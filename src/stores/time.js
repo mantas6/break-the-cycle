@@ -18,7 +18,6 @@ export const useTimeStore = defineStore('time', () => {
 
     function onClock() {
         increment();
-        console.log(daysAfter.value)
     }
 
     return {
