@@ -8,6 +8,7 @@ import router from './router'
 
 import { ClockPlugin } from "@/plugins/clock.js";
 import { SerializationPlugin } from "@/plugins/serialization.js";
+import {useNervousStore} from "@/stores/body/nervous.js";
 
 const app = createApp(App)
 
@@ -19,3 +20,6 @@ app.use(store)
 app.use(router)
 
 app.mount('#app')
+
+
+const nervous = useNervousStore();
