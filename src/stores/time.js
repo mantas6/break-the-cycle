@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import dayjs from "dayjs";
 
 export const useTimeStore = defineStore('time', () => {
-    const startDate = ref(new Date().toString())
+    const startDate = ref(new Date().toISOString())
     const daysAfter = ref(0)
 
     const date = computed(
