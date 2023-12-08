@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { createBarStat, calcBarStatPercent, makeBarStatModify } from '@/helpers/bar-stat.js'
 
 
-export const useNervousStore = defineStore('nervous', () => {
+export const useBrainStore = defineStore('brain', () => {
     const healthSt = createBarStat(1000);
     const healthLt = createBarStat(1000);
 
