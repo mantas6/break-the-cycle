@@ -22,7 +22,7 @@ export function serialize() {
     return JSON.stringify(result);
 }
 
-export function parse(json) {
+export function load(json) {
     const decoded = JSON.parse(json);
 
     for (const [ id, state ] of Object.entries(decoded)) {
@@ -32,4 +32,4 @@ export function parse(json) {
 
 // Debugging
 window.__serialize = serialize;
-window.__parse = parse;
+window.__load = load;

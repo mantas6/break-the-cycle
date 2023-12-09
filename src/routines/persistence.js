@@ -1,4 +1,4 @@
-import { parse, serialize } from "@/plugins/serialization.js";
+import { load, serialize } from "@/plugins/serialization.js";
 
 const saveGameKey = 'currentSaveGame';
 
@@ -6,7 +6,7 @@ export function loadGame() {
     const data = localStorage.getItem(saveGameKey);
 
     if (data) {
-        parse(data);
+        load(data);
     }
 }
 
