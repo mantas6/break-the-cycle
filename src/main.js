@@ -9,6 +9,7 @@ import router from './router'
 import { ClockPlugin } from "@/plugins/clock";
 import { SerializationPlugin} from "@/plugins/serialization";
 import { ActionsPlugin } from "@/plugins/actions.js";
+import { ResetPlugin } from "@/plugins/reset.js";
 
 import { initializeActions } from './stores/actions/init'
 import { loadGame, saveGame } from "@/routines/persistence.js";
@@ -19,6 +20,7 @@ const store = createPinia();
 store.use(ClockPlugin)
 store.use(SerializationPlugin)
 store.use(ActionsPlugin)
+store.use(ResetPlugin)
 
 app.use(store)
 app.use(router)

@@ -26,7 +26,10 @@ export function load(json) {
     const decoded = JSON.parse(json);
 
     for (const [ id, state ] of Object.entries(decoded)) {
-        stores.get(id).$patch(state);
+        const store = stores.get(id);
+
+        store.$reset();
+        store.$patch(state);
     }
 }
 
