@@ -1,8 +1,7 @@
 export function initializeDynamicModules() {
-    const modules = import.meta.glob('./*/*.js');
+    const modules = import.meta.glob('./*/*.js', { eager: true });
 
     Object.values(modules).forEach(async (mod) => {
-        const loaded = await mod();
-        loaded.default();
+        mod.default();
     })
 }
