@@ -9,6 +9,7 @@ export default defineStore('actions:basic_job', () => {
     function executeAction(count) {
         const wallet = useWalletStore();
         wallet.transaction(1 * count);
+
         experience.value += count;
     }
 

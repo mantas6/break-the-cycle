@@ -11,7 +11,7 @@ import { SerializationPlugin} from "@/plugins/serialization";
 import { ActionsPlugin } from "@/plugins/actions.js";
 import { ResetPlugin } from "@/plugins/reset.js";
 
-import { initializeActions } from './stores/actions/init'
+import { initializeDynamicModules } from '@/stores/modules'
 import { loadGame, saveGame } from "@/routines/persistence.js";
 
 const app = createApp(App)
@@ -25,7 +25,7 @@ store.use(ResetPlugin)
 app.use(store)
 app.use(router)
 
-initializeActions();
+initializeDynamicModules();
 
 setTimeout(() => loadGame(), 500)
 setInterval(() => saveGame(), 5000);
