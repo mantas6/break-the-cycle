@@ -1,6 +1,6 @@
 import {ref, computed, reactive} from 'vue'
 import { defineStore } from 'pinia'
-import { sum } from "lodash";
+import { sum } from "lodash/math";
 import { actionStores } from "@/plugins/actions.js";
 
 export const useActionsStore = defineStore('actions', () => {
