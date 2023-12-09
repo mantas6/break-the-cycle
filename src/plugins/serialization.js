@@ -1,13 +1,13 @@
-const stores = new Map;
+export const serializableStores = new Map;
 
 export function SerializationPlugin({ store }) {
-    stores.set(store.$id, store);
+    serializableStores.set(store.$id, store);
 }
 
 export function serialize() {
     const result = {};
 
-    for (const { $id, $state } of stores.values()) {
+    for (const { $id, $state } of serializableStores.values()) {
         const stateToSerialize = {};
         for (const [ itemName, itemValue ] of Object.entries($state)) {
             stateToSerialize[itemName] = itemValue;
@@ -26,7 +26,7 @@ export function load(json) {
     const decoded = JSON.parse(json);
 
     for (const [ id, state ] of Object.entries(decoded)) {
-        const store = stores.get(id);
+        const store = serializableStores.get(id);
 
         store.$reset();
         store.$patch(state);

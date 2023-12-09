@@ -1,4 +1,4 @@
-import { load, serialize } from "@/plugins/serialization.js";
+import {load, serializableStores, serialize} from "@/plugins/serialization.js";
 
 const saveGameKey = 'currentSaveGame';
 
@@ -13,4 +13,9 @@ export function loadGame() {
 export function saveGame() {
     const data = serialize();
     localStorage.setItem(saveGameKey, data)
+}
+
+export function resetGame() {
+    serializableStores.forEach(store => store.$reset());
+    saveGame();
 }

@@ -1,8 +1,13 @@
 <script setup>
 import { useTimeStore } from "@/stores/time.js";
 import { RouterLink } from "vue-router";
+import { resetGame } from "@/routines/persistence.js";
 
 const time = useTimeStore();
+
+function reset() {
+  resetGame();
+}
 </script>
 
 <template>
@@ -13,5 +18,6 @@ const time = useTimeStore();
     <span>|</span>
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
+    <button @click="reset">Reset</button>
   </nav>
 </template>
