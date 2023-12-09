@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
-import { useWalletStore } from "@/stores/stats/wallet.js";
-import { defineModularStore } from "@/stores/modules/index.js";
+import { useWalletStore } from "@/stores/stats/wallet";
+import { defineModularStore } from "@/stores/modules/index";
 
 export default defineModularStore(() => {
     const title = ref('Basic Job');
