@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { sum } from "lodash";
 
 export const useActionsStore = defineStore('actions', () => {
-    const active = reactive({ abc: 1 });
+    const active = reactive({});
 
     const currentCount = computed(() => {
         return sum(Object.values(active));
@@ -18,11 +18,24 @@ export const useActionsStore = defineStore('actions', () => {
     });
 
     function increase(name) {
+        if (currentCount.value >= maxCount.value) {
+            return;
+        }
 
+        if (active[name] === undefined) {
+            active[name] = 1;
+        } else {
+            active[name]++;
+        }
     }
 
     function decrease(name) {
-
+        if (active[name] !== undefined) {
+            active[name]--;
+            if (active[name] <= 0) {
+                delete active[name];
+            }
+        }
     }
 
     return {
@@ -31,5 +44,8 @@ export const useActionsStore = defineStore('actions', () => {
         currentCount,
         maxCount,
         all,
+
+        increase,
+        decrease,
     };
 })

@@ -7,18 +7,18 @@ const brain = useBrainStore();
 const wallet = useWalletStore();
 const actions = useActionsStore();
 
-function doAction() {
-  const diff = brain.modifyHealthSt(-175)
-  console.log(diff)
-}
 </script>
 
 <template>
   <div>Cash: {{ wallet.balance }}$</div>
   <div>Physical condition {{ brain.condition * 100 }}%</div>
   <div>Mental condition {{ brain.mentalCondition * 100 }}%</div>
-  <button @click="doAction">Action</button>
   <div>
-    <button v-for="action in actions.all">{{ action.title }}</button>
+    <div v-for="(action, actionName) in actions.all" class="flex gap-3 p-3">
+      <span class="w-5">x{{ actions.active[actionName] || 0 }}</span>
+      <span>{{ action.title }}</span>
+      <button @click="actions.increase(actionName)">+</button>
+      <button @click="actions.decrease(actionName)">-</button>
+    </div>
   </div>
 </template>
