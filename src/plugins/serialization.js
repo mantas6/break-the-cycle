@@ -8,7 +8,15 @@ export function serialize() {
     const result = {};
 
     for (const { $id, $state } of stores.values()) {
-        result[$id] = $state;
+        const stateToSerialize = {};
+        for (const [ itemName, itemValue ] of Object.entries($state)) {
+            stateToSerialize[itemName] = itemValue;
+        }
+
+        if (Object.keys(stateToSerialize).length > 0) {
+            result[$id] = stateToSerialize;
+        }
+
     }
 
     return JSON.stringify(result);
