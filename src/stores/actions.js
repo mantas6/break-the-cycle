@@ -1,6 +1,7 @@
 import {ref, computed, reactive} from 'vue'
 import { defineStore } from 'pinia'
 import { sum } from "lodash";
+import { actionStores } from "@/plugins/actions.js";
 
 export const useActionsStore = defineStore('actions', () => {
     const active = reactive({});
@@ -12,9 +13,13 @@ export const useActionsStore = defineStore('actions', () => {
     const maxCount = computed(() => 24);
 
     const all = computed(() => {
-        return {
-            basic_job: { title: 'Basic Job' },
-        };
+        const actions = {};
+
+        for (const [ actionName, actionStore ] of actionStores.value.entries()) {
+            actions[actionName] = { title: actionStore.title };
+        }
+
+        return actions;
     });
 
     function increase(name) {
@@ -38,6 +43,13 @@ export const useActionsStore = defineStore('actions', () => {
         }
     }
 
+    function onClock() {
+        for (const [ actionName, actionCount ] of Object.entries(active) ) {
+            const action = actionStores.value.get(actionName);
+            action.executeAction(actionCount);
+        }
+    }
+
     return {
         active,
 
@@ -47,5 +59,7 @@ export const useActionsStore = defineStore('actions', () => {
 
         increase,
         decrease,
+
+        onClock,
     };
 })
