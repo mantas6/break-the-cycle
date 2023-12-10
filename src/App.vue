@@ -1,14 +1,24 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import HeaderPanel from "@/components/HeaderPanel.vue";
+import ProductivityPanel from "@/components/ProductivityPanel.vue";
+import LocationPanel from "@/components/LocationPanel.vue";
+import StatsPanel from "@/components/StatsPanel.vue";
+import Panel from "@/components/Panel.vue";
+import PlannerPanel from "@/components/PlannerPanel.vue";
+import DetailsPanel from "@/components/DetailsPanel.vue";
 </script>
 
 <template>
-  <header class="bg-zinc-600">
-    <HeaderPanel />
-  </header>
-  <main>
-    <RouterView />
-  </main>
+  <div class="grid grid-cols-4 gap-4 m-3">
+    <ProductivityPanel />
+    <LocationPanel class="col-span-2" />
+    <StatsPanel />
+
+    <PlannerPanel />
+    <Panel class="col-span-2">
+      <RouterView />
+    </Panel>
+    <DetailsPanel />
+  </div>
 </template>
 

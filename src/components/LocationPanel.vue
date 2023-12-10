@@ -1,19 +1,15 @@
 <script setup>
-import { useTimeStore } from "@/stores/time.js";
 import { RouterLink } from "vue-router";
-import { resetGame, loadGame, saveGame } from "@/routines/persistence.js";
-
-const time = useTimeStore();
+import { loadGame, resetGame, saveGame } from "@/routines/persistence";
+import Panel from "@/components/Panel.vue";
 </script>
 
 <template>
-  <nav class="w-full flex gap-3 p-3">
-    <div>Break the Cycle</div>
-    <div class="w-24 text-center">{{ time.date }}</div>
+  <Panel class="flex gap-3 items-start">
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
     <button @click="resetGame">Reset</button>
     <button @click="saveGame">Save</button>
     <button @click="loadGame">Load</button>
-  </nav>
+  </Panel>
 </template>
