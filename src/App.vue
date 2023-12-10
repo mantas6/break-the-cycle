@@ -2,7 +2,6 @@
 import { RouterView } from 'vue-router'
 import ProductivityPanel from "@/components/ProductivityPanel.vue";
 import LocationPanel from "@/components/LocationPanel.vue";
-import StatsPanel from "@/components/StatsPanel.vue";
 import Panel from "@/components/Panel.vue";
 import PlannerPanel from "@/components/PlannerPanel.vue";
 import DetailsPanel from "@/components/DetailsPanel.vue";
@@ -12,13 +11,12 @@ import DetailsPanel from "@/components/DetailsPanel.vue";
   <div class="grid grid-cols-4 gap-4 m-3">
     <ProductivityPanel />
     <LocationPanel class="col-span-2" />
-    <StatsPanel />
+    <DetailsPanel class="row-span-2" />
 
     <PlannerPanel />
     <Panel class="col-span-2">
       <RouterView />
     </Panel>
-    <DetailsPanel />
   </div>
 </template>
 
