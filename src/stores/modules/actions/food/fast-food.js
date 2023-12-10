@@ -23,8 +23,6 @@ export default defineStore(storeName(import.meta.url), () => {
 
             const availablePercent = Math.abs(availableBalance) / Math.abs(totalCost);
 
-            console.log({ availableBalance, totalCost, result: caloriesDemand * availablePercent })
-
             wallet.transaction(availableBalance);
             nutrition.modifyCalories(caloriesDemand * availablePercent);
         }
