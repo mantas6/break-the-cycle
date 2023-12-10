@@ -1,9 +1,10 @@
 import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import { createBarStat, calcBarStatPercent, makeBarStatModify } from '@/helpers/bar-stat.js'
+import { storeName } from "@/stores";
 
 
-export const useBrainStore = defineStore('brain', () => {
+export const useBrainStore = defineStore(storeName(import.meta.url), () => {
     const healthSt = createBarStat(1000);
     const healthLt = createBarStat(1000);
 

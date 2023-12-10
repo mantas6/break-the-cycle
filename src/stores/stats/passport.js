@@ -2,8 +2,9 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import {useTimeStore} from "@/stores/time";
 import dayjs from "dayjs";
+import {storeName} from "@/stores";
 
-export const usePassportStore = defineStore('passport', () => {
+export const usePassportStore = defineStore(storeName(import.meta.url), () => {
     const time = useTimeStore();
     const birthday = ref(
         dayjs(time.date).subtract(18, 'years')

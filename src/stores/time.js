@@ -1,8 +1,9 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import dayjs from "dayjs";
+import { storeName } from "@/stores";
 
-export const useTimeStore = defineStore('time', () => {
+export const useTimeStore = defineStore(storeName(import.meta.url), () => {
     const startDate = ref(new Date().toISOString())
     const daysAfter = ref(0)
 

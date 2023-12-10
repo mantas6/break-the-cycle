@@ -1,8 +1,9 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { clamp } from "lodash/number";
+import { storeName } from "@/stores";
 
-export const useWalletStore = defineStore('wallet', () => {
+export const useWalletStore = defineStore(storeName(import.meta.url), () => {
     const balance = ref(0);
 
     function preTransaction(net) {

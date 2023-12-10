@@ -2,8 +2,9 @@ import {ref, computed, reactive} from 'vue'
 import { defineStore } from 'pinia'
 import { sum } from "lodash/math";
 import { actionStores } from "@/plugins/actions.js";
+import { storeName } from "@/stores";
 
-export const useActionsStore = defineStore('actions', () => {
+export const useActionsStore = defineStore(storeName(import.meta.url), () => {
     const active = reactive({});
 
     const currentCount = computed(() => {
