@@ -15,7 +15,7 @@ const passport = usePassportStore();
   <Panel>
     <div class="grid grid-cols-2 gap-3">
       <div>
-        <StatValue title="Balance" :value="wallet.balance" unit="$" />
+        <StatValue title="Balance" :value="wallet.balance + '$'" />
         <StatValue title="Age" :value="passport.age" />
         <StatValue title="Calories" :value="nutrition.calories.now" />
       </div>

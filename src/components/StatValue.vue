@@ -1,5 +1,5 @@
 <script setup>
-  const props = defineProps(['title', 'value', 'unit']);
+  const props = defineProps(['title', 'value']);
 </script>
 
 <template>
@@ -9,7 +9,6 @@
       <slot>
         <span>{{ value }}</span>
       </slot>
-      <span v-if="unit">{{ unit }}</span>
     </div>
   </div>
 </template>
