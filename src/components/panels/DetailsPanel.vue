@@ -1,8 +1,8 @@
 <script setup>
-import Panel from "@/components/Panel.vue";
+import Panel from "@/components/Panels/Panel.vue";
 
-import { useWalletStore } from "@/stores/stats/wallet";
-import { useNutritionStore } from "@/stores/stats/nutrition";
+import { useWalletStore } from "@/stores/stats/wallet.js";
+import { useNutritionStore } from "@/stores/stats/nutrition.js";
 
 const wallet = useWalletStore();
 const nutrition = useNutritionStore();

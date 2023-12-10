@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink } from "vue-router";
-import { loadGame, resetGame, saveGame } from "@/routines/persistence";
-import Panel from "@/components/Panel.vue";
+import { loadGame, resetGame, saveGame } from "@/routines/persistence.js";
+import Panel from "@/components/Panels/Panel.vue";
 </script>
 
 <template>

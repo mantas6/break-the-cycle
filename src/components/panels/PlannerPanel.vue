@@ -1,5 +1,5 @@
 <script setup>
-import Panel from "@/components/Panel.vue";
+import Panel from "@/components/Panels/Panel.vue";
 </script>
 
 <template>
