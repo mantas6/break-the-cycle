@@ -1,5 +1,5 @@
 import {computed, reactive} from "vue";
-import {clamp} from "lodash/number.js";
+import { clamp } from "lodash/number";
 
 export function createBarStat(max, now) {
     return reactive({ now: now || max, max });
@@ -17,5 +17,12 @@ export function makeBarStatModify(stat) {
         stat.now = newValue;
 
         return diff;
+    };
+}
+
+export function makeBarStatPreModify(stat) {
+    return (points) => {
+        const newValue = clamp(stat.now + points, 0, stat.max);
+        return newValue - stat.now;
     };
 }
