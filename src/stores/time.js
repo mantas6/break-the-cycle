@@ -12,12 +12,8 @@ export const useTimeStore = defineStore('time', () => {
             .format('YYYY-MM-DD')
     );
 
-    function increment() {
-        daysAfter.value++
-    }
-
     function onClock() {
-        increment();
+        daysAfter.value++
     }
 
     return {
@@ -26,7 +22,6 @@ export const useTimeStore = defineStore('time', () => {
 
         date,
 
-        increment,
         onClock,
     }
 })
