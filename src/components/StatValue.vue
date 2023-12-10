@@ -4,9 +4,11 @@
 
 <template>
   <div class="flex justify-between">
-    <div>{{ title }}</div>
+    <div class="text-zinc-300">{{ title }}</div>
     <div class="flex">
-      <span>{{ value }}</span>
+      <slot>
+        <span>{{ value }}</span>
+      </slot>
       <span v-if="unit">{{ unit }}</span>
     </div>
   </div>

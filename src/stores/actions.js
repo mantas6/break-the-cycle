@@ -22,6 +22,16 @@ export const useActionsStore = defineStore('actions', () => {
         return actions;
     });
 
+    const allActive = computed(() => {
+        const actions = {};
+
+        for (const actionName of Object.keys(active)) {
+            actions[actionName] = all.value[actionName];
+        }
+
+        return actions;
+    });
+
     function increase(name) {
         if (currentCount.value >= maxCount.value) {
             return;
@@ -56,6 +66,7 @@ export const useActionsStore = defineStore('actions', () => {
         currentCount,
         maxCount,
         all,
+        allActive,
 
         increase,
         decrease,
