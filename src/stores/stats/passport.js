@@ -5,11 +5,13 @@ import dayjs from "dayjs";
 
 export const usePassportStore = defineStore('passport', () => {
     const time = useTimeStore();
-    const birthday = ref(time.date);
+    const birthday = ref(
+        dayjs(time.date).subtract(18, 'years')
+            .toISOString()
+    );
 
     const age = computed(() => {
-        const baseAge = 18;
-        return baseAge + dayjs(time.date)
+        return dayjs(time.date)
            .diff(birthday.value, 'years');
     });
 
