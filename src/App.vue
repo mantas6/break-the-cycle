@@ -11,9 +11,9 @@ import DetailsPanel from "@/components/panels/DetailsPanel.vue";
   <div class="grid grid-cols-4 gap-3 m-3">
     <HeaderPanel />
     <LocationPanel class="col-span-2" />
-    <DetailsPanel class="row-span-2" />
+    <PlannerPanel class="row-span-2" />
 
-    <PlannerPanel />
+    <DetailsPanel />
     <Panel class="col-span-2">
       <RouterView />
     </Panel>
