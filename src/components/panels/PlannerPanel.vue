@@ -12,7 +12,7 @@ const actions = useActionsStore();
   <Panel class="flex flex-col">
     <div class="grid grid-cols-2 gap-3">
       <StatValue title="Planned hours">
-        <span>{{ actions.currentCount }}h / {{ actions.maxCount }}h</span>
+        <span>{{ actions.currentDuration }}h / {{ actions.maxDuration }}h</span>
       </StatValue>
     </div>
     <ActionItem v-for="(action, actionName) in actions.allActive" :name="actionName" v-bind="action"/>

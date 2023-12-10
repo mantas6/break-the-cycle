@@ -1,23 +1,30 @@
-import {ref, computed, reactive} from 'vue'
+import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
-import { sum } from "lodash/math";
 import { actionStores } from "@/plugins/actions.js";
 import { storeName } from "@/stores";
 
 export const useActionsStore = defineStore(storeName(import.meta.url), () => {
     const active = reactive({});
 
-    const currentCount = computed(() => {
-        return sum(Object.values(active));
+    const currentDuration = computed(() => {
+        let total = 0;
+
+        for (const [ actionName, actionCount ] of Object.entries(active)) {
+            total += actionCount * allActive.value[actionName].duration;
+        }
+        return total;
     });
 
-    const maxCount = computed(() => 24);
+    const maxDuration = computed(() => 24);
 
     const all = computed(() => {
         const actions = {};
 
         for (const [ actionName, actionStore ] of actionStores.value.entries()) {
-            actions[actionName] = { title: actionStore.title };
+            actions[actionName] = {
+                title: actionStore.title,
+                duration: actionStore.duration,
+            };
         }
 
         return actions;
@@ -34,7 +41,7 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
     });
 
     function increase(name) {
-        if (currentCount.value >= maxCount.value) {
+        if (currentDuration.value + all.value[name].duration > maxDuration.value) {
             return;
         }
 
@@ -64,8 +71,8 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
     return {
         active,
 
-        currentCount,
-        maxCount,
+        currentDuration,
+        maxDuration,
         all,
         allActive,
 
