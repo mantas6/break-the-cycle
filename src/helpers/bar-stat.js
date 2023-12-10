@@ -6,10 +6,12 @@ export function createBarStat(max, now) {
 }
 
 export function calcBarStatPercent(stat) {
+    warnMismatched(stat);
     return computed(() => stat.now / stat.max);
 }
 
 export function makeBarStatModify(stat) {
+    warnMismatched(stat);
     return (points) => {
         const newValue = clamp(stat.now + points, 0, stat.max);
         const diff = stat.now - newValue;
@@ -21,8 +23,21 @@ export function makeBarStatModify(stat) {
 }
 
 export function makeBarStatPreModify(stat) {
+    warnMismatched(stat);
     return (points) => {
         const newValue = clamp(stat.now + points, 0, stat.max);
         return newValue - stat.now;
     };
+}
+
+function warnMismatched(stat) {
+    const doesNotMatch = Object.keys(stat).length !== 2
+        || stat.now === undefined
+        || typeof stat.now !== 'number'
+        || stat.max === undefined
+        || typeof stat.max !== 'number';
+
+    if (doesNotMatch) {
+        console.warn('Initial stat validation has failed');
+    }
 }
