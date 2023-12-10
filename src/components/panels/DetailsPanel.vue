@@ -3,7 +3,7 @@ import Panel from "@/components/Panels/Panel.vue";
 
 import { useWalletStore } from "@/stores/stats/wallet";
 import { useNutritionStore } from "@/stores/stats/nutrition";
-import {usePassportStore} from "@/stores/stats/passport";
+import { usePassportStore } from "@/stores/stats/passport";
 
 const wallet = useWalletStore();
 const nutrition = useNutritionStore();
