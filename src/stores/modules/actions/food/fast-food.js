@@ -1,9 +1,10 @@
 import { ref, computed } from 'vue'
 import { useWalletStore } from "@/stores/stats/wallet";
-import { defineModularStore } from "@/stores/modules/index";
 import { useNutritionStore } from "@/stores/stats/nutrition";
+import {defineStore} from "pinia";
+import { storeName } from "@/stores";
 
-export default defineModularStore(() => {
+export default defineStore(storeName(import.meta.url), () => {
     const title = ref('Fast Food');
 
     function executeAction(count) {

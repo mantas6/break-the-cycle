@@ -1,9 +1,10 @@
 import { ref, computed } from 'vue'
 import { useWalletStore } from "@/stores/stats/wallet";
-import { defineModularStore } from "@/stores/modules/index";
 import {useNutritionStore} from "@/stores/stats/nutrition.js";
+import { defineStore } from "pinia";
+import { storeName } from "@/stores/index.js";
 
-export default defineModularStore(() => {
+export default defineStore(storeName(import.meta.url), () => {
     const title = ref('Janitor');
     const experience = ref(0);
 
