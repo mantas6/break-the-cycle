@@ -37,7 +37,7 @@ function warnMismatched(stat) {
         || stat.max === undefined
         || typeof stat.max !== 'number';
 
-    if (doesNotMatch) {
-        console.warn('Initial stat validation has failed');
+    if (doesNotMatch && !import.meta.env.PROD) {
+        throw new Error('Initial stat validation has failed');
     }
 }
