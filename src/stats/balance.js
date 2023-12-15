@@ -32,7 +32,18 @@ export function reserve(stat, diff) {
     return diff;
 }
 
-export function assert(stat) {
+export function actualCenter(stat, minPercent = 0) {
+    assert(stat);
+
+    const nowNormalized = Math.abs(stat.now - stat.center)
+    const boundNormalized = stat.now <= stat.center
+        ? Math.abs(stat.min - stat.center)
+        : Math.abs(stat.max - stat.center);
+
+    return 1 - nowNormalized / boundNormalized;
+}
+
+function assert(stat) {
     assertStat(
         stat.type === 'balance',
         stat.last !== undefined,

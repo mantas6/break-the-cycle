@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest'
 import { reactive } from "vue";
 
-import { create, affect, reserve } from './balance';
+import { create, affect, reserve, actualCenter } from './balance';
 
 function createBasicStat() {
     return create(0, -100, 0, 100);
@@ -59,3 +59,41 @@ it('is stat assertion working correctly', () => {
 
     expect(() => affect(statMashed, 1)).toThrowError(expectedError)
 })
+
+it('actual center behaves with default center', () => {
+    const stat = createBasicStat();
+
+    expect(actualCenter(stat)).toBe(1)
+
+    affect(stat, -25)
+    expect(actualCenter(stat)).toBe(0.75)
+
+    affect(stat, -75)
+    expect(actualCenter(stat)).toBe(0)
+
+    affect(stat, 125)
+    expect(actualCenter(stat)).toBe(0.75)
+
+    affect(stat, 75)
+    expect(actualCenter(stat)).toBe(0)
+})
+
+it('actual center behaves with offset center', () => {
+    const stat = create(0, 0, 50, 100);
+
+    expect(actualCenter(stat)).toBe(0)
+
+    affect(stat, 25)
+    expect(actualCenter(stat)).toBe(0.5)
+
+    affect(stat, 25)
+    expect(actualCenter(stat)).toBe(1)
+
+    affect(stat, 25)
+    expect(actualCenter(stat)).toBe(0.5)
+
+    affect(stat, 25)
+    expect(actualCenter(stat)).toBe(0)
+});
+
+it.todo('implement minPercent function and test')
