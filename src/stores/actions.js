@@ -24,6 +24,7 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
             actions[actionName] = {
                 title: actionStore.title,
                 duration: actionStore.duration,
+                meta: actionStore.meta,
             };
         }
 

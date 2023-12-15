@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import {ref, computed, reactive} from 'vue'
 import { useWalletStore } from "@/stores/stats/wallet";
 import { useNutritionStore } from "@/stores/stats/nutrition";
 import {defineStore} from "pinia";
@@ -7,6 +7,8 @@ import { storeName } from "@/stores";
 export default defineStore(storeName(import.meta.url), () => {
     const title = ref('Fast Food');
     const duration = computed(() => 0.5);
+
+    const meta = reactive({})
 
     function executeAction(count) {
         const wallet = useWalletStore();
@@ -32,6 +34,8 @@ export default defineStore(storeName(import.meta.url), () => {
     return {
         title,
         duration,
+
+        meta,
 
         executeAction,
     };

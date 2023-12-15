@@ -23,7 +23,7 @@ const physical = usePhysicalStore();
         <StatValue title="Balance" v-bind="wallet.balance" />
       </div>
       <div>
-        <StatBalance title="Physical" title-min="Lazy" title-max="Tired" v-bind="physical.balance" />
+        <StatBalance title="Physical" title-min="Lazy" title-max="Tired" v-bind="physical.energy" />
       </div>
     </div>
   </Panel>
