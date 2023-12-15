@@ -40,8 +40,12 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
         return actions;
     });
 
+    function canIncrease(name) {
+        return currentDuration.value + all.value[name].duration <= maxDuration.value;
+    }
+
     function increase(name) {
-        if (currentDuration.value + all.value[name].duration > maxDuration.value) {
+        if (!canIncrease(name)) {
             return;
         }
 
@@ -80,6 +84,7 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
         all,
         allActive,
 
+        canIncrease,
         increase,
         decrease,
         remove,

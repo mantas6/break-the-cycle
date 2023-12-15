@@ -1,21 +1,26 @@
 <script setup>
   import { PlusCircleIcon, MinusCircleIcon , BackspaceIcon} from '@heroicons/vue/24/outline'
   import { useActionsStore } from "@/stores/actions";
+  import { computed } from "vue";
 
   const props = defineProps(['title', 'name']);
   const actions = useActionsStore();
+
+  const isActive = computed(() => actions.active[props.name] !== undefined);
+  const canBeIncreased = computed(() => actions.canIncrease(props.name));
+  const currentDuration = computed(() => actions.active[props.name] * actions.allActive[props.name].duration)
 </script>
 
 <template>
   <div class="flex p-3 gap-3 justify-between">
     <div class="flex gap-3">
-      <span class="w-10">{{ actions.active[name] ? actions.active[name] * actions.allActive[name].duration : '0' }}h</span>
+      <span class="w-10">{{ isActive ? currentDuration : '0' }}h</span>
       <span>{{ title }}</span>
     </div>
     <div class="flex gap-1">
-      <button @click="actions.increase(name)"><PlusCircleIcon class="w-7" /></button>
-      <button @click="actions.decrease(name)"><MinusCircleIcon class="w-7" /></button>
-      <button @click="actions.remove(name)"><BackspaceIcon class="w-7" /></button>
+      <button @click="actions.increase(name)" :class="{ 'text-zinc-500': !canBeIncreased }" :disabled="!canBeIncreased"><PlusCircleIcon class="w-7" /></button>
+      <button @click="actions.decrease(name)" :class="{ 'text-zinc-500': !isActive }" :disabled="!isActive"><MinusCircleIcon class="w-7" /></button>
+      <button @click="actions.remove(name)" :class="{ 'text-zinc-500': !isActive }" :disabled="!isActive"><BackspaceIcon class="w-7" /></button>
     </div>
   </div>
 </template>
