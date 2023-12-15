@@ -1,7 +1,16 @@
 <script setup>
 import {computed} from "vue";
 
-const props = defineProps(['title', 'now', 'min', 'max', 'center']);
+const props = defineProps([
+  'title',
+  'titleMin',
+  'titleMax',
+
+  'now',
+  'min',
+  'max',
+  'center',
+]);
 
 const left = computed(() => {
   const minBoundAbs = Math.abs(props.min);
@@ -26,9 +35,9 @@ const left = computed(() => {
       <div class="absolute bg-red-500 h-4 w-1" :style="{ left: `calc(${left}% - 2px)` }"></div>
     </div>
     <div class="flex justify-between">
-      <span class="border-l pl-1 border-dotted">Lazy</span>
+      <span class="border-l pl-1 border-dotted">{{ titleMin }}</span>
       <span>OK</span>
-      <span class="border-r pr-1 border-dotted">Tired</span>
+      <span class="border-r pr-1 border-dotted">{{ titleMax }}</span>
     </div>
   </div>
 </template>
