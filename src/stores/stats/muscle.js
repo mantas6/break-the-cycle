@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { createBarStat, makeBarStatModify, makeBarStatPreModify } from "@/helpers/bar-stat";
+import { createBarStat, makeBarStatModify, makeBarStatPreModify } from "@/helpers/barStat";
 import { storeName } from "@/stores";
 import { useNutritionStore } from "@/stores/stats/nutrition";
 

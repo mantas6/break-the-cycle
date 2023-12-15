@@ -1,6 +1,6 @@
 import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
-import { createBarStat, calcBarStatPercent, makeBarStatModify } from '@/helpers/bar-stat.js'
+import { createBarStat, calcBarStatPercent, makeBarStatModify } from '@/helpers/barStat.js'
 import { storeName } from "@/stores";
 
 
