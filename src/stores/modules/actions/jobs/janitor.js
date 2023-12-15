@@ -13,8 +13,10 @@ export default defineStore(storeName(import.meta.url), () => {
         const physical = usePhysicalStore();
 
         const energyCost = 1 * count;
-        const actualCost = Balance.reserve(physical.balance, energyCost);
+        const actualCost = Balance.reserve(physical.balance, energyCost) * Balance.actualCenter(physical.balance);
         const eff = actualCost / energyCost;
+
+        // console.log({ actualCost, eff })
 
         Balance.affect(physical.balance, actualCost);
 
