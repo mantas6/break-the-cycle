@@ -2,18 +2,21 @@ import { ref, computed } from 'vue'
 import { useWalletStore } from "@/stores/stats/wallet";
 import { defineStore } from "pinia";
 import { storeName } from "@/stores/index.js";
-import { useMuscleStore } from "@/stores/stats/muscle.js";
+import { usePhysicalStore } from "@/stores/stats/physical.js";
+import {Balance} from "@/stats/index.js";
 
 export default defineStore(storeName(import.meta.url), () => {
     const title = ref('Janitor');
     const experience = ref(0);
 
     function executeAction(count) {
-        const muscle = useMuscleStore();
+        const physical = usePhysicalStore();
 
         const energyCost = 1 * count;
-        const energyUsed = muscle.modifyEndurance(-energyCost);
-        const eff = energyUsed / energyCost;
+        const actualCost = Balance.reserve(physical.balance, energyCost);
+        const eff = actualCost / energyCost;
+
+        Balance.affect(physical.balance, actualCost);
 
         const wallet = useWalletStore();
         wallet.transaction(1 * count * eff);
