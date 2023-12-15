@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [ "$1" = "i" ]; then
-    docker exec -it break-the-cycle bash
+if [ $# -gt 0 ]; then
+    docker exec -it break-the-cycle "$@"
 else
     docker run -it --rm --name break-the-cycle -v .:/var/www -w /var/www -p 5173:5173 node:20 npm run dev
 fi
