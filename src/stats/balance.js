@@ -1,5 +1,6 @@
 import { reactive } from "vue";
 import {clamp} from "lodash/number";
+import { assertStat } from '.'
 
 export function create(now = 0, min = -1000, center = 0, max = 1000) {
     return reactive({
@@ -32,14 +33,12 @@ export function reserve(stat, diff) {
 }
 
 export function assert(stat) {
-    const isCorrect = stat.type === 'balance'
-        && stat.last !== undefined
-        && stat.now !== undefined
-        && stat.min !== undefined
-        && stat.center !== undefined
-        && stat.max !== undefined;
-
-    if (!isCorrect && !import.meta.env.PROD) {
-        throw new Error('Incorrect value object given');
-    }
+    assertStat(
+        stat.type === 'balance',
+        stat.last !== undefined,
+        stat.now !== undefined,
+        stat.min !== undefined,
+        stat.center !== undefined,
+        stat.max !== undefined,
+    )
 }
