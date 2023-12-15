@@ -14,7 +14,7 @@ export const useTimeStore = defineStore(storeName(import.meta.url), () => {
     );
 
     function onClock() {
-        daysAfter.value++
+        daysAfter.value += 7;
     }
 
     return {
