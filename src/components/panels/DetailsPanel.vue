@@ -5,24 +5,25 @@ import { useWalletStore } from "@/stores/stats/wallet";
 import { useNutritionStore } from "@/stores/stats/nutrition";
 import { usePassportStore } from "@/stores/stats/passport";
 import { useMuscleStore } from "@/stores/stats/muscle";
+import { usePhysicalStore } from "@/stores/stats/physical";
 import StatValue from "@/components/StatValue.vue";
+import StatBalance from "@/components/StatBalance.vue";
 
 const wallet = useWalletStore();
 const nutrition = useNutritionStore();
 const passport = usePassportStore();
 const muscle = useMuscleStore();
+const physical = usePhysicalStore();
 </script>
 
 <template>
   <Panel>
     <div class="grid grid-cols-2 gap-3">
       <div>
-        <StatValue title="Balance" :value="wallet.balance.now + '$'" />
-        <StatValue title="Age" :value="passport.age" />
-        <StatValue title="Calories" :value="nutrition.calories.now" />
+        <StatValue title="Balance" v-bind="wallet.balance" />
       </div>
       <div>
-        <StatValue title="Endurance" :value="muscle.endurance.now" />
+        <StatBalance title="Physical" v-bind="physical.balance" />
       </div>
     </div>
   </Panel>
