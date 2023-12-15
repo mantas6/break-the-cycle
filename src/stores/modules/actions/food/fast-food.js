@@ -6,7 +6,7 @@ import { storeName } from "@/stores";
 
 export default defineStore(storeName(import.meta.url), () => {
     const title = ref('Fast Food');
-    const duration = ref(0.5);
+    const duration = computed(() => 0.5);
 
     function executeAction(count) {
         const wallet = useWalletStore();
