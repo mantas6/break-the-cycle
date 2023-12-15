@@ -7,8 +7,8 @@ export const useWalletStore = defineStore(storeName(import.meta.url), () => {
     const balance = ref(0);
 
     function preTransaction(net) {
-        if (balance.value - net < 0) {
-            return balance.value + net;
+        if (balance.value + net <= 0) {
+            return balance.value * -1;
         }
 
         return net;
