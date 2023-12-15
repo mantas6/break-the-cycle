@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.0.18",
     "dayjs": "^1.11.10",
     "lodash": "^4.17.21",
     "pinia": "^2.1.7",

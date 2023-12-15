@@ -61,6 +61,10 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
         }
     }
 
+    function remove(name) {
+        delete active[name];
+    }
+
     function onClock() {
         for (const [ actionName, actionCount ] of Object.entries(active) ) {
             const action = actionStores.value.get(actionName);
@@ -78,6 +82,7 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
 
         increase,
         decrease,
+        remove,
 
         onClock,
     };
