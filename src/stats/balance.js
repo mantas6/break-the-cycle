@@ -1,7 +1,7 @@
 import { reactive } from "vue";
 import {clamp} from "lodash/number";
 
-export function createBalanceStat(now = 0, min = -1000, center = 0, max = 1000) {
+export function create(now = 0, min = -1000, center = 0, max = 1000) {
     return reactive({
         type: 'balance',
         last: now,
@@ -12,13 +12,13 @@ export function createBalanceStat(now = 0, min = -1000, center = 0, max = 1000) 
     });
 }
 
-export function affectBalanceStat(stat, diff) {
-    assertStat(stat);
+export function affect(stat, diff) {
+    assert(stat);
     stat.now = clamp(stat.now + diff, stat.min, stat.max);
 }
 
-export function reserveBalanceStat(stat, diff) {
-    assertStat(stat);
+export function reserve(stat, diff) {
+    assert(stat);
 
     if (stat.now + diff <= stat.min) {
         return stat.min - stat.now;
@@ -31,7 +31,7 @@ export function reserveBalanceStat(stat, diff) {
     return diff;
 }
 
-export function assertStat(stat) {
+export function assert(stat) {
     const isCorrect = stat.type === 'balance'
         && stat.last !== undefined
         && stat.now !== undefined

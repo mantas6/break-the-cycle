@@ -1,10 +1,10 @@
-import { expect, test, it } from 'vitest'
+import { expect, it } from 'vitest'
+import { reactive } from "vue";
 
-import { createBalanceStat, affectBalanceStat, reserveBalanceStat } from './balanceStat';
-import {reactive} from "vue";
+import { create, affect, reserve } from './balance';
 
 function createBasicStat() {
-    return createBalanceStat(0, -100, 0, 100);
+    return create(0, -100, 0, 100);
 }
 
 it('initializes as expected', () => {
@@ -22,35 +22,29 @@ it('initializes as expected', () => {
 it('clamps correctly to bounds', () => {
     const stat = createBasicStat();
 
-    const result = affectBalanceStat(stat, 25);
+    const result = affect(stat, 25);
     expect(result).toBeUndefined()
     expect(stat.now).toBe(25)
 
-    affectBalanceStat(stat, 100);
+    affect(stat, 100);
     expect(stat.now).toBe(100)
 
-    affectBalanceStat(stat, -200);
+    affect(stat, -200);
     expect(stat.now).toBe(-100)
 })
 
 it('returns correct reservation values with lower bounds', () => {
     const stat = createBasicStat();
 
-    const reservedInBounds = reserveBalanceStat(stat, -50);
-    expect(reservedInBounds).toBe(-50)
-
-    const reservedOutOfBounds = reserveBalanceStat(stat, -125);
-    expect(reservedOutOfBounds).toBe(-100)
+    expect(reserve(stat, -50)).toBe(-50)
+    expect(reserve(stat, -125)).toBe(-100)
 })
 
 it('returns correct reservation values with upper bounds', () => {
     const stat = createBasicStat();
 
-    const reservedInBounds = reserveBalanceStat(stat, 50);
-    expect(reservedInBounds).toBe(50)
-
-    const reservedOutOfBounds = reserveBalanceStat(stat, 125);
-    expect(reservedOutOfBounds).toBe(100)
+    expect(reserve(stat, 50)).toBe(50)
+    expect(reserve(stat, 125)).toBe(100)
 })
 
 it('is stat assertion working correctly', () => {
@@ -58,14 +52,10 @@ it('is stat assertion working correctly', () => {
 
     const stat = reactive({ type: 'unknown' });
 
-    expect(() => reserveBalanceStat(stat, 1))
-        .toThrowError(expectedError)
-
-    expect(() => affectBalanceStat(stat, 1))
-        .toThrowError(expectedError)
+    expect(() => reserve(stat, 1)).toThrowError(expectedError)
+    expect(() => affect(stat, 1)).toThrowError(expectedError)
 
     const statMashed = reactive({ type: 'balance', value: 20 });
 
-    expect(() => affectBalanceStat(stat, 1))
-        .toThrowError(expectedError)
+    expect(() => affect(statMashed, 1)).toThrowError(expectedError)
 })
