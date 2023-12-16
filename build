@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
-if [ $# -gt 0 ]; then
+docker_run() {
+  docker run -it --rm --name break-the-cycle -v .:/var/www -w /var/www -p 5173:5173 node:20 "$@"
+}
+
+if [ "$1" = "install" ]; then
+    docker_run npm install
+elif [ $# -gt 0 ]; then
     docker exec -it break-the-cycle "$@"
 else
-    docker run -it --rm --name break-the-cycle -v .:/var/www -w /var/www -p 5173:5173 node:20 npm run dev
+    docker_run npm run dev
 fi
