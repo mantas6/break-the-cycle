@@ -1,5 +1,6 @@
 <script setup>
 import {computed} from "vue";
+import NumberFormat from "@/components/NumberFormat.vue";
 
 const props = defineProps([
   'title',
@@ -7,6 +8,7 @@ const props = defineProps([
   'titleMax',
 
   'now',
+  'last',
   'min',
   'max',
   'center',
@@ -21,7 +23,10 @@ const left = computed(() => {
 
 <template>
   <div class="text-xs flex flex-col gap-1">
-    <div class="text-center font-bold">{{ title }}</div>
+    <div class="flex justify-between">
+      <div class="font-bold">{{ title }}</div>
+      <div><NumberFormat :value="now - last" /></div>
+    </div>
 
     <div class="w-full bg-gray-200 overflow-hidden relative h-4">
       <div class="absolute w-1/6 h-2 bg-red-300 bottom-0"></div>

@@ -1,10 +1,12 @@
 <script setup>
 import {computed} from "vue";
+import NumberFormat from "@/components/NumberFormat.vue";
 
 const props = defineProps([
   'title',
 
   'now',
+  'last',
   'min',
   'max',
   'center', // Unused
@@ -17,7 +19,10 @@ const width = computed(() => {
 
 <template>
   <div class="text-xs flex flex-col gap-1">
-    <div class="text-center font-bold">{{ title }}</div>
+    <div class="flex justify-between">
+      <div class="font-bold">{{ title }}</div>
+      <div><NumberFormat :value="now - last" /></div>
+    </div>
     <div class="w-full bg-gray-200 overflow-hidden relative h-4">
       <div class="absolute h-4 bg-yellow-400 bottom-0" :style="{ width: width + '%' }"></div>
       <div class="absolute w-full flex justify-center">
