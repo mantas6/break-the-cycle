@@ -1,3 +1,5 @@
+import {useTimeStore} from "@/stores/time";
+
 const beforeClock = [];
 const onClock = [];
 
@@ -18,6 +20,10 @@ export function ClockPlugin({ store }) {
 function clock() {
     beforeClock.forEach(tick => tick())
     onClock.forEach(tick => tick())
+
+    const time = useTimeStore();
+
+    setTimeout(() => clock(), time.clockInterval)
 }
 
-setInterval(() => clock(), 500);
+setTimeout(() => clock(), 500)
