@@ -19,7 +19,7 @@
         <span class="w-10">{{ isActive ? currentDuration : '0' }}h</span>
         <span>{{ title }}</span>
       </div>
-      <div class="text-xs">Productivity <NumberFormat type="percent" :value="meta.eff" /></div>
+      <div class="text-xs">Productivity <NumberFormat format="percent" :value="meta.eff" /></div>
     </div>
     <div class="flex gap-1">
       <button @click="actions.increase(name)" :class="{ 'text-zinc-500': !canBeIncreased }" :disabled="!canBeIncreased"><PlusCircleIcon class="w-7" /></button>
