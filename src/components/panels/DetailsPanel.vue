@@ -17,7 +17,7 @@ const physical = usePhysicalStore();
     <div class="grid grid-cols-2 gap-3">
       <div>
         <StatValue title="Age" :now="passport.age" />
-        <StatValue title="Balance" type="currency" :now="wallet.balance.now" />
+        <StatValue title="Balance" format="currency" :now="wallet.balance.now" />
       </div>
       <div>
         <StatBalance title="Physical" title-min="Lazy" title-max="Tired" v-bind="physical.energy" />
