@@ -2,6 +2,7 @@ import { expect, it } from 'vitest'
 import { reactive } from "vue";
 
 import { create, affect, reserve, actualCenter } from './balance';
+import {Balance} from "@/stats/index.js";
 
 function createBasicStat() {
     return create(-100, 100);
@@ -145,3 +146,84 @@ it('behaves correctly when using actualCenter with startPercent', () => {
     affect(stat, -25) // -100
     expect(actualCenter(stat, startPercent)).toBe(0)
 })
+
+it('correctly calculates percentage value', () => {
+    let stat = create(-100, 100);
+
+    expect(Balance.percentage(stat)).toBe(0.5)
+
+    stat.now = -50
+    expect(Balance.percentage(stat)).toBe(0.25)
+
+    stat.now = -100
+    expect(Balance.percentage(stat)).toBe(0)
+
+    stat.now = 50
+    expect(Balance.percentage(stat)).toBe(0.75)
+
+    stat.now = 100
+    expect(Balance.percentage(stat)).toBe(1)
+
+    stat = create(0, 100);
+
+    expect(Balance.percentage(stat)).toBe(0.5)
+
+    stat.now = 0;
+    expect(Balance.percentage(stat)).toBe(0)
+
+    stat.now = 50;
+    expect(Balance.percentage(stat)).toBe(0.5)
+
+    stat.now = 100;
+    expect(Balance.percentage(stat)).toBe(1)
+
+    stat = create(50, 100);
+
+    expect(Balance.percentage(stat)).toBe(0.5)
+
+    stat.now = 50;
+    expect(Balance.percentage(stat)).toBe(0)
+
+    stat.now = 100;
+    expect(Balance.percentage(stat)).toBe(1)
+})
+
+it('correctly calculates percentage value with bound overrides', () => {
+    let stat = create(0, 100);
+
+    expect(Balance.percentage(stat, 0.25, 0.75)).toBe(0.5)
+
+    stat.now = 10
+    expect(Balance.percentage(stat, 0.25, 0.75)).toBe(0)
+
+    stat.now = 25
+    expect(Balance.percentage(stat, 0.25, 0.75)).toBe(0)
+
+    stat.now = 75
+    expect(Balance.percentage(stat, 0.25, 0.75)).toBe(1)
+
+    stat.now = 90
+    expect(Balance.percentage(stat, 0.25, 0.75)).toBe(1)
+
+    stat = createBasicStat()
+
+    expect(Balance.percentage(stat, 0.25, 0.75)).toBe(0.5)
+
+    stat.now = -25
+    expect(Balance.percentage(stat, 0.25, 0.75)).toBe(0.25)
+
+    stat.now = -50
+    expect(Balance.percentage(stat, 0.25, 0.75)).toBe(0)
+
+    stat.now = -75
+    expect(Balance.percentage(stat, 0.25, 0.75)).toBe(0)
+
+    stat.now = 25
+    expect(Balance.percentage(stat, 0.25, 0.75)).toBe(0.75)
+
+    stat.now = 50
+    expect(Balance.percentage(stat, 0.25, 0.75)).toBe(1)
+
+    stat.now = 100
+    expect(Balance.percentage(stat, 0.25, 0.75)).toBe(1)
+});

@@ -57,6 +57,17 @@ export function actualCenter(stat, startPercent = 0) {
     return 1 - nowNormalized / boundNormalized;
 }
 
+export function percentage(stat, lowerPercent = 0, upperPercent = 1) {
+    const normalizedBound = stat.max - stat.min;
+
+    const computedMin = stat.min + (lowerPercent * normalizedBound);
+    const computedMax = stat.max - ((1 - upperPercent) * normalizedBound)
+
+    const computedNormalized = computedMax - computedMin;
+
+    return clamp((stat.now - computedMin) / computedNormalized, 0, 1);
+}
+
 function assert(stat) {
     assertStat(
         stat.type === 'balance',
