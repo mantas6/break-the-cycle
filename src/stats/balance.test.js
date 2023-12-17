@@ -96,4 +96,34 @@ it('actual center behaves with offset center', () => {
     expect(actualCenter(stat)).toBe(0)
 });
 
-it.todo('implement minPercent function and test')
+it('behaves correctly when using actualCenter with startPercent', () => {
+    const stat = createBasicStat();
+
+    const startPercent = 0.5;
+
+    expect(actualCenter(stat, startPercent)).toBe(1)
+
+    affect(stat, 25) // 25
+    expect(actualCenter(stat, startPercent)).toBe(1)
+
+    affect(stat, 25) // 50
+    expect(actualCenter(stat, startPercent)).toBe(1)
+
+    affect(stat, 25) // 75
+    expect(actualCenter(stat, startPercent)).toBe(0.5)
+
+    affect(stat, 25) // 100
+    expect(actualCenter(stat, startPercent)).toBe(0)
+
+    affect(stat, -125) // -25
+    expect(actualCenter(stat, startPercent)).toBe(1)
+
+    affect(stat, -25) // -50
+    expect(actualCenter(stat, startPercent)).toBe(1)
+
+    affect(stat, -25) // -75
+    expect(actualCenter(stat, startPercent)).toBe(0.5)
+
+    affect(stat, -25) // -100
+    expect(actualCenter(stat, startPercent)).toBe(0)
+})

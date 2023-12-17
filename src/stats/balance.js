@@ -32,13 +32,23 @@ export function reserve(stat, diff) {
     return diff;
 }
 
-export function actualCenter(stat, minPercent = 0) {
+export function actualCenter(stat, startPercent = 0) {
     assert(stat);
 
-    const nowNormalized = Math.abs(stat.now - stat.center)
-    const boundNormalized = stat.now <= stat.center
+    let nowNormalized = Math.abs(stat.now - stat.center)
+    let boundNormalized = stat.now <= stat.center
         ? Math.abs(stat.min - stat.center)
         : Math.abs(stat.max - stat.center);
+
+    console.log({ nowNormalized, boundNormalized })
+
+    if (startPercent) {
+        const subAmount = boundNormalized * startPercent;
+        nowNormalized = Math.max(nowNormalized - subAmount, 0);
+        boundNormalized -= subAmount;
+    }
+
+    console.log({ nowNormalized, boundNormalized, a: 1 })
 
     return 1 - nowNormalized / boundNormalized;
 }
