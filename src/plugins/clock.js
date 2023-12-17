@@ -18,10 +18,12 @@ export function ClockPlugin({ store }) {
 }
 
 function clock() {
-    beforeClock.forEach(tick => tick())
-    onClock.forEach(tick => tick())
-
     const time = useTimeStore();
+
+    if (!time.pause) {
+        beforeClock.forEach(tick => tick())
+        onClock.forEach(tick => tick())
+    }
 
     setTimeout(() => clock(), time.clockInterval)
 }

@@ -8,6 +8,7 @@ export const useTimeStore = defineStore(storeName(import.meta.url), () => {
     const daysAfter = ref(0)
 
     const clockInterval = ref(500);
+    const pause = ref(false);
 
     const date = computed(
         () => dayjs(startDate.value)
@@ -24,6 +25,7 @@ export const useTimeStore = defineStore(storeName(import.meta.url), () => {
         daysAfter,
 
         clockInterval,
+        pause,
 
         date,
 

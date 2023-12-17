@@ -15,6 +15,7 @@ const time = useTimeStore();
       <RouterLink to="/about">About</RouterLink>
     </div>
     <div class="flex gap-2 items-start">
+      <button @click="time.pause = !time.pause">{{ time.pause ? 'Unpause' : 'Pause' }}</button>
       <button @click="time.clockInterval += 50"><ChevronDoubleLeftIcon class="w-6" /></button>
       <span>{{ time.clockInterval }}ms</span>
       <button @click="time.clockInterval -= 50"><ChevronDoubleRightIcon class="w-6" /></button>
