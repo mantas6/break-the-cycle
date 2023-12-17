@@ -9,7 +9,6 @@ export function ClockPlugin({ store }) {
     beforeClock.push(() => {
         for (const item of Object.values(store)) {
             if (item.type !== undefined && item.last !== undefined && item.now !== undefined) {
-                console.log(item)
                 item.last = item.now;
             }
         }
