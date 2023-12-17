@@ -1,6 +1,7 @@
 <script setup>
 import {computed} from "vue";
 import NumberFormat from "@/components/NumberFormat.vue";
+import { ChevronDoubleUpIcon, ChevronUpIcon, ChevronDoubleDownIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps([
   'title',
@@ -20,12 +21,24 @@ const left = computed(() => {
   const normalized = props.now + minBoundAbs;
   return Math.round(normalized / (props.max + minBoundAbs) * 100);
 })
+
+const diff = computed(() => props.gain - props.loss);
 </script>
 
 <template>
   <div class="text-xs flex flex-col gap-1">
     <div class="flex justify-between">
-      <div class="font-bold">{{ title }}</div>
+      <div class="flex gap-1">
+        <span class="font-bold">{{ title }}</span>
+        <span v-if="diff > 0" class="text-green-300">
+          <ChevronDoubleUpIcon v-if="diff > 1" class="w-4" />
+          <ChevronUpIcon v-else class="w-4" />
+        </span>
+        <span v-else class="text-red-300">
+          <ChevronDoubleDownIcon v-if="diff < -1" class="w-4" />
+          <ChevronDownIcon v-else class="w-4" />
+        </span>
+      </div>
       <div><NumberFormat :value="gain - loss" /></div>
     </div>
 
