@@ -28,6 +28,7 @@ const width = computed(() => {
       <div class="absolute w-full flex justify-center">
         <div class="border-dotted border-l border-zinc-600 h-4"></div>
       </div>
+      <div class="absolute w-1/4 h-4 border-red-500 border-dotted border-r bottom-0"></div>
     </div>
   </div>
 </template>

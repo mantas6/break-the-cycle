@@ -8,14 +8,19 @@ export const usePhysicalStore = defineStore(storeName(import.meta.url), () => {
     const energy = Balance.create(-1000, 1000);
 
     function onClock() {
-        const rate = 3;
+        let rate = 3;
 
         const nutrition = useNutritionStore();
-        const actual = Balance.reserve(nutrition.energy, -rate)
-        const eff = Math.abs(actual) / rate;
 
-        Balance.affect(nutrition.energy, actual)
-        Balance.affect(energy, rate * eff)
+        rate *= Balance.percentage(nutrition.energy, 0, 0.25);
+
+        if (rate > 0) {
+            const actual = Balance.reserve(nutrition.energy, -rate)
+            const eff = Math.abs(actual) / rate;
+
+            Balance.affect(nutrition.energy, actual)
+            Balance.affect(energy, rate * eff)
+        }
     }
 
     return {
