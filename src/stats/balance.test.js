@@ -52,6 +52,14 @@ it('returns correct reservation values with upper bounds', () => {
 
     expect(reserve(stat, 50)).toBe(50)
     expect(reserve(stat, 125)).toBe(100)
+
+
+    stat.now = 90;
+    expect(reserve(stat, 10)).toBe(10)
+    expect(reserve(stat, 20)).toBe(10)
+
+    stat.now = 100;
+    expect(reserve(stat, 10)).toBe(0)
 })
 
 it('is stat assertion working correctly', () => {

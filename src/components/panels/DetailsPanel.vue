@@ -4,12 +4,15 @@ import Panel from "@/components/Panels/Panel.vue";
 import { useWalletStore } from "@/stores/stats/wallet";
 import { usePassportStore } from "@/stores/stats/passport";
 import { usePhysicalStore } from "@/stores/stats/physical";
+import { useNutritionStore } from "@/stores/stats/nutrition";
 import StatValue from "@/components/StatValue.vue";
 import StatBalance from "@/components/StatBalance.vue";
+import StatBalanceFill from "@/components/StatBalanceFill.vue";
 
 const wallet = useWalletStore();
 const passport = usePassportStore();
 const physical = usePhysicalStore();
+const nutrition = useNutritionStore();
 </script>
 
 <template>
@@ -19,8 +22,9 @@ const physical = usePhysicalStore();
         <StatValue title="Age" :now="passport.age" />
         <StatValue title="Balance" format="currency" :now="wallet.balance.now" />
       </div>
-      <div>
+      <div class="flex flex-col gap-3">
         <StatBalance title="Physical" title-min="Lazy" title-max="Tired" v-bind="physical.energy" />
+        <StatBalanceFill title="Nutrition" v-bind="nutrition.energy" />
       </div>
     </div>
   </Panel>
