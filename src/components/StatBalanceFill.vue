@@ -30,7 +30,7 @@ const diff = computed(() => props.gain - props.loss);
           <ChevronDoubleUpIcon v-if="diff > 1" class="w-4" />
           <ChevronUpIcon v-else class="w-4" />
         </span>
-        <span v-else class="text-red-300">
+        <span v-else-if="diff < 0" class="text-red-300">
           <ChevronDoubleDownIcon v-if="diff < -1" class="w-4" />
           <ChevronDownIcon v-else class="w-4" />
         </span>
