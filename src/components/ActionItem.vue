@@ -12,8 +12,8 @@
   const currentDuration = computed(() => actions.active[props.name] * actions.allActive[props.name].duration)
 
   const productivityClasses = computed(() => ({
-    'text-yellow-300': isActive && props.meta.eff < 1 && props.meta.eff > 0,
-    'text-red-300': isActive && !props.meta.eff
+    'text-yellow-300': isActive.value && props.meta.eff < 1 && props.meta.eff > 0,
+    'text-red-300': isActive.value && !props.meta.eff
   }));
 </script>
 
