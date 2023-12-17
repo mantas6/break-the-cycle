@@ -10,6 +10,11 @@
   const isActive = computed(() => actions.active[props.name] !== undefined);
   const canBeIncreased = computed(() => actions.canIncrease(props.name));
   const currentDuration = computed(() => actions.active[props.name] * actions.allActive[props.name].duration)
+
+  const productivityClasses = computed(() => ({
+    'text-yellow-300': isActive && props.meta.eff < 1 && props.meta.eff > 0,
+    'text-red-300': isActive && !props.meta.eff
+  }));
 </script>
 
 <template>
@@ -19,7 +24,7 @@
         <span class="w-10">{{ isActive ? currentDuration : '0' }}h</span>
         <span>{{ title }}</span>
       </div>
-      <div class="text-xs">Productivity <NumberFormat format="percent" :value="meta.eff" /></div>
+      <div class="text-xs" :class="productivityClasses">Productivity <NumberFormat format="percent" :value="meta.eff" /></div>
     </div>
     <div class="flex gap-1">
       <button @click="actions.increase(name)" :class="{ 'text-zinc-500': !canBeIncreased }" :disabled="!canBeIncreased"><PlusCircleIcon class="w-7" /></button>
