@@ -6,7 +6,8 @@ it('initializes as expected', () => {
 
     expect(stat.type).toBe('value')
     expect(stat.now).toBe(0)
-    expect(stat.last).toBe(0)
+    expect(stat.gain).toBe(0)
+    expect(stat.loss).toBe(0)
 })
 
 it('mutates as expected', () => {
@@ -16,4 +17,11 @@ it('mutates as expected', () => {
     expect(result).toBeUndefined()
 
     expect(stat.now).toBe(50)
+    expect(stat.gain).toBe(50)
+    expect(stat.loss).toBe(0)
+
+    affect(stat, -50)
+    expect(stat.now).toBe(0)
+    expect(stat.gain).toBe(50)
+    expect(stat.loss).toBe(50)
 })

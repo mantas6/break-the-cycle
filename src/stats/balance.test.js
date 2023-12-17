@@ -17,7 +17,8 @@ it('initializes as expected', () => {
     expect(stat).toHaveProperty('now')
     expect(stat).toHaveProperty('min')
     expect(stat).toHaveProperty('max')
-    expect(stat).toHaveProperty('last')
+    expect(stat).toHaveProperty('gain')
+    expect(stat).toHaveProperty('loss')
 })
 
 it('assigns center correctly', () => {
@@ -25,6 +26,18 @@ it('assigns center correctly', () => {
     expect(create(0, 100).center).toBe(50)
     expect(create(-100, 0).center).toBe(-50)
     expect(create(-100, -50).center).toBe(-75)
+})
+
+it('calculates gain and loss correctly', () => {
+    const stat = createBasicStat();
+
+    Balance.affect(stat, 50)
+    expect(stat.gain).toBe(50)
+    expect(stat.loss).toBe(0)
+
+    Balance.affect(stat, -50)
+    expect(stat.gain).toBe(50)
+    expect(stat.loss).toBe(50)
 })
 
 it('clamps correctly to bounds', () => {

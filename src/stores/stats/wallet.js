@@ -16,7 +16,7 @@ export const useWalletStore = defineStore(storeName(import.meta.url), () => {
     }
 
     function transaction(net) {
-        balance.now += net;
+        Value.affect(balance, net);
     }
 
     return {

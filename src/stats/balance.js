@@ -13,7 +13,8 @@ export function create(min = -1000, max = 1000, now, center) {
 
     return reactive({
         type: 'balance',
-        last: now,
+        gain: 0,
+        loss: 0,
         now,
         min,
         center,
@@ -24,6 +25,12 @@ export function create(min = -1000, max = 1000, now, center) {
 export function affect(stat, diff) {
     assert(stat);
     stat.now = clamp(stat.now + diff, stat.min, stat.max);
+
+    if (diff > 0) {
+        stat.gain += diff;
+    } else {
+        stat.loss += Math.abs(diff);
+    }
 }
 
 export function reserve(stat, diff) {
@@ -71,7 +78,8 @@ export function percentage(stat, lowerPercent = 0, upperPercent = 1) {
 function assert(stat) {
     assertStat(
         stat.type === 'balance',
-        stat.last !== undefined,
+        stat.gain !== undefined,
+        stat.loss !== undefined,
         stat.now !== undefined,
         stat.min !== undefined,
         stat.center !== undefined,

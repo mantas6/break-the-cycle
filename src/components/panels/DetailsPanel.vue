@@ -20,6 +20,8 @@ const nutrition = useNutritionStore();
     <div class="grid grid-cols-2 gap-3">
       <div>
         <StatValue title="Age" :now="passport.age" />
+        <StatValue title="Income" format="currency" :now="wallet.balance.gain" />
+        <StatValue title="Outcome" format="currency" :now="wallet.balance.loss" />
         <StatValue title="Balance" format="currency" :now="wallet.balance.now" />
       </div>
       <div class="flex flex-col gap-3">
