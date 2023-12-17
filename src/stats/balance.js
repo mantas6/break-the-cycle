@@ -2,7 +2,15 @@ import { reactive } from "vue";
 import {clamp} from "lodash/number";
 import { assertStat } from '.'
 
-export function create(now = 0, min = -1000, center = 0, max = 1000) {
+export function create(min = -1000, max = 1000, now, center) {
+    if (center === undefined) {
+        center = (min + max) / 2;
+    }
+
+    if (now === undefined) {
+        now = center;
+    }
+
     return reactive({
         type: 'balance',
         last: now,

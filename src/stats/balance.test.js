@@ -4,7 +4,7 @@ import { reactive } from "vue";
 import { create, affect, reserve, actualCenter } from './balance';
 
 function createBasicStat() {
-    return create(0, -100, 0, 100);
+    return create(-100, 100);
 }
 
 it('initializes as expected', () => {
@@ -17,6 +17,13 @@ it('initializes as expected', () => {
     expect(stat).toHaveProperty('min')
     expect(stat).toHaveProperty('max')
     expect(stat).toHaveProperty('last')
+})
+
+it('assigns center correctly', () => {
+    expect(create(-100, 100).center).toBe(0)
+    expect(create(0, 100).center).toBe(50)
+    expect(create(-100, 0).center).toBe(-50)
+    expect(create(-100, -50).center).toBe(-75)
 })
 
 it('clamps correctly to bounds', () => {
@@ -79,20 +86,23 @@ it('actual center behaves with default center', () => {
 })
 
 it('actual center behaves with offset center', () => {
-    const stat = create(0, 0, 50, 100);
+    const stat = create(0, 100);
 
-    expect(actualCenter(stat)).toBe(0)
-
-    affect(stat, 25)
-    expect(actualCenter(stat)).toBe(0.5)
-
-    affect(stat, 25)
     expect(actualCenter(stat)).toBe(1)
 
-    affect(stat, 25)
+    stat.now = 0;
+    expect(actualCenter(stat)).toBe(0)
+
+    stat.now = 25;
     expect(actualCenter(stat)).toBe(0.5)
 
-    affect(stat, 25)
+    stat.now = 50;
+    expect(actualCenter(stat)).toBe(1)
+
+    stat.now = 75;
+    expect(actualCenter(stat)).toBe(0.5)
+
+    stat.now = 100;
     expect(actualCenter(stat)).toBe(0)
 });
 
