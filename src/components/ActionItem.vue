@@ -2,6 +2,7 @@
   import { PlusCircleIcon, MinusCircleIcon , BackspaceIcon} from '@heroicons/vue/24/outline'
   import { useActionsStore } from "@/stores/actions";
   import { computed } from "vue";
+  import NumberFormat from "@/components/NumberFormat.vue";
 
   const props = defineProps(['title', 'name', 'meta']);
   const actions = useActionsStore();
@@ -9,8 +10,6 @@
   const isActive = computed(() => actions.active[props.name] !== undefined);
   const canBeIncreased = computed(() => actions.canIncrease(props.name));
   const currentDuration = computed(() => actions.active[props.name] * actions.allActive[props.name].duration)
-
-  const effFormatter = new Intl.NumberFormat('en-US', { style: 'percent' })
 </script>
 
 <template>
@@ -20,7 +19,7 @@
         <span class="w-10">{{ isActive ? currentDuration : '0' }}h</span>
         <span>{{ title }}</span>
       </div>
-      <div class="text-xs">Productivity {{ effFormatter.format(meta.eff) }}</div>
+      <div class="text-xs">Productivity <NumberFormat type="percent" :value="meta.eff" /></div>
     </div>
     <div class="flex gap-1">
       <button @click="actions.increase(name)" :class="{ 'text-zinc-500': !canBeIncreased }" :disabled="!canBeIncreased"><PlusCircleIcon class="w-7" /></button>
