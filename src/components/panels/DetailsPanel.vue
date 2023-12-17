@@ -23,7 +23,7 @@ const nutrition = useNutritionStore();
         <StatValue title="Balance" format="currency" :now="wallet.balance.now" />
       </div>
       <div class="flex flex-col gap-3">
-        <StatBalance title="Physical" title-min="Lazy" title-max="Tired" v-bind="physical.energy" />
+        <StatBalance title="Physical" title-min="Tired" title-max="Lazy" v-bind="physical.energy" />
         <StatBalanceFill title="Nutrition" v-bind="nutrition.energy" />
       </div>
     </div>
