@@ -13,7 +13,7 @@ export default defineStore(storeName(import.meta.url), () => {
         const physical = usePhysicalStore();
 
         const energyCost = 1 * count;
-        const actualCost = Balance.reserve(physical.energy, energyCost) * Balance.actualCenter(physical.energy);
+        const actualCost = Balance.reserve(physical.energy, energyCost) * Balance.actualCenter(physical.energy, 0.5);
         const eff = actualCost / energyCost;
 
         // Should move this to a computed property so that it can be calculated even when the action is not being done
