@@ -6,7 +6,7 @@ import { usePhysicalStore } from "@/stores/stats/physical.js";
 import {Balance} from "@/stats/index.js";
 
 export default defineStore(storeName(import.meta.url), () => {
-    const title = ref('Janitor');
+    const title = computed(() => 'Janitor');
     const meta = reactive({});
 
     function executeAction(count) {

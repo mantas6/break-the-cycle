@@ -29,7 +29,12 @@ export function load(json) {
         const store = serializableStores.get(id);
 
         store.$reset();
-        store.$patch(state);
+
+        for (const itemName of Object.keys(store.$state)) {
+            const patch = {};
+            patch[itemName] = state[itemName];
+            store.$patch(patch);
+        }
     }
 }
 

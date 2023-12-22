@@ -7,7 +7,7 @@ import { Balance } from "@/stats/index.js";
 import {range} from "lodash/util";
 
 export default defineStore(storeName(import.meta.url), () => {
-    const title = ref('Fast Food');
+    const title = computed(() => 'Fast Food');
     const durations = computed(() => range(0.5, 25, 0.5));
 
     const meta = reactive({})
