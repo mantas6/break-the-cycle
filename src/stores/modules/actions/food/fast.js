@@ -5,6 +5,7 @@ import {defineStore} from "pinia";
 import { storeName } from "@/stores";
 import { Balance } from "@/stats/index.js";
 import {interval} from "@/helpers/actions";
+import {executeBasicFood} from "@/helpers/actions/food.js";
 
 export default defineStore(storeName(import.meta.url), () => {
     const title = computed(() => 'Fast Food');
@@ -13,27 +14,7 @@ export default defineStore(storeName(import.meta.url), () => {
     const meta = reactive({})
 
     function executeAction(count) {
-        const energyGain = 1 * count;
-        const nutrition = useNutritionStore();
-        const neededGain = Balance.reserve(nutrition.energy, energyGain)
-        const demandEff = neededGain / energyGain;
-
-        if (demandEff > 0) {
-            const wallet = useWalletStore();
-            const baseCost = 1;
-
-            const actualCost = -baseCost * count * demandEff;
-            const cost = wallet.preTransaction(actualCost)
-
-            const costEff = cost / actualCost;
-
-            const eff = Math.min(demandEff, costEff);
-            meta.eff = eff;
-            wallet.transaction(cost)
-            Balance.affect(nutrition.energy, energyGain * eff)
-        } else {
-            meta.eff = 0;
-        }
+        executeBasicFood(meta, count);
     }
 
     return {
