@@ -99,3 +99,5 @@ it('executes actions correctly', () => {
     runClock();
     expect(store.executions).toBe(4)
 })
+
+it.todo('test with plugins regarding the default durations value')
