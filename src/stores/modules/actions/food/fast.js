@@ -4,7 +4,7 @@ import { useNutritionStore } from "@/stores/stats/nutrition";
 import {defineStore} from "pinia";
 import { storeName } from "@/stores";
 import { Balance } from "@/stats/index.js";
-import {interval} from "@/helpers/actions.js";
+import {interval} from "@/helpers/actions";
 
 export default defineStore(storeName(import.meta.url), () => {
     const title = computed(() => 'Fast Food');
