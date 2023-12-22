@@ -8,7 +8,7 @@ import {range} from "lodash/util";
 
 export default defineStore(storeName(import.meta.url), () => {
     const title = ref('Fast Food');
-    const duration = computed(() => range(0.5, 25, 0.5));
+    const durations = computed(() => range(0.5, 25, 0.5));
 
     const meta = reactive({})
 
@@ -38,7 +38,7 @@ export default defineStore(storeName(import.meta.url), () => {
 
     return {
         title,
-        duration,
+        durations,
 
         meta,
 

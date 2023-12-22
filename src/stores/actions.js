@@ -18,7 +18,7 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
         for (const [ actionName, actionStore ] of actionStores.value.entries()) {
             actions[actionName] = {
                 title: actionStore.title,
-                duration: actionStore.duration,
+                durations: actionStore.durations,
                 meta: actionStore.meta,
             };
         }
@@ -50,12 +50,12 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
 
     function getNextDuration(name) {
         if (active[name] === undefined) {
-            return all.value[name].duration[0];
+            return all.value[name].durations[0];
         } else {
-            const duration = all.value[name].duration;
-            const idx = duration.indexOf(active[name]);
+            const durations = all.value[name].durations;
+            const idx = durations.indexOf(active[name]);
 
-            return duration[idx + 1];
+            return durations[idx + 1];
         }
     }
 
@@ -65,12 +65,12 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
         }
 
         if (active[name] === undefined) {
-            active[name] = all.value[name].duration[0];
+            active[name] = all.value[name].durations[0];
         } else {
-            const duration = all.value[name].duration;
-            const idx = duration.indexOf(active[name])
+            const durations = all.value[name].durations;
+            const idx = durations.indexOf(active[name])
 
-            const nextDuration = duration[idx + 1]
+            const nextDuration = durations[idx + 1]
             if (nextDuration !== undefined) {
                 active[name] = nextDuration;
             }
@@ -79,10 +79,10 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
 
     function decrease(name) {
         if (active[name] !== undefined) {
-            const duration = all.value[name].duration;
-            const idx = duration.indexOf(active[name])
+            const durations = all.value[name].durations;
+            const idx = durations.indexOf(active[name])
 
-            const nextDuration = duration[idx - 1]
+            const nextDuration = durations[idx - 1]
 
             if (nextDuration !== undefined) {
                 active[name] = nextDuration;
