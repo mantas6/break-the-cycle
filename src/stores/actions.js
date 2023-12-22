@@ -2,6 +2,7 @@ import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import { actionStores } from "@/plugins/actions.js";
 import { storeName } from "@/stores";
+import { onClock } from "@/routines/clock";
 
 export const useActionsStore = defineStore(storeName(import.meta.url), () => {
     const active = reactive({});
@@ -90,12 +91,12 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
         delete active[name];
     }
 
-    function onClock() {
+    onClock(() => {
         for (const [ actionName, actionCount ] of Object.entries(active) ) {
             const action = actionStores.value.get(actionName);
             action.executeAction(actionCount);
         }
-    }
+    })
 
     return {
         active,
@@ -109,7 +110,5 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
         increase,
         decrease,
         remove,
-
-        onClock,
     };
 })

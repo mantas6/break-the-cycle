@@ -2,6 +2,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import dayjs from "dayjs";
 import { storeName } from "@/stores";
+import { onClock } from "@/routines/clock.js";
 
 export const useTimeStore = defineStore(storeName(import.meta.url), () => {
     const startDate = ref(new Date().toISOString())
@@ -16,9 +17,7 @@ export const useTimeStore = defineStore(storeName(import.meta.url), () => {
             .format('YYYY-MM-DD')
     );
 
-    function onClock() {
-        daysAfter.value++;
-    }
+    onClock(() => daysAfter.value++);
 
     return {
         startDate,
@@ -28,7 +27,5 @@ export const useTimeStore = defineStore(storeName(import.meta.url), () => {
         pause,
 
         date,
-
-        onClock,
     }
 })

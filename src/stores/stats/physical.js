@@ -3,11 +3,12 @@ import { defineStore } from 'pinia'
 import { storeName } from "@/stores";
 import { Balance } from "@/stats";
 import {useNutritionStore} from "@/stores/stats/nutrition.js";
+import {onClock} from "@/routines/clock.js";
 
 export const usePhysicalStore = defineStore(storeName(import.meta.url), () => {
     const energy = Balance.create(-1000, 1000);
 
-    function onClock() {
+    onClock(() => {
         let rate = 3;
 
         const nutrition = useNutritionStore();
@@ -21,11 +22,9 @@ export const usePhysicalStore = defineStore(storeName(import.meta.url), () => {
             Balance.affect(nutrition.energy, actual)
             Balance.affect(energy, rate * eff)
         }
-    }
+    })
 
     return {
-        onClock,
-
         energy,
     };
 })
