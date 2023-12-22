@@ -17,6 +17,7 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
         const actions = {};
 
         for (const [ actionName, actionStore ] of actionStores.value.entries()) {
+            // TODO: dynamically fetch computed and state
             actions[actionName] = {
                 title: actionStore.title,
                 durations: actionStore.durations,
