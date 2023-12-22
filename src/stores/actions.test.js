@@ -1,37 +1,49 @@
-import { expect, it, beforeEach } from 'vitest'
+import { expect, it, beforeEach, afterEach } from 'vitest'
 import {createPinia, defineStore, setActivePinia} from "pinia";
 import {useActionsStore} from "@/stores/actions.js";
 import {actionStores} from "@/plugins/actions.js";
-import {computed, reactive} from "vue";
-import {usePhysicalStore} from "@/stores/stats/physical.js";
-import {Balance} from "@/stats/index.js";
-import {useWalletStore} from "@/stores/stats/wallet.js";
+import {computed, ref} from "vue";
+import {clockHandlers, runClock} from "@/routines/clock.js";
 
 const useTestStore = defineStore('test-action', () => {
     const title = computed(() => 'store');
     const durations = computed(() => [4, 8, 12]);
 
+    const executions = ref(0);
+
     function executeAction(count) {
-        //
+        executions.value += count;
     }
 
     return {
         title,
         durations,
 
+        executions,
+
         executeAction,
     };
 })
 
+function resetGlobals() {
+    actionStores.value.clear();
+    clockHandlers.onClock.length = 0;
+    clockHandlers.beforeClock.length = 0;
+}
 
 beforeEach(() => {
+    resetGlobals();
+
     const store = createPinia();
     setActivePinia(store)
 
     const action = useTestStore()
-    actionStores.value.clear();
     actionStores.value.set(action.$id, action)
 
+})
+
+afterEach(() => {
+    resetGlobals();
 })
 
 it('correctly controls durations', () => {
@@ -58,4 +70,26 @@ it('correctly controls durations', () => {
     actions.increase(store.$id)
     expect(actions.currentDuration).toBe(12)
     expect(actions.canIncrease(store.$id)).toBe(false)
+
+    actions.decrease(store.$id)
+    expect(actions.currentDuration).toBe(8)
+    expect(actions.canIncrease(store.$id)).toBe(true)
+
+    actions.decrease(store.$id)
+    actions.decrease(store.$id)
+    expect(actions.currentDuration).toBe(0)
+})
+
+it('executes actions correctly', () => {
+    const actions = useActionsStore();
+    const store = useTestStore()
+
+    actions.increase(store.$id)
+
+    runClock();
+    expect(store.executions).toBe(4)
+
+    actions.decrease(store.$id)
+    runClock();
+    expect(store.executions).toBe(4)
 })

@@ -1,6 +1,6 @@
 import { useTimeStore } from "@/stores/time.js";
 
-const handlers = {
+export const clockHandlers = {
     beforeClock: [],
     onClock: [],
 };
@@ -9,19 +9,23 @@ function clock() {
     const time = useTimeStore();
 
     if (!time.pause) {
-        handlers.beforeClock.forEach(tick => tick())
-        handlers.onClock.forEach(tick => tick())
+        runClock();
     }
 
     setTimeout(() => clock(), time.clockInterval)
 }
 
+export function runClock() {
+    clockHandlers.beforeClock.forEach(tick => tick())
+    clockHandlers.onClock.forEach(tick => tick())
+}
+
 export function onClock(cb) {
-    handlers.onClock.push(cb);
+    clockHandlers.onClock.push(cb);
 }
 
 export function beforeClock(cb) {
-    handlers.beforeClock.push(cb);
+    clockHandlers.beforeClock.push(cb);
 }
 
 setTimeout(() => clock(), 500)
