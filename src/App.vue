@@ -2,7 +2,7 @@
 import { RouterView } from 'vue-router'
 import HeaderPanel from "@/components/panels/HeaderPanel.vue";
 import LocationPanel from "@/components/panels/LocationPanel.vue";
-import Panel from "@/components/panels/Panel.vue";
+import PanelBlock from "@/components/panels/PanelBlock.vue";
 import PlannerPanel from "@/components/panels/PlannerPanel.vue";
 import DetailsPanel from "@/components/panels/DetailsPanel.vue";
 </script>
@@ -14,9 +14,9 @@ import DetailsPanel from "@/components/panels/DetailsPanel.vue";
     <PlannerPanel class="row-span-2" />
 
     <DetailsPanel />
-    <Panel class="col-span-2">
+    <PanelBlock class="col-span-2">
       <RouterView />
-    </Panel>
+    </PanelBlock>
   </div>
 </template>
 

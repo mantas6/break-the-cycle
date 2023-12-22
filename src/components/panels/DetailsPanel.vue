@@ -1,5 +1,5 @@
 <script setup>
-import Panel from "@/components/Panels/Panel.vue";
+import PanelBlock from "@/components/Panels/PanelBlock.vue";
 
 import { useWalletStore } from "@/stores/stats/wallet";
 import { usePassportStore } from "@/stores/stats/passport";
@@ -16,7 +16,7 @@ const nutrition = useNutritionStore();
 </script>
 
 <template>
-  <Panel>
+  <PanelBlock>
     <div class="grid grid-cols-2 gap-3">
       <div>
         <StatValue title="Age" :now="passport.age" />
@@ -29,5 +29,5 @@ const nutrition = useNutritionStore();
         <StatBalanceFill title="Nutrition" v-bind="nutrition.energy" />
       </div>
     </div>
-  </Panel>
+  </PanelBlock>
 </template>
