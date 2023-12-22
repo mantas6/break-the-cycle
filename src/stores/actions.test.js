@@ -77,7 +77,13 @@ it('correctly controls durations', () => {
 
     actions.decrease(store.$id)
     actions.decrease(store.$id)
-    expect(actions.currentDuration).toBe(0)
+    expect(actions.currentDuration).toBe(0);
+    expect(actions.allActive).not.toHaveProperty(store.$id)
+
+    actions.increase(store.$id)
+    actions.remove(store.$id);
+    expect(actions.currentDuration).toBe(0);
+    expect(actions.allActive).not.toHaveProperty(store.$id)
 })
 
 it('executes actions correctly', () => {
