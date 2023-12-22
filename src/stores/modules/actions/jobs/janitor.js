@@ -8,6 +8,7 @@ import {Balance} from "@/stats/index.js";
 export default defineStore(storeName(import.meta.url), () => {
     const title = computed(() => 'Janitor');
     const meta = reactive({});
+    const durations = computed(() => [4, 8, 12]);
 
     function executeAction(count) {
         const physical = usePhysicalStore();
@@ -29,6 +30,7 @@ export default defineStore(storeName(import.meta.url), () => {
 
     return {
         title,
+        durations,
 
         meta,
 
