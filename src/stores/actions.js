@@ -64,16 +64,10 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
             return;
         }
 
-        if (active[name] === undefined) {
-            active[name] = all.value[name].durations[0];
-        } else {
-            const durations = all.value[name].durations;
-            const idx = durations.indexOf(active[name])
+        const nextDuration = getNextDuration(name);
 
-            const nextDuration = durations[idx + 1]
-            if (nextDuration !== undefined) {
-                active[name] = nextDuration;
-            }
+        if (nextDuration !== undefined) {
+            active[name] = nextDuration;
         }
     }
 
