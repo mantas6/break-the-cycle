@@ -25,14 +25,14 @@ export function serialize() {
 export function load(json) {
     const decoded = JSON.parse(json);
 
-    for (const [ id, state ] of Object.entries(decoded)) {
+    for (const [ id, savedState ] of Object.entries(decoded)) {
         const store = serializableStores.get(id);
 
         store.$reset();
 
         for (const itemName of Object.keys(store.$state)) {
             const patch = {};
-            patch[itemName] = state[itemName];
+            patch[itemName] = savedState[itemName];
             store.$patch(patch);
         }
     }
