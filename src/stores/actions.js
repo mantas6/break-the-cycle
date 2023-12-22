@@ -7,12 +7,7 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
     const active = reactive({});
 
     const currentDuration = computed(() => {
-        let total = 0;
-
-        for (const [ actionName, actionCount ] of Object.entries(active)) {
-            total += actionCount * allActive.value[actionName].duration;
-        }
-        return total;
+        return Object.values(active).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
     });
 
     const maxDuration = computed(() => 24);
@@ -42,7 +37,26 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
     });
 
     function canIncrease(name) {
-        return currentDuration.value + all.value[name].duration <= maxDuration.value;
+        const nextDuration = getNextDuration(name);
+
+        if (nextDuration === undefined) {
+            return false;
+        }
+
+        const currentActionDuration = active[name] || 0;
+
+        return currentDuration.value - currentActionDuration + nextDuration <= maxDuration.value;
+    }
+
+    function getNextDuration(name) {
+        if (active[name] === undefined) {
+            return all.value[name].duration[0];
+        } else {
+            const duration = all.value[name].duration;
+            const idx = duration.indexOf(active[name]);
+
+            return duration[idx + 1];
+        }
     }
 
     function increase(name) {
@@ -51,16 +65,28 @@ export const useActionsStore = defineStore(storeName(import.meta.url), () => {
         }
 
         if (active[name] === undefined) {
-            active[name] = 1;
+            active[name] = all.value[name].duration[0];
         } else {
-            active[name]++;
+            const duration = all.value[name].duration;
+            const idx = duration.indexOf(active[name])
+
+            const nextDuration = duration[idx + 1]
+            if (nextDuration !== undefined) {
+                active[name] = nextDuration;
+            }
         }
     }
 
     function decrease(name) {
         if (active[name] !== undefined) {
-            active[name]--;
-            if (active[name] <= 0) {
+            const duration = all.value[name].duration;
+            const idx = duration.indexOf(active[name])
+
+            const nextDuration = duration[idx - 1]
+
+            if (nextDuration !== undefined) {
+                active[name] = nextDuration;
+            } else {
                 delete active[name];
             }
         }

@@ -9,7 +9,7 @@
 
   const isActive = computed(() => actions.active[props.name] !== undefined);
   const canBeIncreased = computed(() => actions.canIncrease(props.name));
-  const currentDuration = computed(() => actions.active[props.name] * actions.allActive[props.name].duration)
+  const currentDuration = computed(() => actions.active[props.name])
 
   const productivityClasses = computed(() => ({
     'text-yellow-300': isActive.value && props.meta.eff < 1 && props.meta.eff > 0,

@@ -4,10 +4,11 @@ import { useNutritionStore } from "@/stores/stats/nutrition";
 import {defineStore} from "pinia";
 import { storeName } from "@/stores";
 import { Balance } from "@/stats/index.js";
+import {range} from "lodash/util";
 
 export default defineStore(storeName(import.meta.url), () => {
     const title = ref('Fast Food');
-    const duration = computed(() => 0.5);
+    const duration = computed(() => range(0.5, 25, 0.5));
 
     const meta = reactive({})
 

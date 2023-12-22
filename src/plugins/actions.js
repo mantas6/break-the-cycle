@@ -1,8 +1,9 @@
 import { ref } from "vue";
+import {range} from "lodash/util";
 
 export const actionStores = ref(new Map);
 
-const defaultDuration = ref(1);
+const defaultDuration = ref(range(1, 25));
 
 export function ActionsPlugin({ store }) {
     if (store.executeAction) {
