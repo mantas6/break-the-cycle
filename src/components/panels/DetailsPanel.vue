@@ -17,7 +17,7 @@ const nutrition = useNutritionStore();
 
 <template>
   <PanelBlock>
-    <div class="grid grid-cols-2 gap-3">
+    <div class="grid gap-3">
       <div>
         <StatValue title="Age" :now="passport.age" />
         <StatValue title="Income" format="currency" :value-class="{ 'text-red-300': wallet.balance.gain < wallet.balance.loss }" :now="wallet.balance.gain" />
