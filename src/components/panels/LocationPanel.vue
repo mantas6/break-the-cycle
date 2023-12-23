@@ -1,24 +1,31 @@
 <script setup>
-import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/vue/24/outline'
+import { computed } from "vue";
+import { uniq } from "lodash/array";
+import { map } from "lodash/collection";
+import { kebabCase } from "lodash/string";
+
+import { Cog6ToothIcon } from '@heroicons/vue/24/outline'
 import { RouterLink } from "vue-router";
 import PanelBlock from "@/components/Panels/PanelBlock.vue";
-import {useTimeStore} from "@/stores/time.js";
+import { useTimeStore } from "@/stores/time";
+import { useActionsStore } from "@/stores/actions";
 
 const time = useTimeStore();
+const actions = useActionsStore();
+
+const categories = computed(() => uniq(map(actions.all, 'category')));
 </script>
 
 <template>
   <PanelBlock class="flex justify-between">
     <div class="flex gap-3">
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/settings">Settings</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
+      <template v-for="category in categories" :key="category">
+        <RouterLink :to="`/${kebabCase(category)}`">{{ category }}</RouterLink>
+      </template>
     </div>
     <div class="flex gap-2 items-start">
-      <button @click="time.pause = !time.pause">{{ time.pause ? 'Unpause' : 'Pause' }}</button>
-      <button @click="time.clockInterval += 50"><ChevronDoubleLeftIcon class="w-6" /></button>
-      <span>{{ time.clockInterval }}ms</span>
-      <button @click="time.clockInterval -= 50"><ChevronDoubleRightIcon class="w-6" /></button>
+      <RouterLink to="/settings"><Cog6ToothIcon class="w-6" /></RouterLink>
     </div>
   </PanelBlock>
 </template>
