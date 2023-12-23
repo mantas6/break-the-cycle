@@ -14,11 +14,11 @@ const options = {
     category: 'Food',
 };
 
-export default defineActionStore(options, ({ meta }) => {
+export default defineActionStore(options, ({ eff }) => {
     const durations = interval(0.5);
 
     function executeAction(count) {
-        executeBasicFood(meta, count);
+        executeBasicFood({ eff }, count);
     }
 
     return {

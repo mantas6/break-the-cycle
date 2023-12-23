@@ -11,7 +11,7 @@ const options = {
     category: 'Food',
 };
 
-export default defineActionStore(options, ({ meta }) => {
+export default defineActionStore(options, ({ eff }) => {
     function executeAction(count) {
         const energyGain = 0.25 * count;
 
@@ -19,13 +19,10 @@ export default defineActionStore(options, ({ meta }) => {
 
         // TODO: add energy cost
         const neededGain = Balance.reserve(nutrition.energy, energyGain);
-        const eff = neededGain / energyGain;
+        eff.value = neededGain / energyGain;
 
-        if (eff > 0) {
-            meta.eff = eff;
-            Balance.affect(nutrition.energy, energyGain * eff)
-        } else {
-            meta.eff = 0;
+        if (eff.value > 0) {
+            Balance.affect(nutrition.energy, energyGain * eff.value)
         }
     }
 

@@ -56,7 +56,7 @@ it('initializes correctly using wrapper', () => {
     expect(store.title).toBe(options.title)
     expect(store.subcategory).toBe(options.subcategory)
     expect(store.category).toBe(options.category)
-    expect(store.meta).toBeDefined()
+    expect(store.eff).toBeDefined()
 })
 
 it('correctly controls durations', () => {

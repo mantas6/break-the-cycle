@@ -2,7 +2,7 @@ import {useNutritionStore} from "@/stores/stats/nutrition.js";
 import {Balance} from "@/stats/index.js";
 import {useWalletStore} from "@/stores/stats/wallet.js";
 
-export function executeBasicFood(meta, count, options = { energyGain: 1, baseCost: 1 }) {
+export function executeBasicFood({ eff }, count, options = { energyGain: 1, baseCost: 1 }) {
     const energyGain = options.energyGain * count;
     const nutrition = useNutritionStore();
     const neededGain = Balance.reserve(nutrition.energy, energyGain)
@@ -16,11 +16,10 @@ export function executeBasicFood(meta, count, options = { energyGain: 1, baseCos
 
         const costEff = cost / actualCost;
 
-        const eff = Math.min(demandEff, costEff);
-        meta.eff = eff;
+        eff.value = Math.min(demandEff, costEff);
         wallet.transaction(cost)
-        Balance.affect(nutrition.energy, energyGain * eff)
+        Balance.affect(nutrition.energy, energyGain * eff.value)
     } else {
-        meta.eff = 0;
+        eff.value = 0;
     }
 }

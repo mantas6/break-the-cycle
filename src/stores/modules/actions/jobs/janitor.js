@@ -12,7 +12,7 @@ const options = {
     category: 'Jobs',
 };
 
-export default defineActionStore(options, ({ meta }) => {
+export default defineActionStore(options, ({ eff }) => {
     const durations = computed(() => [4, 8, 12]);
 
     function executeAction(count) {
@@ -20,17 +20,12 @@ export default defineActionStore(options, ({ meta }) => {
 
         const energyCost = 1 * count;
         const actualCost = Balance.reserve(physical.energy, -energyCost) * Balance.actualCenter(physical.energy, 0.5);
-        const eff = Math.abs(actualCost) / energyCost;
-
-        // Should move this to a computed property so that it can be calculated even when the action is not being done
-        meta.eff = eff;
-
-        // console.log({ actualCost, eff })
+        eff.value = Math.abs(actualCost) / energyCost;
 
         Balance.affect(physical.energy, actualCost);
 
         const wallet = useWalletStore();
-        wallet.transaction(1 * count * eff);
+        wallet.transaction(1 * count * eff.value);
     }
 
     return {

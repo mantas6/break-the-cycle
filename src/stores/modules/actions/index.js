@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import {storeName} from "@/stores/index.js";
-import {computed, reactive} from "vue";
+import {computed, ref} from "vue";
 import {range} from "lodash/util.js";
 
 export function defineActionStore(opts, storeSetup) {
@@ -12,7 +12,7 @@ export function defineActionStore(opts, storeSetup) {
         const category = computed(() => opts.category);
 
         const durations = computed(() => range(1, 25));
-        const meta = reactive({});
+        const eff = ref(0);
 
         const defaults = {
             title,
@@ -20,7 +20,7 @@ export function defineActionStore(opts, storeSetup) {
             category,
 
             durations,
-            meta,
+            eff,
         };
 
         const setup = storeSetup(defaults);

@@ -7,12 +7,12 @@ const options = {
     category: 'Jobs',
 };
 
-export default defineActionStore(options, ({ meta }) => {
+export default defineActionStore(options, ({ eff }) => {
     function executeAction(count) {
         const wallet = useWalletStore();
 
         wallet.transaction(0.5 * count);
-        meta.eff = 1;
+        eff.value = 1;
     }
 
     return {

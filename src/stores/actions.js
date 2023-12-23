@@ -21,7 +21,7 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
             actions[actionName] = {
                 title: actionStore.title,
                 durations: actionStore.durations,
-                meta: actionStore.meta,
+                eff: actionStore.eff,
             };
         }
 
