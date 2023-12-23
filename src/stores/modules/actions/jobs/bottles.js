@@ -9,17 +9,17 @@ const options = {
 };
 
 export default defineActionStore(options, ({ eff }) => {
-    const walletBalance = computed(() => 0.5);
+    const baseBalance = computed(() => 0.5);
 
     function executeAction(count) {
         const wallet = useWalletStore();
 
-        wallet.transaction(walletBalance.value * count);
+        wallet.transaction(baseBalance.value * count);
         eff.value = 1;
     }
 
     return {
-        walletBalance,
+        baseBalance,
 
         executeAction,
     };

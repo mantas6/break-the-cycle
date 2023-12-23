@@ -4,7 +4,7 @@
   import { computed } from "vue";
   import NumberFormat from "@/components/NumberFormat.vue";
 
-  const props = defineProps(['title', 'name', 'eff', 'walletBalance']);
+  const props = defineProps(['title', 'name', 'eff', 'baseBalance']);
   const actions = useActionsStore();
 
   const isActive = computed(() => actions.active[props.name] !== undefined);
@@ -25,8 +25,8 @@
         <span>{{ title }}</span>
       </div>
       <div class="flex gap-3 items-center">
-        <span v-if="walletBalance" class="text-sm">
-          <NumberFormat format="currency" :value="walletBalance" />
+        <span v-if="baseBalance" class="text-sm">
+          <NumberFormat format="currency" :value="baseBalance" />
           <span class="text-xs"> / h</span>
         </span>
         <span class="text-xs" :class="productivityClasses">Eff <NumberFormat format="percent" :value="eff" /></span>

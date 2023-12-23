@@ -12,7 +12,7 @@ export function executeBasicFood({ eff, count }, options) {
     if (demandEff > 0) {
         const wallet = useWalletStore();
 
-        const actualCost = unref(options.walletBalance) * count * demandEff;
+        const actualCost = unref(options.baseBalance) * count * demandEff;
         const cost = wallet.preTransaction(actualCost)
 
         const costEff = cost / actualCost;

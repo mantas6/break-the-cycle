@@ -15,7 +15,7 @@ const options = {
 export default defineActionStore(options, ({ eff }) => {
     const durations = computed(() => [4, 8, 12]);
 
-    const walletBalance = computed(() => 1);
+    const baseBalance = computed(() => 1);
 
     function executeAction(count) {
         const physical = usePhysicalStore();
@@ -27,13 +27,13 @@ export default defineActionStore(options, ({ eff }) => {
         Balance.affect(physical.energy, actualCost);
 
         const wallet = useWalletStore();
-        wallet.transaction(walletBalance.value * count * eff.value);
+        wallet.transaction(baseBalance.value * count * eff.value);
     }
 
     return {
         durations,
 
-        walletBalance,
+        baseBalance,
 
         executeAction,
     };
