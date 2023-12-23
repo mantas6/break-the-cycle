@@ -4,7 +4,7 @@
   import { computed } from "vue";
   import NumberFormat from "@/components/NumberFormat.vue";
 
-  const props =   defineProps({
+  const props = defineProps({
     title: String,
     name: String,
     eff: Number,
@@ -24,7 +24,7 @@
 </script>
 
 <template>
-  <div class="flex p-3 gap-3 justify-between">
+  <div class="flex p-3 gap-3 justify-between border-dotted border border-zinc-400">
     <div class="flex flex-col cursor-pointer" @click="actions.increase(name)">
       <div class="flex gap-3">
         <span class="w-10">{{ isActive ? currentDuration : '0' }}h</span>
@@ -38,7 +38,7 @@
         <span class="text-xs" :class="productivityClasses">Eff <NumberFormat format="percent" :value="eff" /></span>
       </div>
     </div>
-    <div class="flex gap-1">
+    <div class="flex gap-1 border-dotted">
       <button @click="actions.increase(name)" :class="{ 'text-zinc-500': !canBeIncreased }" :disabled="!canBeIncreased"><PlusCircleIcon class="w-7" /></button>
       <button @click="actions.decrease(name)" :class="{ 'text-zinc-500': !isActive }" :disabled="!isActive"><MinusCircleIcon class="w-7" /></button>
       <button @click="actions.remove(name)" :class="{ 'text-zinc-500': !isActive }" :disabled="!isActive"><BackspaceIcon class="w-7" /></button>
