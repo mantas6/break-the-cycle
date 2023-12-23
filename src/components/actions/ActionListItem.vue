@@ -4,7 +4,13 @@
   import { computed } from "vue";
   import NumberFormat from "@/components/NumberFormat.vue";
 
-  const props = defineProps(['title', 'name', 'eff', 'baseBalance']);
+  const props =   defineProps({
+    title: String,
+    name: String,
+    eff: Number,
+    baseBalance: Number,
+  });
+
   const actions = useActionsStore();
 
   const isActive = computed(() => actions.active[props.name] !== undefined);
