@@ -4,8 +4,10 @@ import { storeName } from "@/stores";
 import { useNutritionStore } from "@/stores/stats/nutrition";
 import { Balance } from "@/stats";
 
-export default defineStore(storeName(import.meta.url), () => {
-    const title = computed(() => 'Discarded Food');
+const actionTitle = 'Discarded Food';
+
+export default defineStore(storeName(actionTitle), () => {
+    const title = computed(() => actionTitle);
 
     const meta = reactive({})
 

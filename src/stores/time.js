@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { storeName } from "@/stores";
 import { onClock } from "@/routines/clock.js";
 
-export const useTimeStore = defineStore(storeName(import.meta.url), () => {
+export const useTimeStore = defineStore(storeName('time'), () => {
     const startDate = ref(new Date().toISOString())
     const daysAfter = ref(0)
 

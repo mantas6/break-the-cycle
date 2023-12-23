@@ -4,7 +4,7 @@ import { clamp } from "lodash/number";
 import { storeName } from "@/stores";
 import { Value } from "@/stats";
 
-export const useWalletStore = defineStore(storeName(import.meta.url), () => {
+export const useWalletStore = defineStore(storeName('wallet'), () => {
     const balance = Value.create(0);
 
     function preTransaction(net) {

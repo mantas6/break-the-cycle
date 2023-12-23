@@ -4,7 +4,7 @@ import {useTimeStore} from "@/stores/time";
 import dayjs from "dayjs";
 import {storeName} from "@/stores";
 
-export const usePassportStore = defineStore(storeName(import.meta.url), () => {
+export const usePassportStore = defineStore(storeName('passport'), () => {
     const time = useTimeStore();
     const birthday = ref(
         dayjs(time.date).subtract(18, 'years')

@@ -5,8 +5,10 @@ import { storeName } from "@/stores/index.js";
 import { usePhysicalStore } from "@/stores/stats/physical.js";
 import {Balance} from "@/stats/index.js";
 
-export default defineStore(storeName(import.meta.url), () => {
-    const title = computed(() => 'Janitor');
+const actionTitle = 'Janitor';
+
+export default defineStore(storeName(actionTitle), () => {
+    const title = computed(() => actionTitle);
     const meta = reactive({});
     const durations = computed(() => [4, 8, 12]);
 

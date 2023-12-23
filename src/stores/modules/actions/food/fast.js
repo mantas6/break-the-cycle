@@ -7,8 +7,10 @@ import { Balance } from "@/stats/index.js";
 import {interval} from "@/helpers/actions";
 import {executeBasicFood} from "@/helpers/actions/food.js";
 
-export default defineStore(storeName(import.meta.url), () => {
-    const title = computed(() => 'Fast Food');
+const actionTitle = 'Fast Food';
+
+export default defineStore(storeName(actionTitle), () => {
+    const title = computed(() => actionTitle);
     const durations = interval(0.5);
 
     const meta = reactive({})

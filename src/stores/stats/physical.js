@@ -5,7 +5,7 @@ import { Balance } from "@/stats";
 import {useNutritionStore} from "@/stores/stats/nutrition.js";
 import {onClock} from "@/routines/clock.js";
 
-export const usePhysicalStore = defineStore(storeName(import.meta.url), () => {
+export const usePhysicalStore = defineStore(storeName('physical'), () => {
     const energy = Balance.create(-1000, 1000);
 
     onClock(() => {

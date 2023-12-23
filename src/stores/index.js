@@ -1,5 +1,5 @@
-export function storeName(url) {
-    return new URL(url).pathname
-        .replace('/src/stores/', '')
-        .replace('.js', '');
+import { kebabCase } from "lodash/string";
+
+export function storeName(name) {
+    return kebabCase(name);
 }

@@ -4,7 +4,7 @@ import { actionStores } from "@/plugins/actions.js";
 import { storeName } from "@/stores";
 import { onClock } from "@/routines/clock";
 
-export const useActionsStore = defineStore(storeName(import.meta.url), () => {
+export const useActionsStore = defineStore(storeName('actions'), () => {
     const active = reactive({});
 
     const currentDuration = computed(() => {
