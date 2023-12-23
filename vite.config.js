@@ -4,8 +4,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  base: mode === 'production' ? '/break-the-cycle/' : undefined,
+export default defineConfig({
+  // base: mode === 'production' ? '/break-the-cycle/' : undefined,
   server: {
     host: true,
   },
@@ -17,4 +17,4 @@ export default defineConfig(({ mode }) => ({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   }
-}))
+})
