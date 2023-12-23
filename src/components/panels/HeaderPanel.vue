@@ -1,14 +1,15 @@
 <script setup>
-import { useTimeStore } from "@/stores/time.js";
+import { useWalletStore } from "@/stores/stats/wallet";
 import PanelBlock from "@/components/Panels/PanelBlock.vue";
 import Logo from "@/components/Logo.vue";
+import StatWalletBalance from "@/components/StatWalletBalance.vue";
 
-const time = useTimeStore();
+const wallet = useWalletStore();
 </script>
 
 <template>
-  <PanelBlock class="flex justify-between">
+  <PanelBlock class="grid grid-cols-2">
     <Logo />
-    <div class="w-24 text-center">{{ time.date }}</div>
+    <StatWalletBalance v-bind="wallet.balance" />
   </PanelBlock>
 </template>
