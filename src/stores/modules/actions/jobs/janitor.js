@@ -27,7 +27,7 @@ export default defineActionStore(options, ({ eff }) => {
         Balance.affect(physical.energy, actualCost);
 
         const wallet = useWalletStore();
-        wallet.transaction(walletBalance * count * eff.value);
+        wallet.transaction(walletBalance.value * count * eff.value);
     }
 
     return {

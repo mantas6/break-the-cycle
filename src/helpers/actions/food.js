@@ -4,7 +4,7 @@ import {useWalletStore} from "@/stores/stats/wallet.js";
 import {unref} from "vue";
 
 export function executeBasicFood({ eff, count }, options) {
-    const energyGain = options.energyGain * count;
+    const energyGain = unref(options.energyGain) * count;
     const nutrition = useNutritionStore();
     const neededGain = Balance.reserve(nutrition.energy, energyGain)
     const demandEff = neededGain / energyGain;

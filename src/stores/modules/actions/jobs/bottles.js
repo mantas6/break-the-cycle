@@ -14,7 +14,7 @@ export default defineActionStore(options, ({ eff }) => {
     function executeAction(count) {
         const wallet = useWalletStore();
 
-        wallet.transaction(walletBalance * count);
+        wallet.transaction(walletBalance.value * count);
         eff.value = 1;
     }
 
