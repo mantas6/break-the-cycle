@@ -3,14 +3,15 @@ import {defineStore} from "pinia";
 import { storeName } from "@/stores";
 import { useNutritionStore } from "@/stores/stats/nutrition";
 import { Balance } from "@/stats";
+import {defineActionStore} from "@/stores/modules/actions/index.js";
 
-const actionTitle = 'Discarded Food';
+const options = {
+    title: 'Discarded Food',
+    subcategory: 'Homeless',
+    category: 'Food',
+};
 
-export default defineStore(storeName(actionTitle), () => {
-    const title = computed(() => actionTitle);
-
-    const meta = reactive({})
-
+export default defineActionStore(options, ({ meta }) => {
     function executeAction(count) {
         const energyGain = 0.25 * count;
 
@@ -29,10 +30,6 @@ export default defineStore(storeName(actionTitle), () => {
     }
 
     return {
-        title,
-
-        meta,
-
         executeAction,
     };
 })

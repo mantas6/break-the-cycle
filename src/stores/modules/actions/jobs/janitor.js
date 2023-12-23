@@ -4,14 +4,15 @@ import { defineStore } from "pinia";
 import { storeName } from "@/stores/index.js";
 import { usePhysicalStore } from "@/stores/stats/physical.js";
 import {Balance} from "@/stats/index.js";
+import {defineActionStore} from "@/stores/modules/actions/index.js";
 
-const actionTitle = 'Janitor';
-const actionCategory = 'Jobs';
-const actionSubCategory = 'Education-less';
+const options = {
+    title: 'Janitor',
+    subcategory: 'Education-less',
+    category: 'Jobs',
+};
 
-export default defineStore(storeName(actionTitle), () => {
-    const title = computed(() => actionTitle);
-    const meta = reactive({});
+export default defineActionStore(options, ({ meta }) => {
     const durations = computed(() => [4, 8, 12]);
 
     function executeAction(count) {
@@ -33,10 +34,7 @@ export default defineStore(storeName(actionTitle), () => {
     }
 
     return {
-        title,
         durations,
-
-        meta,
 
         executeAction,
     };
