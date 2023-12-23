@@ -16,13 +16,15 @@ const options = {
 
 export default defineActionStore(options, ({ eff }) => {
     const durations = interval(0.5);
+    const walletBalance = computed(() => -1);
 
     function executeAction(count) {
-        executeBasicFood({ eff }, count);
+        executeBasicFood({ eff, count }, { walletBalance, energyGain: 1 });
     }
 
     return {
         durations,
+        walletBalance,
 
         executeAction,
     };

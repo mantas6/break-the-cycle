@@ -1,8 +1,9 @@
 import {useNutritionStore} from "@/stores/stats/nutrition.js";
 import {Balance} from "@/stats/index.js";
 import {useWalletStore} from "@/stores/stats/wallet.js";
+import {unref} from "vue";
 
-export function executeBasicFood({ eff }, count, options = { energyGain: 1, baseCost: 1 }) {
+export function executeBasicFood({ eff, count }, options) {
     const energyGain = options.energyGain * count;
     const nutrition = useNutritionStore();
     const neededGain = Balance.reserve(nutrition.energy, energyGain)
@@ -11,7 +12,7 @@ export function executeBasicFood({ eff }, count, options = { energyGain: 1, base
     if (demandEff > 0) {
         const wallet = useWalletStore();
 
-        const actualCost = -options.baseCost * count * demandEff;
+        const actualCost = unref(options.walletBalance) * count * demandEff;
         const cost = wallet.preTransaction(actualCost)
 
         const costEff = cost / actualCost;

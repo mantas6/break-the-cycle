@@ -4,7 +4,7 @@
   import { computed } from "vue";
   import NumberFormat from "@/components/NumberFormat.vue";
 
-  const props = defineProps(['title', 'name', 'eff']);
+  const props = defineProps(['title', 'name', 'eff', 'walletBalance']);
   const actions = useActionsStore();
 
   const isActive = computed(() => actions.active[props.name] !== undefined);
@@ -24,7 +24,13 @@
         <span class="w-10">{{ isActive ? currentDuration : '0' }}h</span>
         <span>{{ title }}</span>
       </div>
-      <div class="text-xs" :class="productivityClasses">Productivity <NumberFormat format="percent" :value="eff" /></div>
+      <div class="flex gap-3 items-center">
+        <span v-if="walletBalance" class="text-sm">
+          <NumberFormat format="currency" :value="walletBalance" />
+          <span class="text-xs"> / h</span>
+        </span>
+        <span class="text-xs" :class="productivityClasses">Eff <NumberFormat format="percent" :value="eff" /></span>
+      </div>
     </div>
     <div class="flex gap-1">
       <button @click="actions.increase(name)" :class="{ 'text-zinc-500': !canBeIncreased }" :disabled="!canBeIncreased"><PlusCircleIcon class="w-7" /></button>
