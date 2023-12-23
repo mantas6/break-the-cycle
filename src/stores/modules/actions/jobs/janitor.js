@@ -6,6 +6,8 @@ import { usePhysicalStore } from "@/stores/stats/physical.js";
 import {Balance} from "@/stats/index.js";
 
 const actionTitle = 'Janitor';
+const actionCategory = 'Jobs';
+const actionSubCategory = 'Education-less';
 
 export default defineStore(storeName(actionTitle), () => {
     const title = computed(() => actionTitle);

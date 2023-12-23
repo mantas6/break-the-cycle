@@ -4,9 +4,15 @@ import {useActionsStore} from "@/stores/actions.js";
 import {actionStores} from "@/plugins/actions.js";
 import {computed, ref} from "vue";
 import {clockHandlers, runClock} from "@/routines/clock.js";
+import {defineActionStore} from "@/stores/modules/actions";
 
-const useTestStore = defineStore('test-action', () => {
-    const title = computed(() => 'store');
+const options = {
+    title: 'Test action',
+    subcategory: 'Test subcategory',
+    category: 'Category',
+};
+
+const useTestStore = defineActionStore(options, () => {
     const durations = computed(() => [4, 8, 12]);
 
     const executions = ref(0);
@@ -16,7 +22,6 @@ const useTestStore = defineStore('test-action', () => {
     }
 
     return {
-        title,
         durations,
 
         executions,
@@ -44,6 +49,14 @@ beforeEach(() => {
 
 afterEach(() => {
     resetGlobals();
+})
+
+it('initializes correctly using wrapper', () => {
+    const store = useTestStore();
+    expect(store.title).toBe(options.title)
+    expect(store.subcategory).toBe(options.subcategory)
+    expect(store.category).toBe(options.category)
+    expect(store.meta).toBeDefined()
 })
 
 it('correctly controls durations', () => {

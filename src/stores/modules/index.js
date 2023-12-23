@@ -1,7 +1,9 @@
 export function initializeDynamicModules() {
     const modules = import.meta.glob('./**/*.js', { eager: true });
 
-    for (const module of Object.values(modules)) {
-        module.default();
+    for (const [ name, module ] of Object.entries(modules)) {
+        if (module.default) {
+            module.default();
+        }
     }
 }
