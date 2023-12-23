@@ -43,13 +43,13 @@ const diff = computed(() => props.gain - props.loss);
     </div>
 
     <div class="w-full bg-gray-200 overflow-hidden relative h-4">
-      <div class="absolute w-1/6 h-2 bg-red-300 bottom-0"></div>
-      <div class="absolute w-1/6 h-2 bg-red-300 bottom-0 right-0"></div>
+      <div class="absolute w-1/6 h-4 bg-red-200 bottom-0"></div>
+      <div class="absolute w-1/6 h-4 bg-red-200 bottom-0 right-0"></div>
 
-      <div class="absolute w-full flex justify-center bottom-0"><div class="bg-green-300 h-2 w-1/4"></div></div>
+      <div class="absolute w-full flex justify-center bottom-0"><div class="bg-green-200 h-4 w-1/4"></div></div>
 
       <div class="absolute w-full flex justify-center">
-        <div class="border-dotted border-l border-zinc-600 h-2"></div>
+        <div class="border-dotted border-l border-zinc-600 h-4"></div>
       </div>
 
       <div class="absolute bg-red-500 h-4 w-1" :style="{ left: `calc(${left}% - 2px)` }"></div>
