@@ -37,7 +37,7 @@ const diff = computed(() => props.gain - props.loss);
       </div>
       <div><NumberFormat :value="diff" /></div>
     </div>
-    <div class="w-full bg-gray-200 overflow-hidden relative h-4">
+    <div class="w-full bg-zinc-200 overflow-hidden relative h-4">
       <div class="absolute h-4 bg-yellow-400 bottom-0" :style="{ width: width + '%' }"></div>
       <div class="absolute w-full flex justify-center">
         <div class="border-dotted border-l border-zinc-600 h-4"></div>

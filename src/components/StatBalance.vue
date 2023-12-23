@@ -42,7 +42,7 @@ const diff = computed(() => props.gain - props.loss);
       <div><NumberFormat :value="gain - loss" /></div>
     </div>
 
-    <div class="w-full bg-gray-200 overflow-hidden relative h-4">
+    <div class="w-full bg-zinc-200 overflow-hidden relative h-4">
       <div class="absolute w-1/6 h-4 bg-red-200 bottom-0"></div>
       <div class="absolute w-1/6 h-4 bg-red-200 bottom-0 right-0"></div>
 
