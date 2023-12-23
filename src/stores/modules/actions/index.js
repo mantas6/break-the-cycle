@@ -3,13 +3,13 @@ import {storeName} from "@/stores/index.js";
 import {computed, reactive} from "vue";
 import {range} from "lodash/util.js";
 
-export function defineActionStore(options, storeSetup) {
-    const id = options.title; // TODO: add cat and sub names
+export function defineActionStore(opts, storeSetup) {
+    const id = `${opts.category}.${opts.subcategory}.${opts.title}`;
 
     return defineStore(storeName(id), () => {
-        const title = computed(() => options.title);
-        const subcategory = computed(() => options.subcategory);
-        const category = computed(() => options.category);
+        const title = computed(() => opts.title);
+        const subcategory = computed(() => opts.subcategory);
+        const category = computed(() => opts.category);
 
         const durations = computed(() => range(1, 25));
         const meta = reactive({});

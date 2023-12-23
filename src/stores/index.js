@@ -1,4 +1,4 @@
-import { kebabCase } from "lodash/string";
+import { camelCase } from "lodash/string";
 
 const storeNames = [];
 
@@ -9,5 +9,5 @@ export function storeName(name) {
         storeNames.push(name);
     }
 
-    return kebabCase(name);
+    return name.split('.').map(i => camelCase(i)).join('.');
 }
