@@ -17,12 +17,13 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         const actions = {};
 
         for (const [ actionName, actionStore ] of actionStores.value.entries()) {
-            // TODO: dynamically fetch computed and state
-            actions[actionName] = {
-                title: actionStore.title,
-                durations: actionStore.durations,
-                eff: actionStore.eff,
-            };
+            const expose = {};
+
+            Object.keys(actionStore)
+                .filter(key => !key.startsWith('$') && !key.startsWith('_'))
+                .forEach(key => expose[key] = actionStore[key])
+
+            actions[actionName] = expose;
         }
 
         return actions;
