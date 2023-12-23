@@ -1,6 +1,6 @@
 <script setup>
   import { PlusCircleIcon, MinusCircleIcon , BackspaceIcon} from '@heroicons/vue/24/outline'
-  import { useActionsStore } from "@/stores/actions";
+  import { useActionsStore } from "@/stores/actions.js";
   import { computed } from "vue";
   import NumberFormat from "@/components/NumberFormat.vue";
 

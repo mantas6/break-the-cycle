@@ -1,13 +1,13 @@
 <script setup>
 import {useActionsStore} from "@/stores/actions.js";
-import ActionItem from "@/components/ActionItem.vue";
+import ActionList from "@/components/actions/ActionList.vue";
 
 const actions = useActionsStore();
 
 </script>
 
 <template>
-  <div class="grid grid-cols-2">
-    <ActionItem v-for="(action, actionName) in actions.all" :name="actionName" v-bind="action"/>
+  <div>
+    <ActionList :items="actions.all" grid />
   </div>
 </template>
