@@ -98,15 +98,18 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
     }
 
     onClock(() => {
+        // Active action processing
         for (const [ actionName, actionCount ] of Object.entries(active) ) {
             const action = actionStores.value.get(actionName);
             action.executeAction(actionCount);
         }
 
+        // Action unlocking
         for (const actionStore of actionStores.value.values()) {
             if (!actionStore.unlocked && actionStore.beforeUnlock) {
                 const nowUnlocked = actionStore.beforeUnlock();
 
+                // Ref might be mistakenly returned, so checking strictly
                 if (nowUnlocked === true) {
                     actionStore.unlocked = true;
                 }
