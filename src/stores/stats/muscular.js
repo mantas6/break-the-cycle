@@ -4,10 +4,13 @@ import { Balance } from "@/stats";
 import {onClock} from "@/routines/clock.js";
 import {usePhysicalStore} from "@/stores/stats/physical.js";
 import {usePassportStore} from "@/stores/stats/passport.js";
+import {computed} from "vue";
 
 export const useMuscularStore = defineStore(storeName('muscular'), () => {
     const health = Balance.create(0, 1000, 1000);
     const healthLifetime = Balance.create(0, 1000, 1000);
+
+    const overallHealth = computed(() => Balance.percentage(health) * Balance.percentage(healthLifetime));
 
     const physical = usePhysicalStore();
     const passport = usePassportStore();
@@ -29,5 +32,7 @@ export const useMuscularStore = defineStore(storeName('muscular'), () => {
     return {
         health,
         healthLifetime,
+
+        overallHealth,
     };
 })
