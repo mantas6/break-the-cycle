@@ -5,7 +5,6 @@
       <span>the</span>
       <span>Cycle</span>
     </div>
-    <div class="text-xs text-zinc-300">Will you break the cycle?</div>
   </div>
 </template>
 <script setup>
