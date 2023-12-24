@@ -1,5 +1,6 @@
 <script setup>
-  import { PlusCircleIcon, MinusCircleIcon , BackspaceIcon} from '@heroicons/vue/24/outline'
+  import { PlusCircleIcon, MinusCircleIcon , BackspaceIcon } from '@heroicons/vue/24/outline'
+  import { ChartBarIcon } from '@heroicons/vue/16/solid'
   import { useActionsStore } from "@/stores/actions.js";
   import { computed } from "vue";
 
@@ -31,20 +32,23 @@
 
 <template>
   <div class="flex p-3 gap-3 justify-between border-dotted border border-zinc-400 hover:border-zinc-300" @mouseover="clearNotify">
-    <div class="flex flex-col cursor-pointer" @click="actions.increase(name)">
+    <div class="flex flex-col cursor-pointer text-sm" @click="actions.increase(name)">
       <div class="flex gap-3">
         <span class="w-10">{{ isActive ? currentDuration : '0' }}h</span>
         <div>
-          <span>{{ title }}</span>
+          <span class="font-medium">{{ title }}</span>
           <span v-if="notify" class="text-red-300">*</span>
         </div>
       </div>
       <div class="flex gap-3 items-center">
-        <span v-if="baseBalance" class="text-sm">
+        <span v-if="baseBalance" class="text-xs">
           <span v-format:currency="baseBalance"></span>
-          <span class="text-xs"> / h</span>
+          <span> / h</span>
         </span>
-        <span v-if="isActive" class="text-xs" :class="productivityClasses">Eff <span v-format:percent="eff"></span></span>
+        <span v-if="isActive" class="text-xs flex gap-1" :class="productivityClasses">
+          <ChartBarIcon class="w-4" />
+          <span v-format:percent="eff"></span>
+        </span>
       </div>
     </div>
     <div class="flex gap-1 border-dotted">
