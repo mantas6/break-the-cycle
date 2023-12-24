@@ -1,9 +1,6 @@
-import {computed, reactive} from 'vue'
-import {defineStore} from "pinia";
-import { storeName } from "@/stores";
 import { useNutritionStore } from "@/stores/stats/nutrition";
 import { Balance } from "@/stats";
-import {defineActionStore} from "@/stores/modules/actions/index.js";
+import { defineActionStore } from "@/stores/modules/actions";
 
 const options = {
     title: 'Discarded Food',
@@ -26,7 +23,16 @@ export default defineActionStore(options, ({ eff }) => {
         }
     }
 
+    function beforeUnlock() {
+        const nutrition = useNutritionStore();
+
+        const nutritionPercent = Balance.percentage(nutrition.energy)
+
+        return nutritionPercent < 0.25;
+    }
+
     return {
         executeAction,
+        beforeUnlock,
     };
 })
