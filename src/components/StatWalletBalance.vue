@@ -1,6 +1,5 @@
 <script setup>
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
-import NumberFormat from "@/components/NumberFormat.vue";
 
 const props = defineProps({
   now: Number,
