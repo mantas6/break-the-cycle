@@ -1,9 +1,4 @@
-import {ref, computed, reactive} from 'vue'
-import { useWalletStore } from "@/stores/stats/wallet";
-import { defineStore } from "pinia";
-import { storeName } from "@/stores/index.js";
-import { usePhysicalStore } from "@/stores/stats/physical.js";
-import {Balance} from "@/stats/index.js";
+import {computed} from 'vue'
 import {defineActionStore} from "@/stores/modules/actions/index.js";
 import {useSocialStore} from "@/stores/stats/social.js";
 import {executeBasicJob} from "@/helpers/actions/job.js";
