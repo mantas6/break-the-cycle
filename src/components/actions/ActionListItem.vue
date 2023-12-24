@@ -2,7 +2,6 @@
   import { PlusCircleIcon, MinusCircleIcon , BackspaceIcon} from '@heroicons/vue/24/outline'
   import { useActionsStore } from "@/stores/actions.js";
   import { computed } from "vue";
-  import NumberFormat from "@/components/NumberFormat.vue";
 
   const props = defineProps({
     title: String,
@@ -42,10 +41,10 @@
       </div>
       <div class="flex gap-3 items-center">
         <span v-if="baseBalance" class="text-sm">
-          <NumberFormat format="currency" :value="baseBalance" />
+          <span v-format:currency="baseBalance"></span>
           <span class="text-xs"> / h</span>
         </span>
-        <span v-if="isActive" class="text-xs" :class="productivityClasses">Eff <NumberFormat format="percent" :value="eff" /></span>
+        <span v-if="isActive" class="text-xs" :class="productivityClasses">Eff <span v-format:percent="eff"></span></span>
       </div>
     </div>
     <div class="flex gap-1 border-dotted">

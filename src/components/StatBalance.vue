@@ -1,6 +1,5 @@
 <script setup>
 import {computed} from "vue";
-import NumberFormat from "@/components/NumberFormat.vue";
 import { ChevronDoubleUpIcon, ChevronUpIcon, ChevronDoubleDownIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps([
@@ -39,7 +38,7 @@ const diff = computed(() => props.gain - props.loss);
           <ChevronDownIcon v-else class="w-4" />
         </span>
       </div>
-      <div><NumberFormat :value="gain - loss" /></div>
+      <div v-format="gain - loss"></div>
     </div>
 
     <div class="w-full bg-zinc-200 overflow-hidden relative h-4">
