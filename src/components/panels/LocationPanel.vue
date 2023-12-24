@@ -19,13 +19,13 @@ const categories = computed(() => uniq(map(actions.all, 'category')));
 <template>
   <PanelBlock class="flex justify-between">
     <div class="flex gap-3">
-      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/" v-button>Home</RouterLink>
       <template v-for="category in categories" :key="category">
-        <RouterLink :to="`/${kebabCase(category)}`">{{ category }}</RouterLink>
+        <RouterLink :to="`/${kebabCase(category)}`" v-button>{{ category }}</RouterLink>
       </template>
     </div>
     <div class="flex gap-2 items-start">
-      <RouterLink to="/settings"><Cog6ToothIcon class="w-6" /></RouterLink>
+      <RouterLink to="/settings" v-button><Cog6ToothIcon class="w-6" /></RouterLink>
     </div>
   </PanelBlock>
 </template>
