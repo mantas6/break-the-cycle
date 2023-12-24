@@ -19,7 +19,7 @@ const muscular = useMuscularStore()
 
 <template>
   <PanelBlock>
-    <div class="grid gap-3">
+    <div class="grid gap-3 text-sm">
       <div>
         <StatValue title="Age" :now="passport.age" />
       </div>
@@ -40,8 +40,11 @@ const muscular = useMuscularStore()
           <div class="w-full">
             <StatValue title="Health" format="percent" :now="muscular.health.now / muscular.health.max" />
             <StatValue title="Health" :now="muscular.health.now" />
+            <StatValue title="Health Loss" class="text-red-200" :now="muscular.health.loss" />
+            <StatValue title="Health Gain" class="text-green-200" :now="muscular.health.gain" />
             <StatValue title="Health Lifetime" format="percent" :now="muscular.healthLifetime.now / muscular.healthLifetime.max" />
             <StatValue title="Health Lifetime" :now="muscular.healthLifetime.now" />
+            <StatValue title="Health Lifetime Loss" class="text-red-200" :now="muscular.healthLifetime.loss" />
           </div>
         </div>
       </div>
