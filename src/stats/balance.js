@@ -1,6 +1,7 @@
 import { reactive } from "vue";
 import {clamp} from "lodash/number";
 import { assertStat } from '.'
+import {percentageBetween} from "@/helpers/math";
 
 export function create(min = -1000, max = 1000, now, center) {
     if (center === undefined) {
@@ -65,14 +66,7 @@ export function actualCenter(stat, startPercent = 0) {
 }
 
 export function percentage(stat, lowerPercent = 0, upperPercent = 1) {
-    const normalizedBound = stat.max - stat.min;
-
-    const computedMin = stat.min + (lowerPercent * normalizedBound);
-    const computedMax = stat.max - ((1 - upperPercent) * normalizedBound)
-
-    const computedNormalized = computedMax - computedMin;
-
-    return clamp((stat.now - computedMin) / computedNormalized, 0, 1);
+    return percentageBetween(stat.now, lowerPercent, upperPercent, stat.min, stat.max);
 }
 
 function assert(stat) {
