@@ -33,7 +33,7 @@ export default defineActionStore(options, ({ eff }) => {
 
     function beforeUnlock() {
         const social = useSocialStore();
-        return social.construction.now >= 500;
+        return social.construction.now >= 250;
     }
 
     return {
