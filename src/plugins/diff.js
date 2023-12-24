@@ -4,9 +4,11 @@ export function DiffPlugin({ store }) {
     const items = [];
 
     for (const item of Object.values(store)) {
-        if (item.type !== undefined && item.gain !== undefined && item.loss !== undefined) {
-            items.push(item);
+        if (item !== undefined) {
+            if (item.type !== undefined && item.gain !== undefined && item.loss !== undefined) {
+                items.push(item);
 
+            }
         }
     }
 

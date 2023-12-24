@@ -14,6 +14,8 @@ export function defineActionStore(opts, storeSetup) {
         const durations = computed(() => range(1, 25));
         const eff = ref(0);
 
+        const unlocked = ref();
+
         const defaults = {
             title,
             subcategory,
@@ -21,6 +23,8 @@ export function defineActionStore(opts, storeSetup) {
 
             durations,
             eff,
+
+            unlocked,
         };
 
         const setup = storeSetup(defaults);

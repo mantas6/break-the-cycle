@@ -10,6 +10,7 @@ const options = {
 
 export default defineActionStore(options, ({ eff }) => {
     const baseBalance = computed(() => 0.5);
+    const unlocked = computed(() => true);
 
     function executeAction(count) {
         const wallet = useWalletStore();
@@ -20,6 +21,7 @@ export default defineActionStore(options, ({ eff }) => {
 
     return {
         baseBalance,
+        unlocked,
 
         executeAction,
     };

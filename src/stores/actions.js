@@ -17,6 +17,10 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         const actions = {};
 
         for (const [ actionName, actionStore ] of actionStores.value.entries()) {
+            if (!actionStore.unlocked) {
+                continue;
+            }
+
             const expose = {};
 
             Object.keys(actionStore)

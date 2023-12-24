@@ -14,6 +14,7 @@ const options = {
 
 const useTestStore = defineActionStore(options, () => {
     const durations = computed(() => [4, 8, 12]);
+    const unlocked = ref(true);
 
     const executions = ref(0);
 
@@ -23,6 +24,7 @@ const useTestStore = defineActionStore(options, () => {
 
     return {
         durations,
+        unlocked,
 
         executions,
 
@@ -44,7 +46,6 @@ beforeEach(() => {
 
     const action = useTestStore()
     actionStores.value.set(action.$id, action)
-
 })
 
 afterEach(() => {
