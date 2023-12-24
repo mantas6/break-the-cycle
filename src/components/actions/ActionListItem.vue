@@ -35,7 +35,7 @@
           <NumberFormat format="currency" :value="baseBalance" />
           <span class="text-xs"> / h</span>
         </span>
-        <span class="text-xs" :class="productivityClasses">Eff <NumberFormat format="percent" :value="eff" /></span>
+        <span v-if="isActive" class="text-xs" :class="productivityClasses">Eff <NumberFormat format="percent" :value="eff" /></span>
       </div>
     </div>
     <div class="flex gap-1 border-dotted">
