@@ -97,6 +97,11 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         delete active[name];
     }
 
+    function clearNotify(name) {
+        const action = actionStores.value.get(name);
+        action.notify = undefined;
+    }
+
     onClock(() => {
         // Active action processing
         for (const [ actionName, actionCount ] of Object.entries(active) ) {
@@ -112,6 +117,7 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
                 // Ref might be mistakenly returned, so checking strictly
                 if (nowUnlocked === true) {
                     actionStore.unlocked = true;
+                    actionStore.notify = true;
                 }
             }
         }
@@ -129,5 +135,6 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         increase,
         decrease,
         remove,
+        clearNotify,
     };
 })

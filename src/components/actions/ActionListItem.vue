@@ -9,6 +9,7 @@
     name: String,
     eff: Number,
     baseBalance: Number,
+    notify: Boolean,
   });
 
   const actions = useActionsStore();
@@ -21,14 +22,23 @@
     'text-yellow-300': isActive.value && props.eff < 1 && props.eff > 0,
     'text-red-300': isActive.value && !props.eff
   }));
+
+  function clearNotify() {
+    if (props.notify) {
+      actions.clearNotify(props.name);
+    }
+  }
 </script>
 
 <template>
-  <div class="flex p-3 gap-3 justify-between border-dotted border border-zinc-400">
+  <div class="flex p-3 gap-3 justify-between border-dotted border border-zinc-400" @mouseover="clearNotify">
     <div class="flex flex-col cursor-pointer" @click="actions.increase(name)">
       <div class="flex gap-3">
         <span class="w-10">{{ isActive ? currentDuration : '0' }}h</span>
-        <span>{{ title }}</span>
+        <div>
+          <span>{{ title }}</span>
+          <span v-if="notify" class="text-red-300">*</span>
+        </div>
       </div>
       <div class="flex gap-3 items-center">
         <span v-if="baseBalance" class="text-sm">

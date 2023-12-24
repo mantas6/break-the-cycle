@@ -48,9 +48,14 @@ it('unlocks actions correctly', () => {
 
     runClock();
     expect(actions.all).not.toHaveProperty(store.$id)
+    expect(store.notify).toBeUndefined()
 
     store.canBeUnlocked = true;
     runClock();
     expect(store.unlocked).toBe(true)
     expect(actions.all).toHaveProperty(store.$id)
+    expect(store.notify).toBe(true)
+
+    actions.clearNotify(store.$id)
+    expect(store.notify).toBeUndefined()
 })

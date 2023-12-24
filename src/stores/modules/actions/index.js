@@ -15,6 +15,7 @@ export function defineActionStore(opts, storeSetup) {
         const eff = ref(0);
 
         const unlocked = ref();
+        const notify = ref();
 
         const defaults = {
             title,
@@ -25,6 +26,7 @@ export function defineActionStore(opts, storeSetup) {
             eff,
 
             unlocked,
+            notify,
         };
 
         const setup = storeSetup(defaults);
