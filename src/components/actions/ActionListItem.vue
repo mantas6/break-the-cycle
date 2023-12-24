@@ -49,9 +49,9 @@
       </div>
     </div>
     <div class="flex gap-1 border-dotted">
-      <button @click="actions.increase(name)" :disabled="!canBeIncreased" v-button="!canBeIncreased"><PlusCircleIcon class="w-7" /></button>
-      <button @click="actions.decrease(name)" :disabled="!isActive" v-button="!isActive"><MinusCircleIcon class="w-7" /></button>
-      <button @click="actions.remove(name)" :disabled="!isActive" v-button="!isActive"><BackspaceIcon class="w-7" /></button>
+      <button @click="actions.increase(name)" :disabled="!canBeIncreased" v-hover="!canBeIncreased"><PlusCircleIcon class="w-7" /></button>
+      <button @click="actions.decrease(name)" :disabled="!isActive" v-hover="!isActive"><MinusCircleIcon class="w-7" /></button>
+      <button @click="actions.remove(name)" :disabled="!isActive" v-hover="!isActive"><BackspaceIcon class="w-7" /></button>
     </div>
   </div>
 </template>

@@ -1,4 +1,4 @@
-export const vButton = (el, { value }) => {
+export const vHover = (el, { value }) => {
     if (value) {
         el.classList.remove('hover:text-zinc-300', 'active:text-zinc-400')
         el.classList.add('text-zinc-500')
