@@ -59,6 +59,12 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         if (active[name] === undefined) {
             return all.value[name].durations[0];
         } else {
+            const action = all.value[name];
+
+            if (action === undefined) {
+                return false;
+            }
+
             const durations = all.value[name].durations;
             const idx = durations.indexOf(active[name]);
 
@@ -102,6 +108,12 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         action.notify = undefined;
     }
 
+    function $reset() {
+        for (const key of Object.keys(active)) {
+            delete active[key];
+        }
+    }
+
     onClock(() => {
         // Active action processing
         for (const [ actionName, actionCount ] of Object.entries(active) ) {
@@ -136,5 +148,7 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         decrease,
         remove,
         clearNotify,
+
+        $reset,
     };
 })
