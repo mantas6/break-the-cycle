@@ -31,7 +31,7 @@
 </script>
 
 <template>
-  <div class="flex p-3 gap-3 justify-between border-dotted border border-zinc-400" @mouseover="clearNotify">
+  <div class="flex p-3 gap-3 justify-between border-dotted border border-zinc-400 hover:border-zinc-300" @mouseover="clearNotify">
     <div class="flex flex-col cursor-pointer" @click="actions.increase(name)">
       <div class="flex gap-3">
         <span class="w-10">{{ isActive ? currentDuration : '0' }}h</span>
