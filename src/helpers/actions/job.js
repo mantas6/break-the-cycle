@@ -3,15 +3,15 @@ import {Balance} from "@/stats";
 import {useWalletStore} from "@/stores/stats/wallet";
 import {unref} from "vue";
 
-export function executeBasicJob({ eff, count }, opts) {
+export function executeBasicJob({ eff, count }, { energyCost, baseBalance, energyActualStart = 0.5 }) {
     const physical = usePhysicalStore();
 
-    const energyCost = unref(opts.energyCost) * count;
-    const actualCost = Balance.reserve(physical.energy, -energyCost) * Balance.actualCenter(physical.energy, 0.5);
-    eff.value = Math.abs(actualCost) / energyCost;
+    const energyCostTotal = unref(energyCost) * count;
+    const actualCost = Balance.reserve(physical.energy, -energyCostTotal) * Balance.actualCenter(physical.energy, energyActualStart);
+    eff.value = Math.abs(actualCost) / energyCostTotal;
 
     Balance.affect(physical.energy, actualCost);
 
     const wallet = useWalletStore();
-    wallet.transaction(unref(opts.baseBalance) * count * eff.value);
+    wallet.transaction(unref(baseBalance) * count * eff.value);
 }

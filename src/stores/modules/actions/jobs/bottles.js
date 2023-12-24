@@ -1,8 +1,8 @@
 import {defineActionStore} from "@/stores/modules/actions";
-import {useWalletStore} from "@/stores/stats/wallet";
 import {computed} from "vue";
+import {executeBasicJob} from "@/helpers/actions/job";
 import {useSocialStore} from "@/stores/stats/social";
-import {Value} from "@/stats";
+import {Value} from "@/stats/index.js";
 
 const options = {
     title: 'Collect Empty Bottles',
@@ -15,12 +15,10 @@ export default defineActionStore(options, ({ eff }) => {
     const unlocked = computed(() => true);
 
     function executeAction(count) {
-        const wallet = useWalletStore();
-        const social = useSocialStore();
+        executeBasicJob({ eff, count }, { baseBalance, energyCost: 0.5, energyActualStart: 0.75 })
 
-        Value.affect(social.construction, 1 * count);
-        wallet.transaction(baseBalance.value * count);
-        eff.value = 1;
+        const social = useSocialStore();
+        Value.affect(social.construction, 1 * count * eff.value);
     }
 
     return {
