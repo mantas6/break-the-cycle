@@ -7,7 +7,7 @@ defineProps(['title', 'now', 'format', 'valueClass']);
     <div class="text-zinc-300">{{ title }}</div>
     <div class="flex">
       <slot>
-        <span :class="valueClass" v-format.[format]="now"></span>
+        <span :class="valueClass" v-format:[format]="now"></span>
       </slot>
     </div>
   </div>

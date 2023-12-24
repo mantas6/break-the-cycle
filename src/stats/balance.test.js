@@ -52,6 +52,17 @@ it('clamps correctly to bounds', () => {
 
     affect(stat, -200);
     expect(stat.now).toBe(-100)
+
+    affect(stat, 5);
+    affect(stat, -10);
+    expect(stat.now).toBe(-100)
+})
+
+it('clamps correctly to bounds if stat has zero min', () => {
+    const stat = create(0, 100, 5);
+
+    Balance.affect(stat, -10);
+    expect(stat.now).toBe(0)
 })
 
 it('returns correct reservation values with lower bounds', () => {
