@@ -14,6 +14,7 @@ import { ResetPlugin } from "@/plugins/reset.js";
 import { initializeDynamicModules } from '@/stores/modules'
 import { loadGame, saveGame } from "@/routines/persistence.js";
 import { vButton } from "@/directives/button";
+import {vFormat} from "@/directives/format.js";
 
 const app = createApp(App)
 
@@ -32,5 +33,6 @@ setTimeout(() => loadGame(), 500)
 setInterval(() => saveGame(), 5000);
 
 app.directive('button', vButton);
+app.directive('format', vFormat);
 
 app.mount('#app')
