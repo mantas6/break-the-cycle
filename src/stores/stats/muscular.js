@@ -7,13 +7,13 @@ import {usePassportStore} from "@/stores/stats/passport.js";
 import {computed} from "vue";
 
 export const useMuscularStore = defineStore(storeName('muscular'), () => {
+    const physical = usePhysicalStore();
+    const passport = usePassportStore();
+
     const health = Balance.create(0, 1000, 1000);
     const healthLifetime = Balance.create(0, 1000, 1000);
 
-    const overallHealth = computed(() => Balance.percentage(health) * Balance.percentage(healthLifetime));
-
-    const physical = usePhysicalStore();
-    const passport = usePassportStore();
+    const overallCapability = computed(() => Balance.percentage(health) * Balance.percentage(healthLifetime) * Balance.actualCenter(physical.energy, 0));
 
     onClock(() => {
         const actualCenter = Balance.actualCenter(physical.energy, 0.25);
@@ -33,6 +33,6 @@ export const useMuscularStore = defineStore(storeName('muscular'), () => {
         health,
         healthLifetime,
 
-        overallHealth,
+        overallCapability,
     };
 })
