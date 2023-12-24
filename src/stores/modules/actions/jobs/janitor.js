@@ -6,6 +6,7 @@ import { usePhysicalStore } from "@/stores/stats/physical.js";
 import {Balance} from "@/stats/index.js";
 import {defineActionStore} from "@/stores/modules/actions/index.js";
 import {useSocialStore} from "@/stores/stats/social.js";
+import {executeBasicJob} from "@/helpers/actions/job.js";
 
 const options = {
     title: 'Janitor',
@@ -19,16 +20,7 @@ export default defineActionStore(options, ({ eff }) => {
     const baseBalance = computed(() => 1);
 
     function executeAction(count) {
-        const physical = usePhysicalStore();
-
-        const energyCost = 1 * count;
-        const actualCost = Balance.reserve(physical.energy, -energyCost) * Balance.actualCenter(physical.energy, 0.5);
-        eff.value = Math.abs(actualCost) / energyCost;
-
-        Balance.affect(physical.energy, actualCost);
-
-        const wallet = useWalletStore();
-        wallet.transaction(baseBalance.value * count * eff.value);
+        executeBasicJob({ eff, count }, { baseBalance, energyCost: 1 });
     }
 
     function beforeUnlock() {
