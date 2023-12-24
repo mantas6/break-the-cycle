@@ -1,5 +1,5 @@
-export const vButton = (el, binding) => {
-    if (binding.value) {
+export const vButton = (el, { value }) => {
+    if (value) {
         el.classList.remove('hover:text-zinc-300', 'active:text-zinc-400')
         el.classList.add('text-zinc-500')
     } else {
