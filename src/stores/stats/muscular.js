@@ -13,8 +13,11 @@ export const useMuscularStore = defineStore(storeName('muscular'), () => {
     onClock(() => {
         const actualCenter = Balance.actualCenter(physical.energy, 0.25);
         const healthLoss = (10 - actualCenter * 10) + 1;
-        console.log({ healthLoss })
         Balance.affect(health, -healthLoss);
+
+        const healthPercent = Balance.percentage(health)
+        const healthLifetimeLoss = (1 - healthPercent ) * 10;
+        Balance.affect(healthLifetime, -healthLifetimeLoss);
     })
 
     return {
