@@ -3,8 +3,11 @@ import { defineStore } from 'pinia'
 import { actionStores } from "@/plugins/actions.js";
 import { storeName } from "@/stores";
 import { onClock } from "@/routines/clock";
+import {usePassportStore} from "@/stores/stats/passport.js";
 
 export const useActionsStore = defineStore(storeName('actions'), () => {
+    const passport = usePassportStore();
+
     const active = reactive({});
 
     const currentDuration = computed(() => {
@@ -115,6 +118,10 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
     }
 
     onClock(() => {
+        if (!passport.alive) {
+            return;
+        }
+
         // Active action processing
         for (const [ actionName, actionCount ] of Object.entries(active) ) {
             const action = actionStores.value.get(actionName);

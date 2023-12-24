@@ -5,8 +5,11 @@ import { pickBy } from "lodash/object";
 import { kebabCase } from "lodash/string";
 import { useActionsStore } from "@/stores/actions.js";
 import ActionList from "@/components/actions/ActionList.vue";
+import {usePassportStore} from "@/stores/stats/passport.js";
+import DeathScreen from "@/components/DeathScreen.vue";
 
 const actions = useActionsStore();
+const passport = usePassportStore();
 
 const route = useRoute();
 
@@ -22,7 +25,8 @@ const filtered = computed(() => {
 </script>
 
 <template>
-  <div>
+  <div v-if="passport.alive">
     <ActionList :items="filtered" grid />
   </div>
+  <DeathScreen v-else />
 </template>

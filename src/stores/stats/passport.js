@@ -6,6 +6,9 @@ import {storeName} from "@/stores";
 
 export const usePassportStore = defineStore(storeName('passport'), () => {
     const time = useTimeStore();
+
+    const alive = ref(true);
+
     const birthday = ref(
         dayjs(time.date).subtract(18, 'years')
             .toISOString()
@@ -18,6 +21,7 @@ export const usePassportStore = defineStore(storeName('passport'), () => {
 
     return {
         age,
+        alive,
 
         birthday,
     };
