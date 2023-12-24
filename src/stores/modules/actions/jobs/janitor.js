@@ -5,6 +5,7 @@ import { storeName } from "@/stores/index.js";
 import { usePhysicalStore } from "@/stores/stats/physical.js";
 import {Balance} from "@/stats/index.js";
 import {defineActionStore} from "@/stores/modules/actions/index.js";
+import {useSocialStore} from "@/stores/stats/social.js";
 
 const options = {
     title: 'Janitor',
@@ -30,11 +31,17 @@ export default defineActionStore(options, ({ eff }) => {
         wallet.transaction(baseBalance.value * count * eff.value);
     }
 
+    function beforeUnlock() {
+        const social = useSocialStore();
+        return social.construction.now >= 500;
+    }
+
     return {
         durations,
 
         baseBalance,
 
         executeAction,
+        beforeUnlock,
     };
 })

@@ -3,6 +3,8 @@ import {beforeEach, expect, it} from "vitest";
 import {createPinia, setActivePinia} from "pinia";
 import {actionStores} from "@/plugins/actions.js";
 import {useActionsStore} from "@/stores/actions.js";
+import {ref} from "vue";
+import {runClock} from "@/routines/clock";
 
 const options = {
     title: 'Unlockable action',
@@ -11,10 +13,20 @@ const options = {
 };
 
 const useTestStore = defineActionStore(options, () => {
+    const canBeUnlocked = ref(false);
+
     function executeAction(count) {
+
+    }
+
+    function beforeUnlock() {
+        return canBeUnlocked.value;
     }
 
     return {
+        canBeUnlocked,
+
+        beforeUnlock,
         executeAction,
     };
 })
@@ -33,4 +45,12 @@ it('unlocks actions correctly', () => {
     const store = useTestStore()
 
     expect(actions.all).not.toHaveProperty(store.$id)
+
+    runClock();
+    expect(actions.all).not.toHaveProperty(store.$id)
+
+    store.canBeUnlocked = true;
+    runClock();
+    expect(store.unlocked).toBe(true)
+    expect(actions.all).toHaveProperty(store.$id)
 })

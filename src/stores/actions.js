@@ -102,6 +102,16 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
             const action = actionStores.value.get(actionName);
             action.executeAction(actionCount);
         }
+
+        for (const actionStore of actionStores.value.values()) {
+            if (!actionStore.unlocked && actionStore.beforeUnlock) {
+                const nowUnlocked = actionStore.beforeUnlock();
+
+                if (nowUnlocked === true) {
+                    actionStore.unlocked = true;
+                }
+            }
+        }
     })
 
     return {
