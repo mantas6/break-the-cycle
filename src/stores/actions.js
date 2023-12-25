@@ -4,6 +4,7 @@ import { actionStores } from "@/plugins/actions.js";
 import { storeName } from "@/stores";
 import { onClock } from "@/routines/clock";
 import {usePassportStore} from "@/stores/stats/passport.js";
+import {range} from "lodash/util";
 
 export const useActionsStore = defineStore(storeName('actions'), () => {
     const passport = usePassportStore();
@@ -72,6 +73,22 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
             const idx = durations.indexOf(active[name]);
 
             return durations[idx + 1];
+        }
+    }
+
+    function increaseToMax(name) {
+        for (const _ of range(1, 25)) {
+            if (!canIncrease(name)) {
+                return;
+            }
+
+            const nextDuration = getNextDuration(name);
+
+            if (nextDuration === undefined) {
+                return;
+            }
+
+            increase(name);
         }
     }
 
@@ -151,6 +168,7 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         allActive,
 
         canIncrease,
+        increaseToMax,
         increase,
         decrease,
         remove,
