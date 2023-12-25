@@ -1,10 +1,10 @@
 import { ref } from "vue";
-import { beforeClock } from "@/routines/clock.js";
+import { afterClock } from "@/routines/clock.js";
 
 export function computedOnce(cb) {
-    const base = ref()
+    const base = ref(cb())
 
-    beforeClock(() => base.value = cb());
+    afterClock(() => base.value = cb());
 
     return base;
 }

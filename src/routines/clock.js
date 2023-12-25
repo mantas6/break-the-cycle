@@ -17,8 +17,13 @@ function clock() {
 }
 
 export function runClock() {
+    // Reset certain things before doing main calculations
     clockHandlers.beforeClock.forEach(tick => tick())
+
+    // Do the core game calculations
     clockHandlers.onClock.forEach(tick => tick())
+
+    // Retrospective of results of core calculations
     clockHandlers.afterClock.forEach(tick => tick())
 }
 
