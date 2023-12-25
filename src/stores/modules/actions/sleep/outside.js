@@ -1,7 +1,6 @@
 import {defineActionStore} from "@/stores/modules/actions";
 import {useWalletStore} from "@/stores/stats/wallet";
 import {computed} from "vue";
-import {useMuscularStore} from "@/stores/stats/muscular.js";
 import {Balance} from "@/stats/index.js";
 import {usePhysicalStore} from "@/stores/stats/physical.js";
 import {useNutritionStore} from "@/stores/stats/nutrition.js";
@@ -13,7 +12,6 @@ const options = {
 };
 
 export default defineActionStore(options, ({ eff }) => {
-    const muscular = useMuscularStore();
     const physical = usePhysicalStore();
     const nutrition = useNutritionStore();
 
@@ -27,10 +25,6 @@ export default defineActionStore(options, ({ eff }) => {
 
     function beforeUnlock() {
         return true;
-
-        const healthPercent = Balance.percentage(muscular.health);
-
-        return healthPercent < 0.95;
     }
 
     return {

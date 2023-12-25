@@ -1,7 +1,6 @@
 import { useNutritionStore } from "@/stores/stats/nutrition";
 import { Balance } from "@/stats";
 import { defineActionStore } from "@/stores/modules/actions";
-import {useMuscularStore} from "@/stores/stats/muscular.js";
 import {calculateCapability} from "@/helpers/actions/job.js";
 import {usePhysicalStore} from "@/stores/stats/physical.js";
 
@@ -16,10 +15,9 @@ export default defineActionStore(options, ({ eff, durations }) => {
         const energyGain = 0.25 * count;
 
         const nutrition = useNutritionStore();
-        const muscular = useMuscularStore();
         const physical = usePhysicalStore();
 
-        const capability = calculateCapability(muscular.overallCapability, 0.25, count, durations);
+        const capability = calculateCapability(physical.overallCapability, 0.25, count, durations);
 
         const neededGain = Balance.reserve(nutrition.energy, energyGain) * capability;
         eff.value = neededGain / energyGain;
