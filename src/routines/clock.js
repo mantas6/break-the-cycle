@@ -23,7 +23,7 @@ export function runClock() {
     // Do the core game calculations
     clockHandlers.onClock.forEach(tick => tick())
 
-    // Retrospective of results of core calculations
+    // Retrospective of the results of core calculations
     clockHandlers.afterClock.forEach(tick => tick())
 }
 
