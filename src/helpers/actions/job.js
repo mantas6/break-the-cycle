@@ -11,16 +11,20 @@ export function executeBasicJob({ eff, count, durations }, { energyCost, baseBal
     const muscular = useMuscularStore();
 
     const energyCostTotal = unref(energyCost) * count;
-    const capability = percentageBetween(muscular.overallCapability, 0, capabilityUpper);
 
-    const maxDuration = last(unref(durations));
-    const capabilityInTime = percentageBetween(capability, 0, count / maxDuration)
+    const capability = calculateCapability(muscular.overallCapability, capabilityUpper, count, durations)
 
-    const actualCost = Balance.reserve(physical.energy, -energyCostTotal) * capabilityInTime;
+    const actualCost = Balance.reserve(physical.energy, -energyCostTotal) * capability;
     eff.value = Math.abs(actualCost) / energyCostTotal;
 
     Balance.affect(physical.energy, actualCost);
 
     const wallet = useWalletStore();
     wallet.transaction(unref(baseBalance) * count * eff.value);
+}
+
+export function calculateCapability(overallCapability, capabilityUpper, duration, durations) {
+    const maxDuration = last(unref(durations));
+    const capability = percentageBetween(overallCapability, 0, capabilityUpper);
+    return percentageBetween(capability, 0, duration / maxDuration)
 }
