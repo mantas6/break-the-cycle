@@ -13,6 +13,7 @@ const options = {
 export default defineActionStore(options, ({ eff, durations }) => {
     function executeAction(count) {
         const energyGain = 0.25 * count;
+        const energyCost = -0.1 * count;
 
         const nutrition = useNutritionStore();
         const physical = usePhysicalStore();
@@ -24,7 +25,7 @@ export default defineActionStore(options, ({ eff, durations }) => {
 
         if (eff.value > 0) {
             Balance.affect(nutrition.energy, energyGain * eff.value)
-            Balance.affect(physical.energy, -0.1 * eff.value * count)
+            Balance.affect(physical.energy, energyCost * eff.value)
         }
     }
 
