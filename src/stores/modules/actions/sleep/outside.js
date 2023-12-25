@@ -18,7 +18,10 @@ export default defineActionStore(options, ({ eff }) => {
     const nutrition = useNutritionStore();
 
     function executeAction(count) {
-        eff.value = 1;
+        const energyAvailPercent = Balance.percentage(nutrition.energy, 0, 0.25);
+
+        eff.value = energyAvailPercent;
+
         Balance.affect(physical.energy, 0.25 * count * eff.value);
     }
 
