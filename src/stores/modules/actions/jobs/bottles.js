@@ -10,12 +10,12 @@ const options = {
     category: 'Jobs',
 };
 
-export default defineActionStore(options, ({ eff }) => {
+export default defineActionStore(options, ({ eff, durations }) => {
     const baseBalance = computed(() => 0.5);
     const unlocked = computed(() => true);
 
     function executeAction(count) {
-        executeBasicJob({ eff, count }, { baseBalance, energyCost: 0.5, capabilityUpper: 0.25 })
+        executeBasicJob({ eff, count, durations }, { baseBalance, energyCost: 0.5, capabilityUpper: 0.25 })
 
         const social = useSocialStore();
         Value.affect(social.construction, 1 * count * eff.value);

@@ -15,7 +15,7 @@ export default defineActionStore(options, ({ eff }) => {
     const baseBalance = computed(() => 1);
 
     function executeAction(count) {
-        executeBasicJob({ eff, count }, { baseBalance, energyCost: 1 });
+        executeBasicJob({ eff, count, durations }, { baseBalance, energyCost: 1 });
     }
 
     function beforeUnlock() {
