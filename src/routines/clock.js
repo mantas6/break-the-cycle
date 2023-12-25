@@ -3,6 +3,7 @@ import { useTimeStore } from "@/stores/time.js";
 export const clockHandlers = {
     beforeClock: [],
     onClock: [],
+    afterClock: [],
 };
 
 function clock() {
@@ -18,6 +19,7 @@ function clock() {
 export function runClock() {
     clockHandlers.beforeClock.forEach(tick => tick())
     clockHandlers.onClock.forEach(tick => tick())
+    clockHandlers.afterClock.forEach(tick => tick())
 }
 
 export function onClock(cb) {
@@ -26,6 +28,10 @@ export function onClock(cb) {
 
 export function beforeClock(cb) {
     clockHandlers.beforeClock.push(cb);
+}
+
+export function afterClock(cb) {
+    clockHandlers.afterClock.push(cb);
 }
 
 setTimeout(() => clock(), 500)
