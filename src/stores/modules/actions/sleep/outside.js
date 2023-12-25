@@ -3,6 +3,8 @@ import {useWalletStore} from "@/stores/stats/wallet";
 import {computed} from "vue";
 import {useMuscularStore} from "@/stores/stats/muscular.js";
 import {Balance} from "@/stats/index.js";
+import {usePhysicalStore} from "@/stores/stats/physical.js";
+import {useNutritionStore} from "@/stores/stats/nutrition.js";
 
 const options = {
     title: 'Outside',
@@ -12,14 +14,17 @@ const options = {
 
 export default defineActionStore(options, ({ eff }) => {
     const muscular = useMuscularStore();
+    const physical = usePhysicalStore();
+    const nutrition = useNutritionStore();
 
     function executeAction(count) {
-        const recoveryRate = 0.25 * count;
-        eff.value = Balance.reserve(muscular.health, recoveryRate) / recoveryRate;
-        Balance.affect(muscular.health, recoveryRate * eff.value)
+        eff.value = 1;
+        Balance.affect(physical.energy, 0.25 * count * eff.value);
     }
 
     function beforeUnlock() {
+        return true;
+
         const healthPercent = Balance.percentage(muscular.health);
 
         return healthPercent < 0.95;
