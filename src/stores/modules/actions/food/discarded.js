@@ -1,6 +1,9 @@
 import { useNutritionStore } from "@/stores/stats/nutrition";
 import { Balance } from "@/stats";
 import { defineActionStore } from "@/stores/modules/actions";
+import {useMuscularStore} from "@/stores/stats/muscular.js";
+import {calculateCapability} from "@/helpers/actions/job.js";
+import {usePhysicalStore} from "@/stores/stats/physical.js";
 
 const options = {
     title: 'Discarded Food',
@@ -8,18 +11,22 @@ const options = {
     category: 'Food',
 };
 
-export default defineActionStore(options, ({ eff }) => {
+export default defineActionStore(options, ({ eff, durations }) => {
     function executeAction(count) {
         const energyGain = 0.25 * count;
 
         const nutrition = useNutritionStore();
+        const muscular = useMuscularStore();
+        const physical = usePhysicalStore();
 
-        // TODO: add energy cost
-        const neededGain = Balance.reserve(nutrition.energy, energyGain);
+        const capability = calculateCapability(muscular.overallCapability, 0.25, count, durations);
+
+        const neededGain = Balance.reserve(nutrition.energy, energyGain) * capability;
         eff.value = neededGain / energyGain;
 
         if (eff.value > 0) {
             Balance.affect(nutrition.energy, energyGain * eff.value)
+            Balance.affect(physical.energy, -0.1 * eff.value * count)
         }
     }
 
