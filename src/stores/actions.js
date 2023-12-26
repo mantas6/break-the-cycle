@@ -6,6 +6,9 @@ import { onClock } from "@/routines/clock";
 import {usePassportStore} from "@/stores/stats/passport.js";
 import {range} from "lodash/util";
 import {head} from "lodash/array.js";
+import {max} from "lodash/math.js";
+import {filter, orderBy, sortBy} from "lodash/collection.js";
+import {transform} from "lodash/object.js";
 
 export const useActionsStore = defineStore(storeName('actions'), () => {
     const passport = usePassportStore();
@@ -18,14 +21,17 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
 
     const maxDuration = computed(() => 24);
 
+    const ordered = computed(() => {
+        const predicate = ([ _, action ]) => action.unlocked;
+        const unlocked = filter([ ...actionStores.value.entries() ], predicate);
+
+        return sortBy(unlocked, ([ _, action ]) => action.unlocked);
+    });
+
     const all = computed(() => {
         const actions = {};
 
-        for (const [ actionName, actionStore ] of actionStores.value.entries()) {
-            if (!actionStore.unlocked) {
-                continue;
-            }
-
+        for (const [ actionName, actionStore ] of ordered.value) {
             const expose = {};
 
             Object.keys(actionStore)
@@ -142,6 +148,19 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         }
     }
 
+    // Should be an external method?
+    function latestUnlockedNum() {
+        const nums = Object.values(all.value)
+            .map(action => action.unlocked)
+            .filter(unlocked => unlocked)
+
+        if (!nums.length) {
+            return 0;
+        }
+
+        return max(nums);
+    }
+
     onClock(() => {
         if (!passport.alive) {
             return;
@@ -160,7 +179,7 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
 
                 // Ref might be mistakenly returned, so checking strictly
                 if (nowUnlocked === true) {
-                    actionStore.unlocked = true;
+                    actionStore.unlocked = latestUnlockedNum() + 1;
                     actionStore.notify = true;
                 }
             }

@@ -52,7 +52,7 @@ it('unlocks actions correctly', () => {
 
     store.canBeUnlocked = true;
     runClock();
-    expect(store.unlocked).toBe(true)
+    expect(store.unlocked).toBe(1)
     expect(actions.all).toHaveProperty(store.$id)
     expect(store.notify).toBe(true)
 

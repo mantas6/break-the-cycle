@@ -12,7 +12,6 @@ const options = {
 
 export default defineActionStore(options, ({ eff, durations }) => {
     const baseBalance = computed(() => 0.5);
-    const unlocked = computed(() => true);
 
     function executeAction(count) {
         executeBasicJob({ eff, count, durations }, { baseBalance, energyCost: 0.5, capabilityUpper: 0.25 })
@@ -21,10 +20,14 @@ export default defineActionStore(options, ({ eff, durations }) => {
         Value.affect(social.construction, 1 * count * eff.value);
     }
 
+    function beforeUnlock() {
+        return true;
+    }
+
     return {
         baseBalance,
-        unlocked,
 
         executeAction,
+        beforeUnlock,
     };
 });
