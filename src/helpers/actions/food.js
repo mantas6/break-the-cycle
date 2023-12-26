@@ -1,12 +1,12 @@
 import {useNutritionStore} from "@/stores/stats/nutrition.js";
 import {Balance} from "@/stats/index.js";
 import {useWalletStore} from "@/stores/stats/wallet.js";
-import {unref} from "vue";
+import {toValue} from "vue";
 import {head} from "lodash/array.js";
 import {useDigestiveStore} from "@/stores/stats/digestive.js";
 
 export function executeBasicFood({ eff, count, durations }, opts) {
-    const energyGain = unref(opts.energyGain) * count;
+    const energyGain = toValue(opts.energyGain) * count;
     const nutrition = useNutritionStore();
     const digestive = useDigestiveStore();
     const neededGain = Balance.reserve(nutrition.energy, energyGain)
@@ -15,9 +15,9 @@ export function executeBasicFood({ eff, count, durations }, opts) {
     if (demandEff > 0) {
         const wallet = useWalletStore();
 
-        const baseBalance = unref(opts.baseBalance);
+        const baseBalance = toValue(opts.baseBalance);
         const actualCost = baseBalance * count * demandEff;
-        const minBalance = baseBalance * head(unref(durations));
+        const minBalance = baseBalance * head(toValue(durations));
         const cost = wallet.preTransaction(actualCost, minBalance)
 
         const costEff = cost / actualCost;

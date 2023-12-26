@@ -1,14 +1,14 @@
 import {usePhysicalStore} from "@/stores/stats/physical";
 import {Balance} from "@/stats";
 import {useWalletStore} from "@/stores/stats/wallet";
-import {unref} from "vue";
+import {toValue} from "vue";
 import {percentageBetween} from "@/helpers/math.js";
 import {last} from "lodash/array.js";
 
 export function executeBasicJob({ eff, count, durations }, { energyCost, baseBalance, capabilityUpper = 0.5 }) {
     const physical = usePhysicalStore();
 
-    const energyCostTotal = unref(energyCost) * count;
+    const energyCostTotal = toValue(energyCost) * count;
 
     const capability = calculateCapability(physical.overallCapability, capabilityUpper, count, durations)
 
@@ -18,11 +18,11 @@ export function executeBasicJob({ eff, count, durations }, { energyCost, baseBal
     Balance.affect(physical.energy, actualCost);
 
     const wallet = useWalletStore();
-    wallet.transaction(unref(baseBalance) * count * eff.value);
+    wallet.transaction(toValue(baseBalance) * count * eff.value);
 }
 
 export function calculateCapability(overallCapability, capabilityUpper, duration, durations) {
-    const maxDuration = last(unref(durations));
+    const maxDuration = last(toValue(durations));
     const capability = percentageBetween(overallCapability, 0, capabilityUpper);
     return percentageBetween(capability, 0, duration / maxDuration)
 }
