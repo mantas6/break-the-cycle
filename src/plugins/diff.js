@@ -5,7 +5,7 @@ export function DiffPlugin({ store }) {
 
     for (const item of Object.values(store)) {
         if (item !== undefined) {
-            if (item.type !== undefined && item.gain !== undefined && item.loss !== undefined) {
+            if (item.type !== undefined && item.gain !== undefined && item.loss !== undefined && item._gain !== undefined && item._loss !== undefined) {
                 items.push(item);
 
             }
@@ -15,8 +15,11 @@ export function DiffPlugin({ store }) {
     if (items.length) {
         beforeClock(() => {
             items.forEach(item => {
-                item.gain = 0;
-                item.loss = 0;
+                item.gain = item._gain;
+                item.loss = item._loss;
+
+                item._gain = 0;
+                item._loss = 0;
             });
         })
     }

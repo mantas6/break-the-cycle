@@ -4,6 +4,8 @@ import { assertStat } from '.'
 export function create(now) {
     return reactive({
         type: 'value',
+        _gain: 0,
+        _loss: 0,
         gain: 0,
         loss: 0,
         now,
@@ -26,6 +28,8 @@ export function assert(stat) {
         stat.type === 'value',
         stat.gain !== undefined,
         stat.loss !== undefined,
+        stat._gain !== undefined,
+        stat._loss !== undefined,
         stat.now !== undefined,
     )
 }

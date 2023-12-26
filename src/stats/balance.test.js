@@ -32,12 +32,12 @@ it('calculates gain and loss correctly', () => {
     const stat = createBasicStat();
 
     Balance.affect(stat, 50)
-    expect(stat.gain).toBe(50)
-    expect(stat.loss).toBe(0)
+    expect(stat._gain).toBe(50)
+    expect(stat._loss).toBe(0)
 
     Balance.affect(stat, -50)
-    expect(stat.gain).toBe(50)
-    expect(stat.loss).toBe(50)
+    expect(stat._gain).toBe(50)
+    expect(stat._loss).toBe(50)
 })
 
 it('clamps correctly to bounds', () => {

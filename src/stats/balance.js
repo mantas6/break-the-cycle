@@ -14,8 +14,10 @@ export function create(min = -1000, max = 1000, now, center) {
 
     return reactive({
         type: 'balance',
-        gain: 0,
-        loss: 0,
+        _gain: 0, // Internal
+        _loss: 0, // ...
+        gain: 0, // Used for calculations
+        loss: 0, // ...
         now,
         min,
         center,
@@ -28,9 +30,9 @@ export function affect(stat, diff) {
     stat.now = clamp(stat.now + diff, stat.min, stat.max);
 
     if (diff > 0) {
-        stat.gain += diff;
+        stat._gain += diff;
     } else {
-        stat.loss += Math.abs(diff);
+        stat._loss += Math.abs(diff);
     }
 }
 
@@ -74,6 +76,8 @@ function assert(stat) {
         stat.type === 'balance',
         stat.gain !== undefined,
         stat.loss !== undefined,
+        stat._gain !== undefined,
+        stat._loss !== undefined,
         stat.now !== undefined,
         stat.min !== undefined,
         stat.center !== undefined,
