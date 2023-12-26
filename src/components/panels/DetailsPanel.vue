@@ -1,4 +1,5 @@
 <script setup>
+import { ScaleIcon } from '@heroicons/vue/16/solid'
 import PanelBlock from "@/components/Panels/PanelBlock.vue";
 
 import { usePassportStore } from "@/stores/stats/passport";
@@ -29,10 +30,10 @@ const digestive = useDigestiveStore()
       </div>
       <div class="grid grid-cols-2 gap-3">
         <div class="flex flex-col items-center">
-          <span>Social</span>
-          <div class="w-full">
-            <StatValue title="Construction" :now="social.construction.now" />
-            <StatValue title="Destruction" :now="social.destruction.now" />
+          <span class="flex"><ScaleIcon class="w-4" />Social</span>
+          <div class="flex w-full justify-between">
+            <StatValue class="flex-col" title="Construction" :now="social.construction.now" />
+            <StatValue class="flex-col" title="Destruction" :now="social.destruction.now" />
           </div>
         </div>
         <div class="flex flex-col items-center">
