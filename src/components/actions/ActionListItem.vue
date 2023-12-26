@@ -19,7 +19,7 @@
   const currentDuration = computed(() => actions.active[props.name])
 
   const productivityClasses = computed(() => ({
-    'text-yellow-300': isActive.value && props.eff < 1 && props.eff > 0,
+    'text-yellow-300': isActive.value && props.eff < 0.995 && props.eff > 0,
     'text-red-300': isActive.value && !props.eff
   }));
 
