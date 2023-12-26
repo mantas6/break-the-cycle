@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import {computed, ref} from "vue";
 import { afterClock } from "@/routines/clock.js";
 
 export function computedOnce(cb) {
@@ -6,5 +6,5 @@ export function computedOnce(cb) {
 
     afterClock(() => base.value = cb());
 
-    return base;
+    return computed(() => base.value);
 }
