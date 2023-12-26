@@ -12,7 +12,9 @@ export const useDigestiveStore = defineStore(storeName('digestive'), () => {
     const overallHealth = computedOnce(() => Balance.percentage(health) * Balance.percentage(healthLifetime));
 
     onClock(() => {
-        const loss = (1 - Balance.percentage(health)) * 10;
+        const passiveHealthLoss = 0.01;
+        const healthLossMultiplier = 10;
+        const loss = Math.max((1 - Balance.percentage(health)) * healthLossMultiplier, passiveHealthLoss);
         Balance.affect(healthLifetime, -loss);
 
         if (!Balance.percentage(healthLifetime)) {
