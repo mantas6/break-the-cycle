@@ -18,7 +18,9 @@ const diff = computed(() => props.item.gain - props.item.loss);
 
 <template>
   <div class="flex justify-between">
-    <div class="text-zinc-300">{{ title }}</div>
+    <div class="flex text-zinc-300">
+      <slot name="title">{{ title }}</slot>
+    </div>
     <div class="flex justify-center">
       <slot>
         <div class="flex items-center" :class="valueClass">

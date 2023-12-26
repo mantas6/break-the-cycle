@@ -1,5 +1,5 @@
 <script setup>
-import { ScaleIcon, CogIcon } from '@heroicons/vue/16/solid'
+import { ScaleIcon, CogIcon, HeartIcon } from '@heroicons/vue/16/solid'
 import PanelBlock from "@/components/Panels/PanelBlock.vue";
 
 import { usePassportStore } from "@/stores/stats/passport";
@@ -38,9 +38,17 @@ const digestive = useDigestiveStore()
         </div>
         <div class="flex flex-col items-center">
           <span class="flex gap-1"><CogIcon class="w-4" /> Digestive</span>
-          <div class="w-full">
-            <StatValue title="Health" format="percent" :item="digestive.health" />
-            <StatValue title="Health Lifetime" format="percent" :item="digestive.healthLifetime" :diff-low="0.01" :diff-high="0.5" />
+          <div>
+            <StatValue title="Health" format="percent" :item="digestive.health">
+              <template #title>
+                <HeartIcon class="text-green-300 w-4" />
+              </template>
+            </StatValue>
+            <StatValue title="Health Lifetime" format="percent" :item="digestive.healthLifetime" :diff-low="0.01" :diff-high="0.5">
+              <template #title>
+                <HeartIcon class="text-red-300 w-4" />
+              </template>
+            </StatValue>
           </div>
         </div>
       </div>
