@@ -25,7 +25,9 @@ export function executeBasicFood({ eff, count, durations }, opts) {
         eff.value = Math.min(demandEff * digestive.overallHealth, costEff);
         wallet.transaction(cost)
         Balance.affect(nutrition.energy, energyGain * eff.value)
-        Balance.affect(digestive.health, -energyGain * eff.value)
+
+        const digestiveHealthLoss = 0.1;
+        Balance.affect(digestive.health, -digestiveHealthLoss * eff.value * count)
     } else {
         eff.value = 0;
     }
