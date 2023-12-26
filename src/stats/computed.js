@@ -8,3 +8,17 @@ export function computedOnce(cb) {
 
     return computed(() => base.value);
 }
+
+export function computedWritable(initial) {
+    const base = ref(initial)
+
+    return computed({
+        get() {
+            return base.value;
+        },
+
+        set(newValue) {
+            base.value = newValue;
+        },
+    })
+}

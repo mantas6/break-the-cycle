@@ -2,6 +2,7 @@ import {defineStore} from "pinia";
 import {storeName} from "@/stores/index.js";
 import {computed, ref} from "vue";
 import {range} from "lodash/util.js";
+import {computedWritable} from "@/stats/computed.js";
 
 export function defineActionStore(opts, storeSetup) {
     const id = `${opts.category}.${opts.subcategory}.${opts.title}`;
@@ -12,7 +13,7 @@ export function defineActionStore(opts, storeSetup) {
         const category = computed(() => opts.category);
 
         const durations = computed(() => range(1, 25));
-        const eff = ref(0);
+        const eff = computedWritable(0);
 
         const unlocked = ref();
         const notify = ref();
