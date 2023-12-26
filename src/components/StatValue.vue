@@ -17,7 +17,7 @@ const diff = computed(() => props.item.gain - props.item.loss);
 </script>
 
 <template>
-  <div class="flex justify-between">
+  <div class="flex gap-1 justify-between">
     <div class="flex text-zinc-300">
       <slot name="title">{{ title }}</slot>
     </div>
