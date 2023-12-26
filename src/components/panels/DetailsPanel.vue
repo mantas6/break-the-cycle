@@ -10,12 +10,15 @@ import StatValue from "@/components/StatValue.vue";
 import StatBalance from "@/components/StatBalance.vue";
 import StatBalanceFill from "@/components/StatBalanceFill.vue";
 import {useDigestiveStore} from "@/stores/stats/digestive.js";
+import HealthStatDetail from "@/components/details/HealthStatDetail.vue";
+import {useCardiovascular} from "@/stores/stats/cardiovascular.js";
 
 const passport = usePassportStore();
 const physical = usePhysicalStore();
 const nutrition = useNutritionStore();
 const social = useSocialStore();
-const digestive = useDigestiveStore()
+const digestive = useDigestiveStore();
+const cardiovascular = useCardiovascular();
 </script>
 
 <template>
@@ -28,7 +31,7 @@ const digestive = useDigestiveStore()
         <StatBalance title="Physical" title-min="Tired" title-max="Lazy" v-bind="physical.energy" />
         <StatBalanceFill title="Nutrition" v-bind="nutrition.energy" />
       </div>
-      <div class="grid grid-cols-2 gap-3">
+      <div class="grid grid-cols-4 gap-3">
         <div class="flex flex-col items-center">
           <span class="flex gap-1"><ScaleIcon class="w-4" />Social</span>
           <div>
@@ -44,21 +47,8 @@ const digestive = useDigestiveStore()
             </StatValue>
           </div>
         </div>
-        <div class="flex flex-col items-center">
-          <span class="flex gap-1"><CogIcon class="w-4" /> Digestive</span>
-          <div>
-            <StatValue format="percent" :item="digestive.health">
-              <template #title>
-                <HeartIcon class="text-green-200 w-4" />
-              </template>
-            </StatValue>
-            <StatValue format="percent" :item="digestive.healthLifetime" :diff-low="0.01" :diff-high="0.5">
-              <template #title>
-                <HeartIcon class="text-red-200 w-4" />
-              </template>
-            </StatValue>
-          </div>
-        </div>
+        <HealthStatDetail title="Digestive" :stat="digestive" />
+        <HealthStatDetail title="Cardio" :stat="cardiovascular" />
       </div>
     </div>
   </PanelBlock>
