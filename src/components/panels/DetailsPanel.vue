@@ -39,12 +39,12 @@ const digestive = useDigestiveStore()
         <div class="flex flex-col items-center">
           <span class="flex gap-1"><CogIcon class="w-4" /> Digestive</span>
           <div>
-            <StatValue title="Health" format="percent" :item="digestive.health">
+            <StatValue format="percent" :item="digestive.health">
               <template #title>
                 <HeartIcon class="text-green-300 w-4" />
               </template>
             </StatValue>
-            <StatValue title="Health Lifetime" format="percent" :item="digestive.healthLifetime" :diff-low="0.01" :diff-high="0.5">
+            <StatValue format="percent" :item="digestive.healthLifetime" :diff-low="0.01" :diff-high="0.5">
               <template #title>
                 <HeartIcon class="text-red-300 w-4" />
               </template>
