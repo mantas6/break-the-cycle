@@ -3,15 +3,15 @@ import { defineStore } from 'pinia'
 import { actionStores } from "@/plugins/actions.js";
 import { storeName } from "@/stores";
 import { onClock } from "@/routines/clock";
-import {usePassportStore} from "@/stores/stats/passport.js";
 import {range} from "lodash/util";
 import {head} from "lodash/array.js";
 import {max} from "lodash/math.js";
 import {filter, orderBy, sortBy} from "lodash/collection.js";
 import {transform} from "lodash/object.js";
+import {useDeathStore} from "@/stores/death.js";
 
 export const useActionsStore = defineStore(storeName('actions'), () => {
-    const passport = usePassportStore();
+    const death = useDeathStore();
 
     const active = reactive({});
 
@@ -162,7 +162,7 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
     }
 
     onClock(() => {
-        if (!passport.alive) {
+        if (!death.alive) {
             return;
         }
 

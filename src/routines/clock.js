@@ -1,4 +1,5 @@
 import { useTimeStore } from "@/stores/time.js";
+import {useDeathStore} from "@/stores/death.js";
 
 export const clockHandlers = {
     beforeClock: [],
@@ -8,8 +9,9 @@ export const clockHandlers = {
 
 function clock() {
     const time = useTimeStore();
+    const death = useDeathStore();
 
-    if (!time.pause) {
+    if (!time.pause && death.alive) {
         runClock();
     }
 

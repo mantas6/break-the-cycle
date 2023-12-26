@@ -5,11 +5,11 @@ import { pickBy } from "lodash/object";
 import { kebabCase } from "lodash/string";
 import { useActionsStore } from "@/stores/actions.js";
 import ActionList from "@/components/actions/ActionList.vue";
-import {usePassportStore} from "@/stores/stats/passport.js";
 import DeathScreen from "@/components/DeathScreen.vue";
+import {useDeathStore} from "@/stores/death.js";
 
 const actions = useActionsStore();
-const passport = usePassportStore();
+const passport = useDeathStore();
 
 const route = useRoute();
 
