@@ -5,6 +5,7 @@ import { storeName } from "@/stores";
 import { onClock } from "@/routines/clock";
 import {usePassportStore} from "@/stores/stats/passport.js";
 import {range} from "lodash/util";
+import {head} from "lodash/array.js";
 
 export const useActionsStore = defineStore(storeName('actions'), () => {
     const passport = usePassportStore();
@@ -92,6 +93,13 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         }
     }
 
+    function trigger(name) {
+        const action = actionStores.value.get(name);
+        const minDuration = head(action.durations);
+
+        action.executeAction(minDuration);
+    }
+
     function increase(name) {
         if (!canIncrease(name)) {
             return;
@@ -169,6 +177,7 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
 
         canIncrease,
         increaseToMax,
+        trigger,
         increase,
         decrease,
         remove,
