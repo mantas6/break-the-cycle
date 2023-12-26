@@ -1,5 +1,5 @@
 <script setup>
-import { ScaleIcon } from '@heroicons/vue/16/solid'
+import { ScaleIcon, CogIcon } from '@heroicons/vue/16/solid'
 import PanelBlock from "@/components/Panels/PanelBlock.vue";
 
 import { usePassportStore } from "@/stores/stats/passport";
@@ -30,22 +30,17 @@ const digestive = useDigestiveStore()
       </div>
       <div class="grid grid-cols-2 gap-3">
         <div class="flex flex-col items-center">
-          <span class="flex"><ScaleIcon class="w-4" />Social</span>
+          <span class="flex gap-1"><ScaleIcon class="w-4" />Social</span>
           <div class="flex w-full justify-between">
-            <StatValue class="flex-col" title="Construction" :now="social.construction.now" />
-            <StatValue class="flex-col" title="Destruction" :now="social.destruction.now" />
+            <StatValue class="flex-col" title="Construction" :item="social.construction" />
+            <StatValue class="flex-col" title="Destruction" :item="social.destruction" />
           </div>
         </div>
         <div class="flex flex-col items-center">
-          <span>Digestive</span>
+          <span class="flex gap-1"><CogIcon class="w-4" /> Digestive</span>
           <div class="w-full">
-            <StatValue title="Health" format="percent" :now="digestive.health.now / digestive.health.max" />
-            <StatValue title="Health" :now="digestive.health.now" />
-            <StatValue title="Health Loss" class="text-red-200" :now="digestive.health.loss" />
-            <StatValue title="Health Gain" class="text-green-200" :now="digestive.health.gain" />
-            <StatValue title="Health Lifetime" format="percent" :now="digestive.healthLifetime.now / digestive.healthLifetime.max" />
-            <StatValue title="Health Lifetime" :now="digestive.healthLifetime.now" />
-            <StatValue title="Health Lifetime Loss" class="text-red-200" :now="digestive.healthLifetime.loss" />
+            <StatValue title="Health" format="percent" :item="digestive.health" />
+            <StatValue title="Health Lifetime" format="percent" :item="digestive.healthLifetime" :diff-low="0.01" :diff-high="0.5" />
           </div>
         </div>
       </div>
