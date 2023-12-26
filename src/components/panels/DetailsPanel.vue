@@ -8,13 +8,13 @@ import { useSocialStore } from "@/stores/stats/social";
 import StatValue from "@/components/StatValue.vue";
 import StatBalance from "@/components/StatBalance.vue";
 import StatBalanceFill from "@/components/StatBalanceFill.vue";
-import {useCardiovascular} from "@/stores/stats/cardiovascular";
+import {useDigestiveStore} from "@/stores/stats/digestive.js";
 
 const passport = usePassportStore();
 const physical = usePhysicalStore();
 const nutrition = useNutritionStore();
 const social = useSocialStore();
-const cardiovascular = useCardiovascular()
+const digestive = useDigestiveStore()
 </script>
 
 <template>
@@ -36,15 +36,15 @@ const cardiovascular = useCardiovascular()
           </div>
         </div>
         <div class="flex flex-col items-center">
-          <span>Cardiovascular</span>
+          <span>Digestive</span>
           <div class="w-full">
-            <StatValue title="Health" format="percent" :now="cardiovascular.health.now / cardiovascular.health.max" />
-            <StatValue title="Health" :now="cardiovascular.health.now" />
-            <StatValue title="Health Loss" class="text-red-200" :now="cardiovascular.health.loss" />
-            <StatValue title="Health Gain" class="text-green-200" :now="cardiovascular.health.gain" />
-            <StatValue title="Health Lifetime" format="percent" :now="cardiovascular.healthLifetime.now / cardiovascular.healthLifetime.max" />
-            <StatValue title="Health Lifetime" :now="cardiovascular.healthLifetime.now" />
-            <StatValue title="Health Lifetime Loss" class="text-red-200" :now="cardiovascular.healthLifetime.loss" />
+            <StatValue title="Health" format="percent" :now="digestive.health.now / digestive.health.max" />
+            <StatValue title="Health" :now="digestive.health.now" />
+            <StatValue title="Health Loss" class="text-red-200" :now="digestive.health.loss" />
+            <StatValue title="Health Gain" class="text-green-200" :now="digestive.health.gain" />
+            <StatValue title="Health Lifetime" format="percent" :now="digestive.healthLifetime.now / digestive.healthLifetime.max" />
+            <StatValue title="Health Lifetime" :now="digestive.healthLifetime.now" />
+            <StatValue title="Health Lifetime Loss" class="text-red-200" :now="digestive.healthLifetime.loss" />
           </div>
         </div>
       </div>
