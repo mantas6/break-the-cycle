@@ -18,6 +18,12 @@ function clock() {
     setTimeout(() => clock(), time.clockInterval)
 }
 
+export function clearHandlers() {
+    clockHandlers.beforeClock.length = 0;
+    clockHandlers.onClock.length = 0;
+    clockHandlers.afterClock.length = 0;
+}
+
 export function runClock() {
     // Reset certain things before doing main calculations
     clockHandlers.beforeClock.forEach(tick => tick())

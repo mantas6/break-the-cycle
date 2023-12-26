@@ -3,7 +3,7 @@ import {createPinia, defineStore, setActivePinia} from "pinia";
 import {useActionsStore} from "@/stores/actions.js";
 import {actionStores} from "@/plugins/actions.js";
 import {computed, ref} from "vue";
-import {clockHandlers, runClock} from "@/routines/clock.js";
+import {clearHandlers, clockHandlers, runClock} from "@/routines/clock.js";
 import {defineActionStore} from "@/stores/modules/actions";
 
 const options = {
@@ -34,8 +34,7 @@ const useTestStore = defineActionStore(options, () => {
 
 function resetGlobals() {
     actionStores.value.clear();
-    clockHandlers.onClock.length = 0;
-    clockHandlers.beforeClock.length = 0;
+    clearHandlers();
 }
 
 beforeEach(() => {
