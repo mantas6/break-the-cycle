@@ -1,6 +1,6 @@
 <script setup>
 import {computed} from "vue";
-import { ChevronDoubleUpIcon, ChevronUpIcon, ChevronDoubleDownIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
+import DiffIcon from "@/components/DiffIcon.vue";
 
 const props = defineProps([
   'title',
@@ -29,14 +29,7 @@ const diff = computed(() => props.gain - props.loss);
     <div class="flex justify-between">
       <div class="flex gap-1">
         <span class="font-bold">{{ title }}</span>
-        <span v-if="diff > 0" class="text-green-300">
-          <ChevronDoubleUpIcon v-if="diff > 1" class="w-4" />
-          <ChevronUpIcon v-else class="w-4" />
-        </span>
-        <span v-else-if="diff < 0" class="text-red-300">
-          <ChevronDoubleDownIcon v-if="diff < -1" class="w-4" />
-          <ChevronDownIcon v-else class="w-4" />
-        </span>
+        <DiffIcon :diff="diff" />
       </div>
       <div v-format="gain - loss"></div>
     </div>
