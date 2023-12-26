@@ -19,7 +19,11 @@ export default defineActionStore(options, ({ eff }) => {
     const baseBalance = computed(() => -1);
 
     function executeAction(count) {
-        executeBasicFood({ eff, count }, { baseBalance, energyGain: 1 });
+        executeBasicFood({ eff, count, durations }, { baseBalance, energyGain: 1 });
+    }
+
+    function beforeUnlock() {
+        return true;
     }
 
     return {
@@ -27,5 +31,6 @@ export default defineActionStore(options, ({ eff }) => {
         baseBalance,
 
         executeAction,
+        beforeUnlock,
     };
 })

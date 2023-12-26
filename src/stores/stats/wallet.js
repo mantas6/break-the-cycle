@@ -7,8 +7,12 @@ import { Value } from "@/stats";
 export const useWalletStore = defineStore(storeName('wallet'), () => {
     const balance = Value.create(0);
 
-    function preTransaction(net) {
+    function preTransaction(net, minBalance = 0) {
         if (balance.now + net <= 0) {
+            if (balance.now < Math.abs(minBalance)) {
+                return 0;
+            }
+
             return balance.now * -1;
         }
 
