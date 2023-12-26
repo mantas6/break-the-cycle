@@ -10,7 +10,9 @@ export function serialize() {
     for (const { $id, $state } of serializableStores.values()) {
         const stateToSerialize = {};
         for (const [ itemName, itemValue ] of Object.entries($state)) {
-            stateToSerialize[itemName] = itemValue;
+            if (itemValue !== undefined) {
+                stateToSerialize[itemName] = itemValue;
+            }
         }
 
         if (Object.keys(stateToSerialize).length > 0) {
