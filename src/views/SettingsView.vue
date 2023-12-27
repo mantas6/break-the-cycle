@@ -2,8 +2,15 @@
 import { loadGame, resetGame, saveGame } from "@/routines/persistence";
 import {useTimeStore} from "@/stores/time.js";
 import {ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/vue/24/outline";
+import {useRouter} from "vue-router";
 
 const time = useTimeStore();
+const router = useRouter()
+
+function reset() {
+  resetGame();
+  router.push('/');
+}
 </script>
 
 <template>
@@ -11,7 +18,7 @@ const time = useTimeStore();
     <div class="flex flex-col gap-3">
       <button @click="saveGame" v-hover>Save</button>
       <button @click="loadGame" v-hover>Load</button>
-      <button @click="resetGame" v-hover>Reset</button>
+      <button @click="reset" v-hover>Reset</button>
     </div>
 
     <div class="flex gap-2 justify-center">

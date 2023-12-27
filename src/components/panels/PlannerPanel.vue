@@ -1,5 +1,5 @@
 <script setup>
-import PanelBlock from "@/components/Panels/PanelBlock.vue";
+import PanelBlock from "@/components/panels/PanelBlock.vue";
 import ActionList from "@/components/actions/ActionList.vue";
 
 import { useActionsStore } from "@/stores/actions";

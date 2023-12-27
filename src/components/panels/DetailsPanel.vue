@@ -1,6 +1,6 @@
 <script setup>
 import { ScaleIcon, CogIcon, HeartIcon, HandThumbUpIcon, HandThumbDownIcon } from '@heroicons/vue/16/solid'
-import PanelBlock from "@/components/Panels/PanelBlock.vue";
+import PanelBlock from "@/components/panels/PanelBlock.vue";
 
 import { usePassportStore } from "@/stores/stats/passport";
 import { usePhysicalStore } from "@/stores/stats/physical";

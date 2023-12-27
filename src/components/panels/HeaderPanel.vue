@@ -1,6 +1,6 @@
 <script setup>
 import { useWalletStore } from "@/stores/stats/wallet";
-import PanelBlock from "@/components/Panels/PanelBlock.vue";
+import PanelBlock from "@/components/panels/PanelBlock.vue";
 import Logo from "@/components/Logo.vue";
 import StatWalletBalance from "@/components/StatWalletBalance.vue";
 import { useTimeStore } from "@/stores/time.js";

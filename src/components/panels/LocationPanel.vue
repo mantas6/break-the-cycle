@@ -6,7 +6,7 @@ import { kebabCase } from "lodash/string";
 
 import { Cog6ToothIcon } from '@heroicons/vue/24/outline'
 import { RouterLink } from "vue-router";
-import PanelBlock from "@/components/Panels/PanelBlock.vue";
+import PanelBlock from "@/components/panels/PanelBlock.vue";
 import { useTimeStore } from "@/stores/time";
 import { useActionsStore } from "@/stores/actions";
 import {pickBy} from "lodash/object";
@@ -23,7 +23,7 @@ const categoriesNotify = computed(() => {
 </script>
 
 <template>
-  <PanelBlock class="flex justify-between">
+  <PanelBlock class="flex justify-between" :locked="categories.length <= 1">
     <div class="flex gap-3">
       <RouterLink to="/" v-hover>Home</RouterLink>
       <template v-for="category in categories" :key="category">
