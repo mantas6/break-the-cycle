@@ -31,7 +31,7 @@ const unlock = useUnlockStore();
       </div>
       <div class="flex flex-col gap-3">
         <StatBalance v-if="unlock.physical" title="Physical" title-min="Tired" title-max="Lazy" v-bind="physical.energy" />
-        <StatBalanceFill title="Nutrition" v-bind="nutrition.energy" />
+        <StatBalanceFill v-if="unlock.nutrition" title="Nutrition" v-bind="nutrition.energy" />
       </div>
       <div class="grid grid-cols-4 gap-3">
         <div class="flex flex-col items-center">
