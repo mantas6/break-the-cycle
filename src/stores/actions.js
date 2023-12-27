@@ -84,7 +84,7 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
     }
 
     function increaseToMax(name) {
-        for (const _ of range(1, 25)) {
+        for (const _ of range(1, 13)) {
             if (!canIncrease(name)) {
                 return;
             }
