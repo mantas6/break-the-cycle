@@ -4,6 +4,7 @@
   import { useActionsStore } from "@/stores/actions.js";
   import { computed } from "vue";
   import {useActionsTriggersStore} from "@/stores/actionsTriggers.js";
+  import {useLockStore} from "@/stores/lock.js";
 
   const props = defineProps({
     title: String,
@@ -15,6 +16,7 @@
 
   const actions = useActionsStore();
   const triggers = useActionsTriggersStore();
+  const lock = useLockStore();
 
   const isActive = computed(() => actions.active[props.name] !== undefined);
   const canBeIncreased = computed(() => actions.canIncrease(props.name));
@@ -53,7 +55,7 @@
         </span>
       </div>
     </div>
-    <div class="flex gap-1 border-dotted">
+    <div v-if="lock.planner" class="flex gap-1 border-dotted">
       <button @click="actions.increaseToMax(name)" :disabled="!canBeIncreased" v-hover="!canBeIncreased"><ArrowUpCircleIcon class="w-7" /></button>
       <button @click="actions.increase(name)" :disabled="!canBeIncreased" v-hover="!canBeIncreased"><PlusCircleIcon class="w-7" /></button>
       <button @click="actions.decrease(name)" :disabled="!isActive" v-hover="!isActive"><MinusCircleIcon class="w-7" /></button>

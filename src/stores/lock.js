@@ -7,18 +7,20 @@ export const useLockStore = defineStore(storeName('lock'), () => {
     const wallet = useWalletStore();
 
     const balance = ref();
+    const planner = ref();
 
     watchEffect(() => {
-       if (balance.value) {
-           return;
-       }
+       if (balance.value) return;
+       if (wallet.balance.now > 5) balance.value = true;
+    });
 
-       if (wallet.balance.now > 5) {
-           balance.value = true;
-       }
+    watchEffect(() => {
+        if (planner.value) return;
+        if (wallet.balance.now > 25) planner.value = true;
     });
 
     return {
         balance,
+        planner,
     }
 })
