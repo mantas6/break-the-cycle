@@ -30,7 +30,10 @@ app.use(router)
 initializeDynamicModules();
 
 setTimeout(() => loadGame(), 500)
-setInterval(() => saveGame(), 5000);
+
+const devSaveInterval = 5_000;
+const prodSaveInterval = 60_000;
+setInterval(() => saveGame(), import.meta.env.PROD ? prodSaveInterval : devSaveInterval);
 
 app.directive('hover', vHover);
 app.directive('format', vFormat);

@@ -40,6 +40,8 @@ export function load(json) {
     }
 }
 
-// Debugging
-window.__serialize = serialize;
-window.__load = load;
+if (import.meta.env.DEV) {
+    // Debugging
+    window.__serialize = serialize;
+    window.__load = load;
+}
