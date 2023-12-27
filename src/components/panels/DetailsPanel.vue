@@ -12,6 +12,7 @@ import StatBalanceFill from "@/components/StatBalanceFill.vue";
 import {useDigestiveStore} from "@/stores/stats/digestive.js";
 import HealthStatDetail from "@/components/details/HealthStatDetail.vue";
 import {useCardiovascular} from "@/stores/stats/cardiovascular.js";
+import {useUnlockStore} from "@/stores/unlock.js";
 
 const passport = usePassportStore();
 const physical = usePhysicalStore();
@@ -19,6 +20,7 @@ const nutrition = useNutritionStore();
 const social = useSocialStore();
 const digestive = useDigestiveStore();
 const cardiovascular = useCardiovascular();
+const unlock = useUnlockStore();
 </script>
 
 <template>
@@ -28,7 +30,7 @@ const cardiovascular = useCardiovascular();
         <StatValue title="Age" :now="passport.age" />
       </div>
       <div class="flex flex-col gap-3">
-        <StatBalance title="Physical" title-min="Tired" title-max="Lazy" v-bind="physical.energy" />
+        <StatBalance v-if="unlock.physical" title="Physical" title-min="Tired" title-max="Lazy" v-bind="physical.energy" />
         <StatBalanceFill title="Nutrition" v-bind="nutrition.energy" />
       </div>
       <div class="grid grid-cols-4 gap-3">
