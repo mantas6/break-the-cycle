@@ -39,7 +39,7 @@ export default defineActionStore(options, ({ eff, durations }) => {
 
         const nutritionPercent = Balance.percentage(nutrition.energy)
 
-        return nutritionPercent < 0.5;
+        return nutritionPercent < 0.25;
     }
 
     return {

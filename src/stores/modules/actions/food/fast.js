@@ -7,6 +7,7 @@ import { Balance } from "@/stats/index.js";
 import {interval} from "@/helpers/actions";
 import {executeBasicFood} from "@/helpers/actions/food.js";
 import {defineActionStore} from "@/stores/modules/actions/index.js";
+import {useSocialStore} from "@/stores/stats/social.js";
 
 const options = {
     title: 'Fast Food',
@@ -15,6 +16,8 @@ const options = {
 };
 
 export default defineActionStore(options, store => {
+    const social = useSocialStore();
+
     const durations = interval(0.5);
     const baseBalance = computed(() => -1);
 
@@ -23,7 +26,7 @@ export default defineActionStore(options, store => {
     }
 
     function beforeUnlock() {
-        return true;
+        return social.construction.now >= 1000;
     }
 
     return {

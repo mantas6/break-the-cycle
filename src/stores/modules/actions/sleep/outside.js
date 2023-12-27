@@ -24,7 +24,7 @@ export default defineActionStore(options, ({ eff }) => {
     }
 
     function beforeUnlock() {
-        return true;
+        return Balance.percentage(physical.energy) < 0.25;
     }
 
     return {
