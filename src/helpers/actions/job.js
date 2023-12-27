@@ -1,7 +1,7 @@
 import {usePhysicalStore} from "@/stores/stats/physical";
 import {Balance} from "@/stats";
 import {useWalletStore} from "@/stores/stats/wallet";
-import {toValue} from "vue";
+import {ref, toValue} from "vue";
 import {percentageBetween} from "@/helpers/math.js";
 import {last} from "lodash/array.js";
 
@@ -27,4 +27,35 @@ export function calculateCapability(overallCapability, capabilityUpper, duration
     const maxDuration = last(toValue(durations));
     const capability = percentageBetween(overallCapability, 0, capabilityUpper);
     return percentageBetween(capability, 0, duration / maxDuration)
+}
+
+export function createChargeable(opts) {
+    const charge = Balance.create(0, opts.max, 0);
+
+    const reserve = ref(0);
+
+    function onCharge(cb) {
+        const affect = cb();
+        const reserved = Balance.reserve(charge, affect);
+        const overflow = affect - reserved;
+
+        if (overflow) {
+            reserve.value += overflow;
+        }
+
+        Balance.affect(charge, affect);
+    }
+
+    function onFull(cb) {
+        if (Balance.percentage(charge) === 1) {
+            charge.now -= charge.max;
+            cb();
+        }
+    }
+
+    return {
+        charge,
+        onCharge,
+        onFull,
+    };
 }
