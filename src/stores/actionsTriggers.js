@@ -4,7 +4,7 @@ import {actionStores} from "@/plugins/actions.js";
 import {head} from "lodash";
 import {useLockTimeout} from "@/helpers/misc.js";
 
-export const useActionsTriggersStore = defineStore(storeName('actions-triggers'), () => {
+export const useActionsTriggersStore = defineStore(storeName('actions.triggers'), () => {
     const { start, locked } = useLockTimeout();
 
     function execute(name) {
