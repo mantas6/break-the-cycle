@@ -2,7 +2,7 @@ import {defineStore} from "pinia";
 import {storeName} from "@/stores/index.js";
 import {computed, ref} from "vue";
 import {range, assign} from "lodash";
-import {computedWritable} from "@/stats/computed.js";
+import {computedWritable} from "@/helpers/computed";
 
 export function defineActionStore(opts, storeSetup) {
     const id = `${opts.category}.${opts.subcategory}.${opts.title}`;

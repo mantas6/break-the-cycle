@@ -1,4 +1,4 @@
-import {computedOnce} from "@/stats/computed.js";
+import {computedOnce} from "@/helpers/computed.js";
 import {expect, it, afterEach} from "vitest";
 import {ref} from "vue";
 import {clearHandlers, runClock} from "@/routines/clock.js";

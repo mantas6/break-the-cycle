@@ -1,8 +1,6 @@
 import {computed, ref} from "vue";
 import { afterClock } from "@/routines/clock.js";
 
-// TODO: Move to helpers
-
 export function computedOnce(cb) {
     const base = ref(cb())
 

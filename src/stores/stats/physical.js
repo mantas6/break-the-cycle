@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { storeName } from "@/stores";
 import { Balance } from "@/stats";
 import {useCardiovascular} from "@/stores/stats/cardiovascular.js";
-import {computedOnce} from "@/stats/computed.js";
+import {computedOnce} from "@/helpers/computed.js";
 import {onClock} from "@/routines/clock.js";
 
 export const usePhysicalStore = defineStore(storeName('physical'), () => {
