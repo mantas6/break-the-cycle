@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // base: mode === 'production' ? '/break-the-cycle/' : undefined,
+  base: '/break-the-cycle/',
   server: {
     host: true,
   },
