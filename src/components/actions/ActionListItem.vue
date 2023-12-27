@@ -38,7 +38,7 @@
   <div class="flex p-3 gap-3 justify-between border-dotted border border-zinc-400 hover:border-zinc-300 rounded" @mouseover="clearNotify">
     <div class="flex flex-col cursor-pointer text-sm grow" @click="triggers.execute(name)" v-hover>
       <div class="flex gap-3">
-        <span class="w-10">{{ isActive ? currentDuration : '0' }}h</span>
+        <span class="w-10" v-if="unlock.planner">{{ isActive ? currentDuration : '0' }}h</span>
         <div>
           <span class="font-medium">{{ title }}</span>
           <span v-if="notify" class="text-red-300">*</span>
@@ -47,7 +47,7 @@
       <div class="flex gap-3 items-center">
         <span v-if="baseBalance" class="text-xs">
           <span v-format:currency="baseBalance"></span>
-          <span> / h</span>
+          <span v-if="unlock.planner"> / h</span>
         </span>
         <span v-if="isActive" class="text-xs flex gap-1" :class="productivityClasses">
           <ChartBarIcon class="w-4" />
