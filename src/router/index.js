@@ -6,13 +6,15 @@ const router = createRouter({
   routes: [
     {
       path: '/:category?',
-      name: 'home',
       component: HomeView
     },
     {
       path: '/settings',
-      name: 'settings',
       component: () => import('@/views/SettingsView.vue')
+    },
+    {
+      path: '/dev',
+      component: () => import('@/views/DevView.vue')
     },
   ]
 })
