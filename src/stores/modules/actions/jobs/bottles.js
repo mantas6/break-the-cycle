@@ -23,10 +23,10 @@ export default defineActionStore(options, store => {
         const social = useSocialStore();
         Value.affect(social.construction, 1 * count * eff.value);
 
-        Balance.affect(charge, 1 * eff.value);
+        Balance.affect(charge, 1 * count * eff.value);
 
         if (Balance.percentage(charge) === 1) {
-            charge.now = 0;
+            charge.now -= charge.max;
             const wallet = useWalletStore();
             wallet.transaction(baseBalance.value)
         }
