@@ -1,8 +1,8 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { clamp } from "lodash/number";
 import { storeName } from "@/stores";
 import { Value } from "@/stats";
+import { orderBy } from "lodash";
 
 export const useWalletStore = defineStore(storeName('wallet'), () => {
     const balance = Value.create(0);
@@ -19,6 +19,21 @@ export const useWalletStore = defineStore(storeName('wallet'), () => {
         return net;
     }
 
+    // Only supports negative transactions
+    function preTransactionArr(baseBalance, durations = [1], count = 1) {
+        const durationsAmounts = durations
+            .filter(duration => duration <= count)
+            .map(duration => duration * baseBalance);
+
+        for (const amount of orderBy(durationsAmounts)) {
+            if (balance.now + amount >= 0) {
+                return amount;
+            }
+        }
+
+        return 0;
+    }
+
     function transaction(net) {
         Value.affect(balance, net);
     }
@@ -27,6 +42,7 @@ export const useWalletStore = defineStore(storeName('wallet'), () => {
         balance,
 
         preTransaction,
+        preTransactionArr,
         transaction,
     };
 })
