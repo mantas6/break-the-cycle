@@ -25,6 +25,7 @@ export default defineActionStore(options, store => {
 
         Balance.affect(charge, 1 * count * eff.value);
 
+        // TODO: make helper method
         if (Balance.percentage(charge) === 1) {
             charge.now -= charge.max;
             const wallet = useWalletStore();
