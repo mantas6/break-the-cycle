@@ -4,14 +4,14 @@ import ActionList from "@/components/actions/ActionList.vue";
 
 import { useActionsStore } from "@/stores/actions";
 import StatValue from "@/components/StatValue.vue";
-import {useLockStore} from "@/stores/lock";
+import {useUnlockStore} from "@/stores/unlock";
 
 const actions = useActionsStore();
-const lock = useLockStore();
+const unlock = useUnlockStore();
 </script>
 
 <template>
-  <PanelBlock class="flex flex-col" :locked="!lock.planner">
+  <PanelBlock class="flex flex-col" :locked="!unlock.planner">
     <div class="grid grid-cols-2 gap-3">
       <StatValue title="Planned hours">
         <span>{{ actions.currentDuration }}h / {{ actions.maxDuration }}h</span>

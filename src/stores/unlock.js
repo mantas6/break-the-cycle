@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { storeName } from "@/stores";
 import {useWalletStore} from "@/stores/stats/wallet.js";
 
-export const useLockStore = defineStore(storeName('lock'), () => {
+export const useUnlockStore = defineStore(storeName('unlock'), () => {
     const wallet = useWalletStore();
 
     const balance = ref();
