@@ -28,4 +28,12 @@ it('correctly updates ref when condition changes', async () => {
     await nextTick();
     expect(unlocked.value).toBe(true)
     expect(triggerCount.value).toBe(3)
+
+    dependency.value = 0;
+    unlocked.value = undefined;
+    await nextTick();
+
+    dependency.value = 5;
+    await nextTick();
+    expect(unlocked.value).toBe(true)
 })
