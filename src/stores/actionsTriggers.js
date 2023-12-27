@@ -12,7 +12,6 @@ export const useActionsTriggersStore = defineStore(storeName('actions-triggers')
         const minDuration = head(action.durations);
 
         const lockDuration = minDuration * 100;
-        console.log(lockDuration)
 
         if (start(lockDuration)) {
             action.executeAction(minDuration);
