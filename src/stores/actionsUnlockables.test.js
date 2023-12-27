@@ -5,6 +5,7 @@ import {actionStores} from "@/plugins/actions.js";
 import {useActionsStore} from "@/stores/actions.js";
 import {ref} from "vue";
 import {runClock} from "@/routines/clock";
+import {useActionsTriggersStore} from "@/stores/actionsTriggers.js";
 
 const options = {
     title: 'Unlockable action',
@@ -42,6 +43,7 @@ beforeEach(() => {
 
 it('unlocks actions correctly', () => {
     const actions = useActionsStore();
+    const triggers = useActionsTriggersStore();
     const store = useTestStore()
 
     expect(actions.all).not.toHaveProperty(store.$id)
@@ -56,6 +58,6 @@ it('unlocks actions correctly', () => {
     expect(actions.all).toHaveProperty(store.$id)
     expect(store.notify).toBe(true)
 
-    actions.clearNotify(store.$id)
+    triggers.clearNotify(store.$id)
     expect(store.notify).toBeUndefined()
 })

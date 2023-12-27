@@ -3,6 +3,7 @@
   import { ChartBarIcon } from '@heroicons/vue/16/solid'
   import { useActionsStore } from "@/stores/actions.js";
   import { computed } from "vue";
+  import {useActionsTriggersStore} from "@/stores/actionsTriggers.js";
 
   const props = defineProps({
     title: String,
@@ -13,6 +14,7 @@
   });
 
   const actions = useActionsStore();
+  const triggers = useActionsTriggersStore();
 
   const isActive = computed(() => actions.active[props.name] !== undefined);
   const canBeIncreased = computed(() => actions.canIncrease(props.name));
@@ -25,14 +27,14 @@
 
   function clearNotify() {
     if (props.notify) {
-      actions.clearNotify(props.name);
+      triggers.clearNotify(props.name);
     }
   }
 </script>
 
 <template>
   <div class="flex p-3 gap-3 justify-between border-dotted border border-zinc-400 hover:border-zinc-300 rounded" @mouseover="clearNotify">
-    <div class="flex flex-col cursor-pointer text-sm grow" @click="actions.trigger(name)" v-hover>
+    <div class="flex flex-col cursor-pointer text-sm grow" @click="triggers.execute(name)" v-hover>
       <div class="flex gap-3">
         <span class="w-10">{{ isActive ? currentDuration : '0' }}h</span>
         <div>

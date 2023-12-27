@@ -99,12 +99,7 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         }
     }
 
-    function trigger(name) {
-        const action = actionStores.value.get(name);
-        const minDuration = head(action.durations);
 
-        action.executeAction(minDuration);
-    }
 
     function increase(name) {
         if (!canIncrease(name)) {
@@ -135,11 +130,6 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
 
     function remove(name) {
         delete active[name];
-    }
-
-    function clearNotify(name) {
-        const action = actionStores.value.get(name);
-        action.notify = undefined;
     }
 
     function $reset() {
@@ -196,11 +186,9 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
 
         canIncrease,
         increaseToMax,
-        trigger,
         increase,
         decrease,
         remove,
-        clearNotify,
 
         $reset,
     };
