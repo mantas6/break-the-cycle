@@ -10,13 +10,22 @@ it('correctly updates ref when condition changes', async () => {
         return dependency.value >= 5;
     });
 
+    await nextTick();
     expect(unlocked.value).toBeUndefined()
+    expect(triggerCount.value).toBe(1)
 
     dependency.value = 1;
+    await nextTick();
     expect(unlocked.value).toBeUndefined()
+    expect(triggerCount.value).toBe(2)
 
     dependency.value = 5;
-
     await nextTick();
     expect(unlocked.value).toBe(true)
+    expect(triggerCount.value).toBe(3)
+
+    dependency.value = 10;
+    await nextTick();
+    expect(unlocked.value).toBe(true)
+    expect(triggerCount.value).toBe(3)
 })

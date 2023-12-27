@@ -1,4 +1,3 @@
-import {computed, ref, watchEffect} from 'vue'
 import { defineStore } from 'pinia'
 import { storeName } from "@/stores";
 import {useWalletStore} from "@/stores/stats/wallet.js";
