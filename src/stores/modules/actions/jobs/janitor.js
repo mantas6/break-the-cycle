@@ -9,13 +9,13 @@ const options = {
     category: 'Jobs',
 };
 
-export default defineActionStore(options, ({ eff }) => {
+export default defineActionStore(options, store => {
     const durations = computed(() => [4, 8, 12]);
 
     const baseBalance = computed(() => 1);
 
     function executeAction(count) {
-        executeBasicJob({ eff, count, durations }, { baseBalance, energyCost: 1 });
+        executeBasicJob(store, count, { baseBalance, energyCost: 1 });
     }
 
     function beforeUnlock() {

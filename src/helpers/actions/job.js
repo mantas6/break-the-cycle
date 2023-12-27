@@ -5,7 +5,7 @@ import {toValue} from "vue";
 import {percentageBetween} from "@/helpers/math.js";
 import {last} from "lodash/array.js";
 
-export function executeBasicJob({ eff, count, durations }, { energyCost, baseBalance, capabilityUpper = 0.5 }) {
+export function executeBasicJob({ eff, durations }, count, { energyCost, baseBalance, capabilityUpper = 0.5 }) {
     const physical = usePhysicalStore();
 
     const energyCostTotal = toValue(energyCost) * count;

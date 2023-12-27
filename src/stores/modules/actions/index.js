@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {storeName} from "@/stores/index.js";
 import {computed, ref} from "vue";
-import {range} from "lodash/util.js";
+import {range, assign} from "lodash";
 import {computedWritable} from "@/stats/computed.js";
 
 export function defineActionStore(opts, storeSetup) {
@@ -18,7 +18,7 @@ export function defineActionStore(opts, storeSetup) {
         const unlocked = ref();
         const notify = ref();
 
-        const defaults = {
+        const store = {
             title,
             subcategory,
             category,
@@ -30,11 +30,10 @@ export function defineActionStore(opts, storeSetup) {
             notify,
         };
 
-        const setup = storeSetup(defaults);
+        const setup = storeSetup(store);
 
-        return {
-            ...defaults,
-            ...setup,
-        };
+        assign(store, setup);
+
+        return store;
     });
 }

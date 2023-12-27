@@ -14,12 +14,12 @@ const options = {
     category: 'Food',
 };
 
-export default defineActionStore(options, ({ eff }) => {
+export default defineActionStore(options, store => {
     const durations = interval(0.5);
     const baseBalance = computed(() => -1);
 
     function executeAction(count) {
-        executeBasicFood({ eff, count, durations }, { baseBalance, energyGain: 1 });
+        executeBasicFood(store, count, { baseBalance, energyGain: 1 });
     }
 
     function beforeUnlock() {

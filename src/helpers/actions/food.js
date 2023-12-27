@@ -5,7 +5,7 @@ import {toValue} from "vue";
 import {head} from "lodash/array.js";
 import {useDigestiveStore} from "@/stores/stats/digestive.js";
 
-export function executeBasicFood({ eff, count, durations }, opts) {
+export function executeBasicFood({ eff, durations }, count, opts) {
     const energyGain = toValue(opts.energyGain) * count;
     const nutrition = useNutritionStore();
     const digestive = useDigestiveStore();
