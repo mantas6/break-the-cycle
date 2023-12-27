@@ -17,8 +17,10 @@ export function executeBasicJob({ eff, durations }, count, { energyCost, baseBal
 
     Balance.affect(physical.energy, actualCost);
 
-    const wallet = useWalletStore();
-    wallet.transaction(toValue(baseBalance) * count * eff.value);
+    if (baseBalance !== undefined) {
+        const wallet = useWalletStore();
+        wallet.transaction(toValue(baseBalance) * count * eff.value);
+    }
 }
 
 export function calculateCapability(overallCapability, capabilityUpper, duration, durations) {

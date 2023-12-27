@@ -12,6 +12,7 @@
     eff: Number,
     baseBalance: Number,
     notify: Boolean,
+    charge: Object,
   });
 
   const actions = useActionsStore();
@@ -44,12 +45,17 @@
           <span v-if="notify" class="text-red-300">*</span>
         </div>
       </div>
-      <div class="flex gap-3 items-center">
-        <span v-if="baseBalance" class="text-xs">
+      <div class="flex gap-3 items-center text-xs">
+        <span v-if="baseBalance">
           <span v-format:currency="baseBalance"></span>
-          <span v-if="unlock.planner"> / h</span>
+          <span v-if="unlock.planner && !charge"> / h</span>
         </span>
-        <span v-if="isActive" class="text-xs flex gap-1" :class="productivityClasses">
+        <span v-if="charge">
+          <span v-format="charge.now"></span>
+          <span>/</span>
+          <span v-format="charge.max"></span>
+        </span>
+        <span v-if="isActive" class="flex gap-1" :class="productivityClasses">
           <ChartBarIcon class="w-4" />
           <span v-format:percent="eff"></span>
         </span>
