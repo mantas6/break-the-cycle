@@ -16,5 +16,5 @@ const options = {
 
 export default defineTierUpgrade(options, -10, useJob, () => {
     const social = useSocialStore();
-    return social.construction.now >= 50;
+    return social.construction.now >= 5;
 });
