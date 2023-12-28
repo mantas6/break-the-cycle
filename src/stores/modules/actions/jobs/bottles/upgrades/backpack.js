@@ -14,7 +14,7 @@ const options = {
     once: true,
 };
 
-export default defineTierUpgrade(options, -10, useJob, () => {
+export default defineTierUpgrade(options, -5, useJob, () => {
     const social = useSocialStore();
-    return social.construction.now >= 5;
+    return social.construction.now >= 2.5;
 });
