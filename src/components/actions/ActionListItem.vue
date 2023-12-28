@@ -50,7 +50,7 @@
    @mouseleave="showDetails = false">
     <div class="flex flex-col cursor-pointer text-sm grow select-none" @click="triggers.execute(name)" v-hover>
       <div class="flex gap-3" :class="{ 'text-zinc-500': !canExecute }">
-        <span class="w-10" v-if="unlock.planner">{{ isActive ? currentDuration : '0' }}h</span>
+        <span class="w-10" v-if="unlock.planner && durations.length">{{ isActive ? currentDuration : '0' }}h</span>
         <div>
           <span class="font-medium">{{ title }}</span>
           <span v-if="notify" class="text-red-300">*</span>
@@ -59,7 +59,7 @@
       <div class="flex gap-3 items-center text-xs">
         <span v-if="baseBalance">
           <span v-format:currency="baseBalance"></span>
-          <span v-if="unlock.planner && !charge"> / h</span>
+          <span v-if="unlock.planner && durations.length"> / h</span>
         </span>
         <span v-if="charge">
           <span v-format="charge.now"></span>
