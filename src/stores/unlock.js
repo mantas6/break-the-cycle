@@ -29,12 +29,13 @@ export const useUnlockStore = defineStore(storeName('unlock'), () => {
 
     const nutrition = condition(() => Balance.percentage(nutritionStore.energy) < 0.25);
 
-    /*onClock(() => {
+    function unlockAll() {
         balance.value = true;
+        categories.value = true;
         planner.value = true;
         physical.value = true;
         nutrition.value = true;
-    })*/
+    }
 
     return {
         balance,
@@ -42,5 +43,7 @@ export const useUnlockStore = defineStore(storeName('unlock'), () => {
         planner,
         physical,
         nutrition,
+
+        unlockAll,
     }
 })
