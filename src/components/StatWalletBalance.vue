@@ -5,13 +5,15 @@ const props = defineProps({
   now: Number,
   loss: Number,
   gain: Number,
+
+  showDiff: Boolean,
 })
 </script>
 
 <template>
   <div class="flex flex-col">
     <div class="text-3xl text-center" :class="loss > gain ? 'text-red-200' : 'text-green-200'" v-format:currency="now"></div>
-    <div class="flex justify-between text-xs">
+    <div v-if="showDiff" class="flex justify-between text-xs">
       <div class="flex gap-1">
         <ChevronUpIcon class="w-4 text-green-500" />
         <span :class="{ 'text-zinc-400': gain === 0 }" v-format:currency="gain"></span>
