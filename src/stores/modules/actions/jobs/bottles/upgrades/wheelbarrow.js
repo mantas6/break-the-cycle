@@ -1,6 +1,7 @@
 import {defineTierUpgrade} from "@/helpers/actions/jobUpgrade.js";
 import useJob from '../bottles.js'
 import {useSocialStore} from "@/stores/stats/social.js";
+import {computed} from "vue";
 
 const options = {
     title: 'Wheelbarrow',
@@ -10,7 +11,7 @@ const options = {
     once: true,
 };
 
-export default defineTierUpgrade(options, -10, useJob, () => {
+export default defineTierUpgrade(options, computed(() => -10), useJob, () => {
     const social = useSocialStore();
     const job = useJob();
     return job.tier === 2 && social.construction.now >= 10;

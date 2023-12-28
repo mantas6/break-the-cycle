@@ -1,10 +1,7 @@
-import {defineActionStore} from "@/stores/modules/actions";
-import {computed, toValue} from "vue";
-import { useWalletStore } from "@/stores/stats/wallet";
 import {useSocialStore} from "@/stores/stats/social";
 import useJob from '../bottles';
-import {requireCost} from "@/helpers/actions/index.js";
 import {defineTierUpgrade} from "@/helpers/actions/jobUpgrade.js";
+import {computed} from "vue";
 
 const options = {
     title: 'Backpack',
@@ -14,7 +11,7 @@ const options = {
     once: true,
 };
 
-export default defineTierUpgrade(options, -5, useJob, () => {
+export default defineTierUpgrade(options, computed(() => -5), useJob, () => {
     const social = useSocialStore();
     return social.construction.now >= 2.5;
 });
