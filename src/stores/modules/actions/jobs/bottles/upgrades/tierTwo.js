@@ -9,7 +9,7 @@ const options = {
     title: 'Wheelbarrow',
     subcategory: 'Job - Collect Empty Bottles',
     category: 'Upgrades',
-    description: 'Load up all the bottles at once',
+    description: 'Load up more bottles at once. No need to carry them in a backpack.',
     once: true,
 };
 

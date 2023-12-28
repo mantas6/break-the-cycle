@@ -9,6 +9,7 @@ const options = {
     title: 'Collect Empty Bottles',
     subcategory: 'Homeless',
     category: 'Jobs',
+    description: "Trash cans might have an empty bottle or two. There's other place to look as well.",
 };
 
 export default defineActionStore(options, store => {
