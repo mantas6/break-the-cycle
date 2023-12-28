@@ -1,6 +1,6 @@
 import {defineActionStore} from "@/stores/modules/actions";
 import {computed} from "vue";
-import {executeBasicJob} from "@/helpers/actions/job";
+import {createChargeable, executeBasicJob} from "@/helpers/actions/job";
 import {useSocialStore} from "@/stores/stats/social";
 import {Balance, Value} from "@/stats/index.js";
 import {useWalletStore} from "@/stores/stats/wallet.js";
@@ -15,7 +15,9 @@ export default defineActionStore(options, store => {
     const { eff } = store;
     const baseBalance = computed(() => 0.5);
 
-    const charge = Balance.create(0, 10, 0);
+    const wallet = useWalletStore();
+
+    const { charge, onCharge, onFull } = createChargeable({ max: 10 })
 
     function executeAction(count) {
         executeBasicJob(store, count, { energyCost: 0.5, capabilityUpper: 0.25 })
@@ -23,14 +25,8 @@ export default defineActionStore(options, store => {
         const social = useSocialStore();
         Value.affect(social.construction, 1 * count * eff.value);
 
-        Balance.affect(charge, 1 * count * eff.value);
-
-        // TODO: make helper method
-        if (Balance.percentage(charge) === 1) {
-            charge.now -= charge.max;
-            const wallet = useWalletStore();
-            wallet.transaction(baseBalance.value)
-        }
+        onCharge(() => count * eff.value);
+        onFull(() => wallet.transaction(baseBalance.value))
     }
 
     function beforeUnlock() {

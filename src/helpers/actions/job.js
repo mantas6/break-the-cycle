@@ -32,17 +32,10 @@ export function calculateCapability(overallCapability, capabilityUpper, duration
 export function createChargeable(opts) {
     const charge = Balance.create(0, opts.max, 0);
 
-    const reserve = ref(0);
-
     function onCharge(cb) {
         const affect = cb();
-        const reserved = Balance.reserve(charge, affect);
-        const overflow = affect - reserved;
 
-        if (overflow) {
-            reserve.value += overflow;
-        }
-
+        // This does not support overflow, it is cut off
         Balance.affect(charge, affect);
     }
 
