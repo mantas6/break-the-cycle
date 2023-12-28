@@ -18,8 +18,6 @@ export default defineActionStore(options, store => {
 
     const baseBalance = computed(() => tier.value * 0.1);
 
-    const wallet = useWalletStore();
-
     function executeAction(count) {
         executeBasicJob(store, count, { energyCost: 0.5, capabilityUpper: 0.25, baseBalance })
 
