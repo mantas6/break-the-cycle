@@ -7,6 +7,7 @@ const options = {
     title: 'Janitor',
     subcategory: 'Education-less',
     category: 'Jobs',
+    description: 'The contract states that the toilet cleaning is included in the daily routine.',
 };
 
 export default defineActionStore(options, store => {
