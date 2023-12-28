@@ -4,42 +4,17 @@ import { useWalletStore } from "@/stores/stats/wallet";
 import {useSocialStore} from "@/stores/stats/social";
 import useJob from '../bottles';
 import {requireCost} from "@/helpers/actions/index.js";
+import {defineTierUpgrade} from "@/helpers/actions/jobUpgrade.js";
 
 const options = {
-    title: 'Wheelbarrow',
+    title: 'Backpack',
     subcategory: 'Job - Collect Empty Bottles',
     category: 'Upgrades',
-    description: 'Load up more bottles at once. No need to carry them in a backpack.',
+    description: 'Load up more bottles at once.',
     once: true,
 };
 
-export default defineActionStore(options, ({ revoked }) => {
-    const baseBalance = computed(() => -10);
-
-    const wallet = useWalletStore();
-
-    const canExecute = requireCost(baseBalance);
-
-    function executeAction() {
-        const cost = toValue(baseBalance)
-
-        wallet.transaction(cost);
-        revoked.value = true;
-
-        const job = useJob();
-        job.tier++;
-    }
-
-    function beforeUnlock() {
-        const social = useSocialStore();
-        return social.construction.now >= 50;
-    }
-
-    return {
-        baseBalance,
-
-        canExecute,
-        executeAction,
-        beforeUnlock,
-    };
+export default defineTierUpgrade(options, -10, useJob, () => {
+    const social = useSocialStore();
+    return social.construction.now >= 50;
 });
