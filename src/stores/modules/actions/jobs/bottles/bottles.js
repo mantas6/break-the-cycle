@@ -2,8 +2,8 @@ import {defineActionStore} from "@/stores/modules/actions";
 import {computed} from "vue";
 import {createChargeable, executeBasicJob} from "@/helpers/actions/job";
 import {useSocialStore} from "@/stores/stats/social";
-import {Balance, Value} from "@/stats/index.js";
-import {useWalletStore} from "@/stores/stats/wallet.js";
+import { Value } from "@/stats";
+import { useWalletStore } from "@/stores/stats/wallet";
 
 const options = {
     title: 'Collect Empty Bottles',

@@ -1,0 +1,30 @@
+<script setup>
+import { ClockIcon } from '@heroicons/vue/16/solid'
+import {computed} from "vue";
+import {useUnlockStore} from "@/stores/unlock.js";
+
+const props = defineProps({
+  visible: Boolean,
+  description: String,
+  durations: Array,
+});
+
+const unlock = useUnlockStore();
+
+const durationsHuman = computed(() => {
+  if (props.durations.length > 5) {
+    return props.durations.slice(0, 3).join('h ') + 'h...';
+  }
+
+  return props.durations.join('h ') + 'h';
+})
+</script>
+
+<template>
+  <template v-if="visible && description">
+    <div class="absolute z-10 top-full left-0 bg-zinc-500 border-dotted border border-zinc-400 p-3 text-xs">
+      <div>{{ description }}</div>
+      <div v-if="unlock.planner" class="flex gap-1"><ClockIcon class="w-4"/> {{ durationsHuman }}</div>
+    </div>
+  </template>
+</template>

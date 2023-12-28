@@ -2,13 +2,16 @@
   import { PlusCircleIcon, MinusCircleIcon , BackspaceIcon, ArrowUpCircleIcon } from '@heroicons/vue/24/outline'
   import { ChartBarIcon } from '@heroicons/vue/16/solid'
   import { useActionsStore } from "@/stores/actions.js";
-  import { computed } from "vue";
+  import {computed, ref} from "vue";
   import {useActionsTriggersStore} from "@/stores/actionsTriggers.js";
   import {useUnlockStore} from "@/stores/unlock.js";
+  import ActionDetailsBlock from "@/components/actions/ActionDetailsBlock.vue";
 
   const props = defineProps({
-    title: String,
     name: String,
+    item: Object,
+
+    title: String,
     eff: Number,
     baseBalance: Number,
     notify: Boolean,
@@ -18,6 +21,8 @@
   const actions = useActionsStore();
   const triggers = useActionsTriggersStore();
   const unlock = useUnlockStore();
+
+  const showDetails = ref(false);
 
   const isActive = computed(() => actions.active[props.name] !== undefined);
   const canBeIncreased = computed(() => actions.canIncrease(props.name));
@@ -36,7 +41,10 @@
 </script>
 
 <template>
-  <div class="flex p-3 gap-3 justify-between border-dotted border border-zinc-400 hover:border-zinc-300 rounded" @mouseover="clearNotify">
+  <div class="flex p-3 gap-3 justify-between border-dotted border border-zinc-400 hover:border-zinc-300 rounded relative"
+   @mouseover="clearNotify"
+   @mouseenter="showDetails = true"
+   @mouseleave="showDetails = false">
     <div class="flex flex-col cursor-pointer text-sm grow select-none" @click="triggers.execute(name)" v-hover>
       <div class="flex gap-3">
         <span class="w-10" v-if="unlock.planner">{{ isActive ? currentDuration : '0' }}h</span>
@@ -67,5 +75,6 @@
       <button @click="actions.decrease(name)" :disabled="!isActive" v-hover="!isActive"><MinusCircleIcon class="w-7" /></button>
       <button @click="actions.remove(name)" :disabled="!isActive" v-hover="!isActive"><BackspaceIcon class="w-7" /></button>
     </div>
+    <ActionDetailsBlock :visible="showDetails" v-bind="item" />
   </div>
 </template>

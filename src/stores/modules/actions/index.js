@@ -11,6 +11,7 @@ export function defineActionStore(opts, storeSetup) {
         const title = computed(() => opts.title);
         const subcategory = computed(() => opts.subcategory);
         const category = computed(() => opts.category);
+        const description = computed(() => opts.description);
 
         const durations = computed(() => range(1, 25));
         const eff = computedWritable(0);
@@ -22,6 +23,7 @@ export function defineActionStore(opts, storeSetup) {
             title,
             subcategory,
             category,
+            description,
 
             durations,
             eff,
