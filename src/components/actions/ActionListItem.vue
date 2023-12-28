@@ -78,6 +78,6 @@
       <button @click="actions.decrease(name)" :disabled="!isActive" v-hover="!isActive"><MinusCircleIcon class="w-7" /></button>
       <button @click="actions.remove(name)" :disabled="!isActive" v-hover="!isActive"><BackspaceIcon class="w-7" /></button>
     </div>
-    <ActionDetailsBlock :visible="showDetails && unlock.categories" v-bind="item" />
+    <ActionDetailsBlock :visible="showDetails && unlock.categories" v-bind="item" @hover="showDetails = false" />
   </div>
 </template>
