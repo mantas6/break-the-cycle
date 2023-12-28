@@ -10,6 +10,10 @@ export const useActionsTriggersStore = defineStore(storeName('actions.triggers')
     function execute(name) {
         const action = actionStores.value.get(name);
 
+        if (!action.canExecute) {
+            return;
+        }
+
         // Once actions do not have durations
         const minDuration = head(action.durations) || 1;
 

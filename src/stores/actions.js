@@ -166,6 +166,10 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
                 continue;
             }
 
+            if (!action.canExecute) {
+                continue;
+            }
+
             action.executeAction(actionCount);
         }
 

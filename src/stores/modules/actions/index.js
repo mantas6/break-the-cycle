@@ -21,6 +21,8 @@ export function defineActionStore(opts, storeSetup) {
         const revoked = ref();
         const notify = ref();
 
+        const canExecute = computed(() => true);
+
         const store = {
             title,
             subcategory,
@@ -33,6 +35,8 @@ export function defineActionStore(opts, storeSetup) {
             unlocked,
             revoked,
             notify,
+
+            canExecute,
         };
 
         const setup = storeSetup(store);

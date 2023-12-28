@@ -18,6 +18,7 @@
     once: Boolean,
     charge: Object,
     durations: Array,
+    canExecute: Boolean,
   });
 
   const actions = useActionsStore();
@@ -48,7 +49,7 @@
    @mouseenter="showDetails = true"
    @mouseleave="showDetails = false">
     <div class="flex flex-col cursor-pointer text-sm grow select-none" @click="triggers.execute(name)" v-hover>
-      <div class="flex gap-3">
+      <div class="flex gap-3" :class="{ 'text-zinc-500': !canExecute }">
         <span class="w-10" v-if="unlock.planner">{{ isActive ? currentDuration : '0' }}h</span>
         <div>
           <span class="font-medium">{{ title }}</span>

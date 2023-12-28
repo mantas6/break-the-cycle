@@ -3,6 +3,7 @@ import {computed, toValue} from "vue";
 import { useWalletStore } from "@/stores/stats/wallet";
 import {useSocialStore} from "@/stores/stats/social";
 import useJob from '../bottles';
+import {requireCost} from "@/helpers/actions/index.js";
 
 const options = {
     title: 'Wheelbarrow',
@@ -17,15 +18,16 @@ export default defineActionStore(options, ({ revoked }) => {
 
     const wallet = useWalletStore();
 
-    function executeAction(count) {
-        const cost = toValue(baseBalance)
-        if (wallet.preTransaction(cost, cost)) {
-            wallet.transaction(cost);
-            revoked.value = true;
+    const canExecute = requireCost(baseBalance);
 
-            const job = useJob();
-            job.tier++;
-        }
+    function executeAction() {
+        const cost = toValue(baseBalance)
+
+        wallet.transaction(cost);
+        revoked.value = true;
+
+        const job = useJob();
+        job.tier++;
     }
 
     function beforeUnlock() {
@@ -36,6 +38,7 @@ export default defineActionStore(options, ({ revoked }) => {
     return {
         baseBalance,
 
+        canExecute,
         executeAction,
         beforeUnlock,
     };
