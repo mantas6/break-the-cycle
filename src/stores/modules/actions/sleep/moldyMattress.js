@@ -1,14 +1,13 @@
 import {defineActionStore} from "@/stores/modules/actions";
-import {useWalletStore} from "@/stores/stats/wallet";
-import {computed} from "vue";
 import {Balance} from "@/stats/index.js";
 import {usePhysicalStore} from "@/stores/stats/physical.js";
 import {useNutritionStore} from "@/stores/stats/nutrition.js";
 
 const options = {
-    title: 'Outside',
+    title: 'Moldy Mattress',
     subcategory: 'Homeless',
     category: 'Sleep',
+    description: 'Somebody threw it away. Smells like attic.',
 };
 
 export default defineActionStore(options, ({ eff }) => {
