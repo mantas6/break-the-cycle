@@ -22,7 +22,7 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
     const maxDuration = computed(() => 24);
 
     const ordered = computed(() => {
-        const predicate = ([ _, action ]) => action.unlocked;
+        const predicate = ([ _, action ]) => action.unlocked && !action.revoked;
         const unlocked = filter([ ...actionStores.value.entries() ], predicate);
 
         return sortBy(unlocked, ([ _, action ]) => action.unlocked);
@@ -159,6 +159,13 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         // Active action processing
         for (const [ actionName, actionCount ] of Object.entries(active) ) {
             const action = actionStores.value.get(actionName);
+
+            if (action.revoked) {
+                // If action was revoked - auto remove from planner
+                remove(actionName);
+                continue;
+            }
+
             action.executeAction(actionCount);
         }
 

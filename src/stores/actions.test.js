@@ -113,4 +113,19 @@ it('executes actions correctly', () => {
     expect(store.executions).toBe(4)
 })
 
+it('correctly manages revoked actions', () => {
+    const actions = useActionsStore();
+    const store = useTestStore()
+
+    actions.increase(store.$id)
+
+    store.revoked = true;
+    expect(actions.all).not.toHaveProperty(store.$id)
+
+    runClock();
+
+    expect(store.executions).toBe(0)
+
+})
+
 it.todo('test with plugins regarding the default durations value')

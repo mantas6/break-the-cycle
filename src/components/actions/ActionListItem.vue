@@ -15,7 +15,9 @@
     eff: Number,
     baseBalance: Number,
     notify: Boolean,
+    once: Boolean,
     charge: Object,
+    durations: Array,
   });
 
   const actions = useActionsStore();
@@ -69,7 +71,7 @@
         </span>
       </div>
     </div>
-    <div v-if="unlock.planner" class="flex gap-1 border-dotted">
+    <div v-if="unlock.planner && durations.length" class="flex gap-1 border-dotted">
       <button @click="actions.increaseToMax(name)" :disabled="!canBeIncreased" v-hover="!canBeIncreased"><ArrowUpCircleIcon class="w-7" /></button>
       <button @click="actions.increase(name)" :disabled="!canBeIncreased" v-hover="!canBeIncreased"><PlusCircleIcon class="w-7" /></button>
       <button @click="actions.decrease(name)" :disabled="!isActive" v-hover="!isActive"><MinusCircleIcon class="w-7" /></button>

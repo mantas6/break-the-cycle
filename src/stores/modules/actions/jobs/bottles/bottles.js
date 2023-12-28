@@ -1,5 +1,5 @@
 import {defineActionStore} from "@/stores/modules/actions";
-import {computed} from "vue";
+import {computed, ref} from "vue";
 import {createChargeable, executeBasicJob} from "@/helpers/actions/job";
 import {useSocialStore} from "@/stores/stats/social";
 import { Value } from "@/stats";
@@ -13,7 +13,9 @@ const options = {
 
 export default defineActionStore(options, store => {
     const { eff } = store;
-    const baseBalance = computed(() => 0.5);
+    const tier = ref(1);
+
+    const baseBalance = computed(() => tier.value * 0.5);
 
     const wallet = useWalletStore();
 
@@ -37,6 +39,7 @@ export default defineActionStore(options, store => {
     return {
         baseBalance,
         charge,
+        tier,
 
         executeAction,
         beforeUnlock,

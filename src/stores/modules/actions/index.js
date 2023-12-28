@@ -13,10 +13,12 @@ export function defineActionStore(opts, storeSetup) {
         const category = computed(() => opts.category);
         const description = computed(() => opts.description);
 
-        const durations = computed(() => range(1, 25));
+
+        const durations = computed(() => opts.once ? [] : range(1, 25));
         const eff = computedWritable(0);
 
         const unlocked = ref();
+        const revoked = ref();
         const notify = ref();
 
         const store = {
@@ -29,6 +31,7 @@ export function defineActionStore(opts, storeSetup) {
             eff,
 
             unlocked,
+            revoked,
             notify,
         };
 
