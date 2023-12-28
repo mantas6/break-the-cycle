@@ -10,9 +10,11 @@ import PanelBlock from "@/components/panels/PanelBlock.vue";
 import { useTimeStore } from "@/stores/time";
 import { useActionsStore } from "@/stores/actions";
 import {pickBy} from "lodash/object";
+import {useUnlockStore} from "@/stores/unlock.js";
 
 const time = useTimeStore();
 const actions = useActionsStore();
+const unlock = useUnlockStore();
 
 const categories = computed(() => uniq(map(actions.all, 'category')));
 
@@ -23,7 +25,7 @@ const categoriesNotify = computed(() => {
 </script>
 
 <template>
-  <PanelBlock class="flex justify-between" :locked="categories.length <= 1">
+  <PanelBlock class="flex justify-between" :locked="!unlock.categories">
     <div class="flex gap-3">
       <RouterLink to="/" v-hover>All</RouterLink>
       <template v-for="category in categories" :key="category">

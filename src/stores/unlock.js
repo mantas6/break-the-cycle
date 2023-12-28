@@ -6,13 +6,17 @@ import {Balance} from "@/stats/index.js";
 import {condition} from "@/helpers/state.js";
 import {useNutritionStore} from "@/stores/stats/nutrition.js";
 import {onClock} from "@/routines/clock.js";
+import {useActionsStore} from "@/stores/actions.js";
 
 export const useUnlockStore = defineStore(storeName('unlock'), () => {
     const wallet = useWalletStore();
+    const actionsStore = useActionsStore();
     const physicalStore = usePhysicalStore();
     const nutritionStore = useNutritionStore();
 
     const balance = condition(() => wallet.balance.now >= 1);
+
+    const categories = condition(() => Object.keys(actionsStore.all).length > 1);
 
     const planner = condition(() => wallet.balance.now > 25);
 
@@ -29,6 +33,7 @@ export const useUnlockStore = defineStore(storeName('unlock'), () => {
 
     return {
         balance,
+        categories,
         planner,
         physical,
         nutrition,
