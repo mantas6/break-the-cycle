@@ -17,8 +17,6 @@ export default defineActionStore(options, ({ revoked }) => {
     const wallet = useWalletStore();
     const social = useSocialStore();
 
-    const canExecute = requireCost(baseBalance);
-
     function beforeUnlock() {
         return social.construction.now >= 25;
         return true;
@@ -34,7 +32,6 @@ export default defineActionStore(options, ({ revoked }) => {
     return {
         baseBalance,
 
-        canExecute,
         beforeUnlock,
         executeAction,
     };
