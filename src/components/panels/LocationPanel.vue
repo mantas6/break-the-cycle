@@ -25,7 +25,7 @@ const categoriesNotify = computed(() => {
 <template>
   <PanelBlock class="flex justify-between" :locked="categories.length <= 1">
     <div class="flex gap-3">
-      <RouterLink to="/" v-hover>Home</RouterLink>
+      <RouterLink to="/" v-hover>All</RouterLink>
       <template v-for="category in categories" :key="category">
         <RouterLink :to="`/${kebabCase(category)}`" v-hover>
           <span>{{ category }}</span>
