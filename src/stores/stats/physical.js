@@ -7,7 +7,7 @@ import {computedOnce} from "@/helpers/computed.js";
 import {onClock} from "@/routines/clock.js";
 
 export const usePhysicalStore = defineStore(storeName('physical'), () => {
-    const energy = Balance.create(-100, 100);
+    const energy = Balance.create(-100, 100, 50);
 
     const cardiovascular = useCardiovascular();
 
