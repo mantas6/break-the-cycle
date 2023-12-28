@@ -6,7 +6,7 @@ import {afterClock, onClock} from "@/routines/clock.js";
 import {usePhysicalStore} from "@/stores/stats/physical.js";
 
 export const useNutritionStore = defineStore(storeName('nutrition'), () => {
-    const energy = Balance.create(0, 1000);
+    const energy = Balance.create(0, 1000, 300);
     const physical = usePhysicalStore();
 
     afterClock(() => {
