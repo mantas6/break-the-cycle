@@ -9,6 +9,7 @@ const options = {
     title: 'Discarded Food',
     subcategory: 'Homeless',
     category: 'Food',
+    description: 'Green containers near houses or stores might contain some not spoiled or almost spoiled but-not-quite food.',
 };
 
 export default defineActionStore(options, ({ eff, durations }) => {
