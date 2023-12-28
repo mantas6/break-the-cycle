@@ -12,7 +12,7 @@ export const useUnlockStore = defineStore(storeName('unlock'), () => {
     const physicalStore = usePhysicalStore();
     const nutritionStore = useNutritionStore();
 
-    const balance = condition(() => wallet.balance.now > 0);
+    const balance = condition(() => wallet.balance.now >= 1);
 
     const planner = condition(() => wallet.balance.now > 25);
 
