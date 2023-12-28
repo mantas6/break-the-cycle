@@ -14,7 +14,7 @@ import DetailsPanel from "@/components/panels/DetailsPanel.vue";
     <PlannerPanel class="row-span-2" />
 
     <DetailsPanel />
-    <PanelBlock class="col-span-2">
+    <PanelBlock class="col-span-2 min-h-96">
       <RouterView />
     </PanelBlock>
   </div>
