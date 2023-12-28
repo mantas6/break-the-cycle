@@ -23,7 +23,7 @@ export default defineActionStore(options, store => {
 
         // Move to global method
         const social = useSocialStore();
-        Value.affect(social.construction, 1 * count * eff.value);
+        Value.affect(social.construction, 1 * count * eff.value * tier.value);
     }
 
     function beforeUnlock() {
