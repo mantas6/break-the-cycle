@@ -13,20 +13,20 @@ const passport = useDeathStore();
 
 const route = useRoute();
 
-const filtered = computed(() => {
-  const selectedCategory = route.params.category;
+const selectedCategory = computed(() => route.params.category)
 
-  if (!selectedCategory) {
+const filtered = computed(() => {
+  if (!selectedCategory.value) {
     return actions.all;
   }
 
-  return pickBy(actions.all, action => kebabCase(action.category) === selectedCategory)
+  return pickBy(actions.all, action => kebabCase(action.category) === selectedCategory.value)
 })
 </script>
 
 <template>
   <div v-if="passport.alive">
-    <ActionList :items="filtered" grid />
+    <ActionList :items="filtered" :nested="!!selectedCategory" grid />
   </div>
   <DeathScreen v-else />
 </template>
