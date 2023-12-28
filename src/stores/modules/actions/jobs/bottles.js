@@ -22,6 +22,7 @@ export default defineActionStore(options, store => {
     function executeAction(count) {
         executeBasicJob(store, count, { energyCost: 0.5, capabilityUpper: 0.25 })
 
+        // Move to global method
         const social = useSocialStore();
         Value.affect(social.construction, 1 * count * eff.value);
 
