@@ -1,8 +1,9 @@
 import {defineStore} from "pinia";
 import {storeName} from "@/stores/index.js";
-import {computed, ref} from "vue";
+import {computed, ref, toValue} from "vue";
 import {range, assign} from "lodash";
 import {computedWritable} from "@/helpers/computed";
+import {requireCost} from "@/helpers/actions/index.js";
 
 export function defineActionStore(opts, storeSetup) {
     const id = `${opts.category}.${opts.subcategory}.${opts.title}`;
@@ -21,8 +22,6 @@ export function defineActionStore(opts, storeSetup) {
         const revoked = ref();
         const notify = ref();
 
-        const canExecute = computed(() => true);
-
         const store = {
             title,
             subcategory,
@@ -35,11 +34,19 @@ export function defineActionStore(opts, storeSetup) {
             unlocked,
             revoked,
             notify,
-
-            canExecute,
         };
 
         const setup = storeSetup(store);
+
+        // If setup does not implement "canExecute"
+        if (!setup.canExecute) {
+            // But provides a baseBalance cost
+            if (setup.baseBalance && toValue(setup.baseBalance) < 0) {
+                store.canExecute = requireCost(setup.baseBalance);
+            } else {
+                store.canExecute = computed(() => true)
+            }
+        }
 
         assign(store, setup);
 

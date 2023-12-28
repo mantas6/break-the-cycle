@@ -17,8 +17,6 @@ export default defineActionStore(options, store => {
     const durations = interval(0.5);
     const baseBalance = computed(() => -1);
 
-    const canExecute = requireCost(baseBalance);
-
     function executeAction(count) {
         executeBasicFood(store, count, { baseBalance, energyGain: 1 });
     }
@@ -31,7 +29,6 @@ export default defineActionStore(options, store => {
         durations,
         baseBalance,
 
-        canExecute,
         executeAction,
         beforeUnlock,
     };
