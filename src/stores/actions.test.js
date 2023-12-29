@@ -56,21 +56,16 @@ afterEach(() => {
     resetGlobals();
 })
 
-it('initializes correctly using wrapper', () => {
-    const store = useTestStore();
+actionsTest('initializes correctly using wrapper', ({ store }) => {
     expect(store.title).toBe(options.title)
     expect(store.subcategory).toBe(options.subcategory)
     expect(store.category).toBe(options.category)
     expect(store.eff).toBeDefined()
 })
 
-it('correctly controls durations', () => {
-    const actions = useActionsStore();
-    const store = useTestStore()
-
+actionsTest('correctly controls durations', ({ store, actions }) => {
     expect(actions.currentDuration).toBe(0)
     expect(actions.maxDuration).toBe(24)
-
 
     expect(actions.all).toHaveProperty(store.$id)
     expect(actions.allActive).not.toHaveProperty(store.$id)
@@ -104,10 +99,7 @@ it('correctly controls durations', () => {
     expect(actions.allActive).not.toHaveProperty(store.$id)
 })
 
-it('executes actions correctly', () => {
-    const actions = useActionsStore();
-    const store = useTestStore()
-
+actionsTest('executes actions correctly', ({ store, actions }) => {
     actions.increase(store.$id)
 
     runClock();
@@ -118,10 +110,7 @@ it('executes actions correctly', () => {
     expect(store.executions).toBe(4)
 })
 
-it('correctly manages revoked actions', () => {
-    const actions = useActionsStore();
-    const store = useTestStore()
-
+actionsTest('correctly manages revoked actions', ({ actions, store }) => {
     actions.increase(store.$id)
 
     store.revoked = true;
