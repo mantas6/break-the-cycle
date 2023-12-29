@@ -19,10 +19,6 @@ const hold = useActionsHoldStore();
 const actions = useActionsStore();
 
 const durationsHuman = computed(() => {
-  if (!props.durations.length) {
-    return 'Manual';
-  }
-
   if (props.durations.length > 5) {
     return props.durations.slice(0, 3).join('h ') + 'h...';
   }
@@ -37,7 +33,7 @@ const durationsHuman = computed(() => {
       <div class="flex flex-col gap-1">
         <div>{{ description }}</div>
         <div class="flex gap-2">
-          <div v-if="unlock.planner" class="flex gap-1"><ClockIcon class="w-4"/> {{ durationsHuman }}</div>
+          <div v-if="unlock.planner && durations.length" class="flex gap-1"><ClockIcon class="w-4"/> {{ durationsHuman }}</div>
           <div v-if="tier" class="flex gap-1"><StarIcon class="w-4" /> {{ tier }}</div>
         </div>
         <div v-if="unlock.hold && durations.length" class="flex gap-1">
