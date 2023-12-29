@@ -185,6 +185,17 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
                 }
             }
         }
+
+        // Action revoking
+        for (const actionStore of actionStores.value.values()) {
+            if (!actionStore.revoked && actionStore.beforeRevoke) {
+                const nowRevoked = actionStore.beforeRevoke();
+
+                if (nowRevoked === true) {
+                    actionStore.revoked = true;
+                }
+            }
+        }
     })
 
     return {

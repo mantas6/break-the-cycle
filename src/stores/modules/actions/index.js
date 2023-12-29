@@ -21,6 +21,7 @@ export function defineActionStore(opts, storeSetup) {
         const unlocked = ref();
         const revoked = ref();
         const notify = ref();
+        const executionCount = ref();
 
         const store = {
             title,
@@ -34,6 +35,8 @@ export function defineActionStore(opts, storeSetup) {
             unlocked,
             revoked,
             notify,
+
+            executionCount,
         };
 
         const setup = storeSetup(store);
@@ -56,6 +59,21 @@ export function defineActionStore(opts, storeSetup) {
         }
 
         assign(store, setup);
+
+        const executeActionChild = store.executeAction;
+        store.executeAction = function (count) {
+            if (!store.canExecute.value) {
+                return;
+            }
+
+            executeActionChild(count)
+
+            if (executionCount.value) {
+                executionCount.value += count;
+            } else {
+                executionCount.value = count;
+            }
+        }
 
         return store;
     });

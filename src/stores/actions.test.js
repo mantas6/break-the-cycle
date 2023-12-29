@@ -105,10 +105,12 @@ actionsTest('executes actions correctly', ({ store, actions }) => {
 
     runClock();
     expect(store.executions).toBe(4)
+    expect(store.executionCount).toBe(4)
 
     actions.decrease(store.$id)
     runClock();
     expect(store.executions).toBe(4)
+    expect(store.executionCount).toBe(4)
 })
 
 actionsTest('correctly manages revoked actions', ({ actions, store }) => {
@@ -148,6 +150,36 @@ actionsTest('actions is not executed and removed from the stack when revoked', (
     expect(store.executions).toBe(0)
     expect(actions.currentDuration).toBe(0)
     expect(actions.active).not.toHaveProperty(store.$id)
+})
+
+actionsTest('does not execute when canExecute is false', () => {
+    const useActionWithCanExecute = defineActionStore({ title: 'ActionWithCanExecute' }, () => {
+        const unlocked = ref(true);
+        const someCondition = ref(false);
+        const canExecute = computed(() => someCondition.value);
+
+        function executeAction(count) {
+
+        }
+
+        return {
+            unlocked,
+            someCondition,
+
+            canExecute,
+
+            executeAction,
+        };
+    })
+
+    const store = useActionWithCanExecute();
+
+    store.executeAction(1)
+    expect(store.executionCount).toBeUndefined()
+
+    store.someCondition = true;
+    store.executeAction(1)
+    expect(store.executionCount).toBe(1)
 })
 
 it.todo('test with plugins regarding the default durations value')
