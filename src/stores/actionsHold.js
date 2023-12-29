@@ -10,6 +10,7 @@ import {computed} from "vue";
 
 export const useActionsHoldStore = defineStore(storeName('actions.hold'), () => {
     const actionName = computedWritable(null);
+    const debounced = computedWritable(false);
 
     const maxDuration = computed(() => 24);
 
@@ -18,6 +19,7 @@ export const useActionsHoldStore = defineStore(storeName('actions.hold'), () => 
 
     function enable(name) {
         actionName.value = name;
+        debounced.value = false;
     }
 
     function disable() {
@@ -26,6 +28,11 @@ export const useActionsHoldStore = defineStore(storeName('actions.hold'), () => 
 
     onClock(() => {
         if (!actionName.value || !unlock.hold) {
+            return;
+        }
+
+        if (!debounced.value) {
+            debounced.value = true;
             return;
         }
 
@@ -45,6 +52,7 @@ export const useActionsHoldStore = defineStore(storeName('actions.hold'), () => 
     return {
         // For some reason crashes if returned
         // actionName,
+        debounced,
 
         maxDuration,
 
