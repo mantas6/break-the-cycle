@@ -10,7 +10,7 @@ import StatBalance from "@/components/StatBalance.vue";
 import StatBalanceFill from "@/components/StatBalanceFill.vue";
 import {useDigestiveStore} from "@/stores/stats/digestive.js";
 import HealthStatDetail from "@/components/details/HealthStatDetail.vue";
-import {useCardiovascular} from "@/stores/stats/cardiovascular.js";
+import {useCardiovascularStore} from "@/stores/stats/cardiovascular.js";
 import {useUnlockStore} from "@/stores/unlock.js";
 import {useIntellectStore} from "@/stores/stats/intellect.js";
 
@@ -18,7 +18,7 @@ const physical = usePhysicalStore();
 const nutrition = useNutritionStore();
 const social = useSocialStore();
 const digestive = useDigestiveStore();
-const cardiovascular = useCardiovascular();
+const cardiovascular = useCardiovascularStore();
 const unlock = useUnlockStore();
 const intellect = useIntellectStore();
 </script>
