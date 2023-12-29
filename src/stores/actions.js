@@ -9,6 +9,7 @@ import {max} from "lodash/math.js";
 import {filter, orderBy, sortBy} from "lodash/collection.js";
 import {transform} from "lodash/object.js";
 import {useDeathStore} from "@/stores/death.js";
+import {actionRevokeHook, actionUnlockHook} from "@/routines/hooks/actions.js";
 
 export const useActionsStore = defineStore(storeName('actions'), () => {
     const death = useDeathStore();
@@ -138,19 +139,6 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         }
     }
 
-    // Should be an external method?
-    function latestUnlockedNum() {
-        const nums = Object.values(all.value)
-            .map(action => action.unlocked)
-            .filter(unlocked => unlocked)
-
-        if (!nums.length) {
-            return 0;
-        }
-
-        return max(nums);
-    }
-
     onClock(() => {
         if (!death.alive) {
             return;
@@ -175,26 +163,12 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
 
         // Action unlocking
         for (const actionStore of actionStores.value.values()) {
-            if (!actionStore.unlocked && actionStore.beforeUnlock) {
-                const nowUnlocked = actionStore.beforeUnlock();
-
-                // Ref might be mistakenly returned, so checking strictly
-                if (nowUnlocked === true) {
-                    actionStore.unlocked = latestUnlockedNum() + 1;
-                    actionStore.notify = true;
-                }
-            }
+            actionUnlockHook(actionStore);
         }
 
         // Action revoking
         for (const actionStore of actionStores.value.values()) {
-            if (!actionStore.revoked && actionStore.beforeRevoke) {
-                const nowRevoked = actionStore.beforeRevoke();
-
-                if (nowRevoked === true) {
-                    actionStore.revoked = true;
-                }
-            }
+            actionRevokeHook(actionStore);
         }
     })
 

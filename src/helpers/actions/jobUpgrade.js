@@ -3,23 +3,28 @@ import {useWalletStore} from "@/stores/stats/wallet.js";
 import {toValue} from "vue";
 
 export function defineTierUpgrade(options, baseBalance, jobFn, beforeUnlockFn) {
-    return defineActionStore(options, ({ revoked }) => {
+    return defineActionStore(options, ({ executionCount }) => {
         const wallet = useWalletStore();
 
         function executeAction() {
             const cost = toValue(baseBalance)
 
             wallet.transaction(cost);
-            revoked.value = true;
 
             const job = jobFn();
             job.tier++;
+        }
+
+        function beforeRevoke() {
+            return executionCount.value > 0;
         }
 
         return {
             baseBalance,
 
             executeAction,
+            beforeRevoke,
+
             beforeUnlock: beforeUnlockFn,
         };
     });

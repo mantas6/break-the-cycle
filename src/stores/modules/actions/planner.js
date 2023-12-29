@@ -3,6 +3,7 @@ import {useWalletStore} from "@/stores/stats/wallet.js";
 import {requireCost} from "@/helpers/actions/index.js";
 import {computed, toValue} from "vue";
 import {useSocialStore} from "@/stores/stats/social.js";
+import {useUnlockStore} from "@/stores/unlock.js";
 
 const options = {
     title: 'Planning course',
@@ -12,21 +13,22 @@ const options = {
     once: true,
 };
 
-export default defineActionStore(options, ({ revoked }) => {
+export default defineActionStore(options, ({ executionCount }) => {
     const baseBalance = computed(() => -200);
     const wallet = useWalletStore();
     const social = useSocialStore();
+    const unlock = useUnlockStore();
 
     function beforeUnlock() {
         return social.construction.now >= 25;
-        return true;
     }
 
     function executeAction() {
-        const cost = toValue(baseBalance)
+        wallet.transaction(toValue(baseBalance));
+    }
 
-        wallet.transaction(cost);
-        revoked.value = true;
+    function beforeRevoke() {
+        return executionCount.value > 0 || unlock.planner;
     }
 
     return {
@@ -34,5 +36,6 @@ export default defineActionStore(options, ({ revoked }) => {
 
         beforeUnlock,
         executeAction,
+        beforeRevoke,
     };
 });
