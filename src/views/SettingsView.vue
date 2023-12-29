@@ -20,6 +20,6 @@ function reset() {
     <button @click="saveGame" v-hover>Save</button>
     <button @click="loadGame" v-hover>Load</button>
     <button @click="reset" v-hover>Reset</button>
-    <RouterLink v-if="showDevMenu" to="/dev" v-hover>Dev menu</RouterLink>
+    <RouterLink v-if="showDevMenu" to="/debug" v-hover>Debug menu</RouterLink>
   </div>
 </template>
