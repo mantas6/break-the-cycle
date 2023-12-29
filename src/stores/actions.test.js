@@ -5,6 +5,7 @@ import {actionStores} from "@/plugins/actions.js";
 import {computed, ref} from "vue";
 import {clearHandlers, clockHandlers, runClock} from "@/routines/clock.js";
 import {defineActionStore} from "@/stores/modules/actions";
+import {useDeathStore} from "@/stores/death.js";
 
 const options = {
     title: 'Test action',
@@ -125,6 +126,28 @@ actionsTest('correctly manages revoked actions', ({ actions, store }) => {
 actionsTest('correctly sets action count when increaseToMax is used', ({ actions, store }) => {
     actions.increaseToMax(store.$id);
     expect(actions.currentDuration).toBe(12)
+})
+
+actionsTest('actions are not executed when not alive', ({ actions, store }) => {
+    actions.increase(store.$id);
+
+    const death = useDeathStore();
+    death.setDead('Test');
+
+    runClock();
+    expect(store.executions).toBe(0)
+})
+
+actionsTest('actions is not executed and removed from the stack when revoked', ({ actions, store }) => {
+    actions.increase(store.$id);
+
+    store.revoked = true;
+
+    runClock();
+
+    expect(store.executions).toBe(0)
+    expect(actions.currentDuration).toBe(0)
+    expect(actions.active).not.toHaveProperty(store.$id)
 })
 
 it.todo('test with plugins regarding the default durations value')
