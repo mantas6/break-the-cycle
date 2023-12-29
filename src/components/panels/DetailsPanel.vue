@@ -27,7 +27,7 @@ const intellect = useIntellectStore();
   <PanelBlock>
     <div class="grid gap-3 text-sm">
       <div class="grid grid-cols-2 gap-3">
-        <StatValue title="Education" :now="intellect.education" />
+        <StatValue title="Education" :item="intellect.education" />
       </div>
       <div class="flex flex-col gap-3">
         <StatBalance v-if="unlock.physical" title="Physical" title-min="Tired" title-max="Lazy" v-bind="physical.energy" />

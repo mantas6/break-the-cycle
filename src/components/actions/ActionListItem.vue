@@ -14,7 +14,10 @@
 
     title: String,
     eff: Number,
+
     baseBalance: Number,
+    minBalance: Number,
+
     notify: Boolean,
     once: Boolean,
     charge: Object,
@@ -58,10 +61,13 @@
           <span v-if="notify" class="text-red-300">*</span>
         </div>
       </div>
-      <div class="flex gap-3 items-center text-xs">
-        <span v-if="baseBalance">
+      <div class="flex gap-2 items-center text-xs">
+        <span v-if="minBalance">
+          <span v-format:currency="minBalance"></span>
+        </span>
+        <span v-if="baseBalance && durations.length && unlock.planner">
           <span v-format:currency="baseBalance"></span>
-          <span v-if="unlock.planner && durations.length"> / h</span>
+          <span>/h</span>
         </span>
         <span v-if="charge">
           <span v-format="charge.now"></span>
