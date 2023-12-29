@@ -4,6 +4,7 @@ import {requireCost} from "@/helpers/actions/index.js";
 import {computed, toValue} from "vue";
 import {useSocialStore} from "@/stores/stats/social.js";
 import {useUnlockStore} from "@/stores/unlock.js";
+import {useIntellectStore} from "@/stores/stats/intellect.js";
 
 const options = {
     title: 'Planning course',
@@ -16,11 +17,11 @@ const options = {
 export default defineActionStore(options, ({ executionCount }) => {
     const baseBalance = computed(() => -200);
     const wallet = useWalletStore();
-    const social = useSocialStore();
+    const intellect = useIntellectStore();
     const unlock = useUnlockStore();
 
     function beforeUnlock() {
-        return social.construction.now >= 25;
+        return intellect.overall >= 1;
     }
 
     function executeAction() {

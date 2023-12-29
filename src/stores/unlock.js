@@ -8,8 +8,8 @@ import {useNutritionStore} from "@/stores/stats/nutrition.js";
 import {onClock} from "@/routines/clock.js";
 import {useActionsStore} from "@/stores/actions.js";
 
-import usePlannerUpgrade from '@/stores/modules/actions/planner';
-import useHoldUpgrade from '@/stores/modules/actions/hold';
+import usePlannerUpgrade from '@/stores/modules/actions/upgrades/planner.js';
+import useHoldUpgrade from '@/stores/modules/actions/upgrades/hold.js';
 
 export const useUnlockStore = defineStore(storeName('unlock'), () => {
     const wallet = useWalletStore();

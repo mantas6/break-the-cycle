@@ -7,7 +7,7 @@ export const useIntellectStore = defineStore(storeName('intellect'), () => {
     const intelligence = ref(50);
     const education = Value.create(0);
 
-    const overall = computed(() => intelligence.value * education.value);
+    const overall = computed(() => intelligence.value * education.now);
 
     return {
         intelligence,
