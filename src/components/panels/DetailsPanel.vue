@@ -2,7 +2,6 @@
 import { ScaleIcon, HandThumbUpIcon, HandThumbDownIcon } from '@heroicons/vue/16/solid'
 import PanelBlock from "@/components/panels/PanelBlock.vue";
 
-import { usePassportStore } from "@/stores/stats/passport";
 import { usePhysicalStore } from "@/stores/stats/physical";
 import { useNutritionStore } from "@/stores/stats/nutrition";
 import { useSocialStore } from "@/stores/stats/social";
@@ -13,21 +12,22 @@ import {useDigestiveStore} from "@/stores/stats/digestive.js";
 import HealthStatDetail from "@/components/details/HealthStatDetail.vue";
 import {useCardiovascular} from "@/stores/stats/cardiovascular.js";
 import {useUnlockStore} from "@/stores/unlock.js";
+import {useIntellectStore} from "@/stores/stats/intellect.js";
 
-const passport = usePassportStore();
 const physical = usePhysicalStore();
 const nutrition = useNutritionStore();
 const social = useSocialStore();
 const digestive = useDigestiveStore();
 const cardiovascular = useCardiovascular();
 const unlock = useUnlockStore();
+const intellect = useIntellectStore();
 </script>
 
 <template>
   <PanelBlock>
     <div class="grid gap-3 text-sm">
-      <div>
-        <StatValue title="Age" :now="passport.age" />
+      <div class="grid grid-cols-2 gap-3">
+        <StatValue title="Education" :now="intellect.education" />
       </div>
       <div class="flex flex-col gap-3">
         <StatBalance v-if="unlock.physical" title="Physical" title-min="Tired" title-max="Lazy" v-bind="physical.energy" />
