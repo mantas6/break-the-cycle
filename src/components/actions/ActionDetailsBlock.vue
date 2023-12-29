@@ -1,7 +1,9 @@
 <script setup>
-import { ClockIcon, StarIcon } from '@heroicons/vue/16/solid'
+import { ClockIcon, StarIcon, CursorArrowRippleIcon } from '@heroicons/vue/16/solid'
 import {computed} from "vue";
 import {useUnlockStore} from "@/stores/unlock.js";
+import {useActionsHoldStore} from "@/stores/actionsHold.js";
+import {useActionsStore} from "@/stores/actions.js";
 
 defineEmits(['hover'])
 
@@ -13,6 +15,8 @@ const props = defineProps({
 });
 
 const unlock = useUnlockStore();
+const hold = useActionsHoldStore();
+const actions = useActionsStore();
 
 const durationsHuman = computed(() => {
   if (!props.durations.length) {
@@ -35,6 +39,11 @@ const durationsHuman = computed(() => {
         <div class="flex gap-2">
           <div v-if="unlock.planner" class="flex gap-1"><ClockIcon class="w-4"/> {{ durationsHuman }}</div>
           <div v-if="tier" class="flex gap-1"><StarIcon class="w-4" /> {{ tier }}</div>
+        </div>
+        <div v-if="unlock.hold && durations.length" class="flex gap-1">
+          <CursorArrowRippleIcon class="w-4" />
+          <span v-if="unlock.planner">{{ hold.maxDuration - actions.currentDuration }}h</span>
+          <span v-else>Hold mouse to do bulk</span>
         </div>
       </div>
     </div>
