@@ -1,4 +1,4 @@
-import { expect, it, beforeEach, afterEach } from 'vitest'
+import { expect, it, beforeEach, afterEach, test } from 'vitest'
 import {createPinia, defineStore, setActivePinia} from "pinia";
 import {useActionsStore} from "@/stores/actions.js";
 import {actionStores} from "@/plugins/actions.js";
@@ -30,6 +30,11 @@ const useTestStore = defineActionStore(options, () => {
 
         executeAction,
     };
+})
+
+const actionsTest = test.extend({
+    store: async ({}, use) => await use(useTestStore()),
+    actions: async ({}, use) => await use(useActionsStore()),
 })
 
 function resetGlobals() {
@@ -126,6 +131,11 @@ it('correctly manages revoked actions', () => {
 
     expect(store.executions).toBe(0)
 
+})
+
+actionsTest('correctly sets action count when increaseToMax is used', ({ actions, store }) => {
+    actions.increaseToMax(store.$id);
+    expect(actions.currentDuration).toBe(12)
 })
 
 it.todo('test with plugins regarding the default durations value')
