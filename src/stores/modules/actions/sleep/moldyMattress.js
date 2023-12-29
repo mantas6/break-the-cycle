@@ -24,8 +24,8 @@ export default defineActionStore(options, ({ eff }) => {
         eff.value = energyAvailPercent;
         Balance.affect(physical.energy, sleepQuality * count * eff.value);
 
-        Balance.affect(digestive.health, sleepQuality * count * eff.value * 0.25);
-        Balance.affect(cardio.health, sleepQuality * count * eff.value * 0.25);
+        Balance.affect(digestive.health, sleepQuality * count * eff.value * 0.1);
+        Balance.affect(cardio.health, sleepQuality * count * eff.value * 0.1);
     }
 
     function beforeUnlock() {
