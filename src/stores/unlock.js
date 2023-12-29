@@ -9,6 +9,7 @@ import {onClock} from "@/routines/clock.js";
 import {useActionsStore} from "@/stores/actions.js";
 
 import usePlannerUpgrade from '@/stores/modules/actions/planner';
+import useHoldUpgrade from '@/stores/modules/actions/hold';
 
 export const useUnlockStore = defineStore(storeName('unlock'), () => {
     const wallet = useWalletStore();
@@ -22,6 +23,11 @@ export const useUnlockStore = defineStore(storeName('unlock'), () => {
 
     const planner = condition(() => {
         const upgrade = usePlannerUpgrade();
+        return upgrade.revoked;
+    });
+
+    const hold = condition(() => {
+        const upgrade = useHoldUpgrade();
         return upgrade.revoked;
     });
 
@@ -40,7 +46,10 @@ export const useUnlockStore = defineStore(storeName('unlock'), () => {
     return {
         balance,
         categories,
+
         planner,
+        hold,
+
         physical,
         nutrition,
 

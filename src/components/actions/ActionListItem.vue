@@ -6,6 +6,7 @@
   import {useActionsTriggersStore} from "@/stores/actionsTriggers.js";
   import {useUnlockStore} from "@/stores/unlock.js";
   import ActionDetailsBlock from "@/components/actions/ActionDetailsBlock.vue";
+  import {useActionsHoldStore} from "@/stores/actionsHold.js";
 
   const props = defineProps({
     name: String,
@@ -23,6 +24,7 @@
 
   const actions = useActionsStore();
   const triggers = useActionsTriggersStore();
+  const hold = useActionsHoldStore();
   const unlock = useUnlockStore();
 
   const showDetails = ref(false);
@@ -48,7 +50,7 @@
    @mouseover="clearNotify"
    @mouseenter="showDetails = true"
    @mouseleave="showDetails = false">
-    <div class="flex flex-col cursor-pointer text-sm grow select-none" @click="triggers.execute(name)" v-hover>
+    <div class="flex flex-col cursor-pointer text-sm grow select-none" @click="triggers.execute(name)" @mousedown="hold.enable(name)" @mouseup="hold.disable" v-hover>
       <div class="flex gap-3" :class="{ 'text-zinc-500': !canExecute }">
         <span class="w-10" v-if="unlock.planner && durations.length">{{ isActive ? currentDuration : '0' }}h</span>
         <div>
