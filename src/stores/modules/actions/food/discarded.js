@@ -23,7 +23,7 @@ export default defineActionStore(options, ({ eff, durations }) => {
 
         const capability = calculateCapability(physical.overallCapability, 0.25, count, durations);
 
-        const neededGain = Balance.reserve(nutrition.energy, energyGain) * capability;
+        const neededGain = Balance.reserve(nutrition.energy, energyGain) * capability * digestive.overallHealth;
         eff.value = neededGain / energyGain;
 
         if (eff.value > 0) {
