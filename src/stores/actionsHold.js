@@ -37,6 +37,7 @@ export const useActionsHoldStore = defineStore(storeName('actions.hold'), () => 
 
         const availableHours = maxDuration.value - actions.currentDuration;
         const availableDurations = action.durations.filter(duration => duration <= availableHours);
+        // TODO: Here it needs to take into account if this action is already being executed in the planner
 
         const duration = last(availableDurations);
 
