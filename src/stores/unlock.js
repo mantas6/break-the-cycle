@@ -39,6 +39,7 @@ export const useUnlockStore = defineStore(storeName('unlock'), () => {
         balance.value = true;
         categories.value = true;
         planner.value = true;
+        hold.value = true;
         physical.value = true;
         nutrition.value = true;
     }
