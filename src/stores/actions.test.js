@@ -64,7 +64,7 @@ export function setupStore() {
     const actionA = useActionA()
     actionStores.value.set(actionA.$id, actionA)
 
-    const actionB = useActionA()
+    const actionB = useActionB()
     actionStores.value.set(actionB.$id, actionB)
 }
 
