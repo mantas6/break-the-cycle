@@ -17,9 +17,9 @@ export const useActionsHoldStore = defineStore(storeName('actions.hold'), () => 
     const unlock = useUnlockStore();
     const actions = useActionsStore();
 
-    function enable(name) {
+    function enable(name, skipDebounce = false) {
         actionName.value = name;
-        debounced.value = false;
+        debounced.value = skipDebounce;
     }
 
     function disable() {
@@ -38,9 +38,11 @@ export const useActionsHoldStore = defineStore(storeName('actions.hold'), () => 
 
         const action = actionStores.value.get(actionName.value);
 
+        // Duration in the planner
+        const activeDuration = actions.active[actionName.value] || 0;
+
         const availableHours = maxDuration.value - actions.currentDuration;
-        const availableDurations = action.durations.filter(duration => duration <= availableHours);
-        // TODO: Here it needs to take into account if this action is already being executed in the planner
+        const availableDurations = action.durations.filter(duration => duration <= availableHours && activeDuration + duration <= last(action.durations));
 
         const duration = last(availableDurations);
 

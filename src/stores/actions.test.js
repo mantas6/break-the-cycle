@@ -13,7 +13,7 @@ const options = {
     category: 'Category',
 };
 
-export const useTestStore = defineActionStore(options, () => {
+export const useActionA = defineActionStore(options, () => {
     const durations = computed(() => [4, 8, 12]);
     const unlocked = ref(true);
 
@@ -33,8 +33,22 @@ export const useTestStore = defineActionStore(options, () => {
     };
 })
 
+export const useActionB = defineActionStore(options, () => {
+    const unlocked = ref(true);
+
+    function executeAction() {
+
+    }
+
+    return {
+        unlocked,
+
+        executeAction,
+    };
+})
+
 const actionsTest = test.extend({
-    store: async ({}, use) => await use(useTestStore()),
+    store: async ({}, use) => await use(useActionA()),
     actions: async ({}, use) => await use(useActionsStore()),
 })
 
@@ -47,7 +61,7 @@ export function setupStore() {
     const store = createPinia();
     setActivePinia(store)
 
-    const action = useTestStore()
+    const action = useActionA()
     actionStores.value.set(action.$id, action)
 }
 
@@ -186,3 +200,4 @@ actionsTest('does not execute when canExecute is false', () => {
 })
 
 it.todo('test with plugins regarding the default durations value')
+it.todo('test action unlocking')
