@@ -2,7 +2,7 @@ import { expect, it, beforeEach, afterEach, test } from 'vitest'
 import {createPinia, defineStore, setActivePinia} from "pinia";
 import {useActionsStore} from "@/stores/actions.js";
 import {actionStores} from "@/plugins/actions.js";
-import {computed, ref} from "vue";
+import {computed, nextTick, ref} from "vue";
 import {clearHandlers, clockHandlers, runClock} from "@/routines/clock.js";
 import {defineActionStore} from "@/stores/modules/actions";
 import {useDeathStore} from "@/stores/death.js";
@@ -33,7 +33,7 @@ export const useActionA = defineActionStore(options, () => {
     };
 })
 
-export const useActionB = defineActionStore(options, () => {
+export const useActionB = defineActionStore({ title: 'ActionB' }, () => {
     const unlocked = ref(true);
 
     function executeAction() {
@@ -199,5 +199,38 @@ actionsTest('does not execute when canExecute is false', () => {
     expect(store.executionCount).toBe(1)
 })
 
+actionsTest('unlocking triggers correctly', ({ actions }) => {
+    const useAction = defineActionStore({ title: 'LockedAction' }, () => {
+        const someCondition = ref(false);
+
+        function beforeUnlock() {
+            return someCondition.value;
+        }
+
+        function executeAction(count) {}
+
+        return {
+            someCondition,
+
+            beforeUnlock,
+            executeAction,
+        };
+    })
+
+    const action = useAction();
+
+    actionStores.value.set(action.$id, action)
+
+    runClock();
+    expect(action.unlocked).toBeUndefined()
+    expect(actions.all).not.toHaveProperty(action.$id)
+
+    action.someCondition = true;
+
+    runClock();
+    expect(action.unlocked).toBeDefined()
+    expect(actions.all).toHaveProperty(action.$id)
+})
+
 it.todo('test with plugins regarding the default durations value')
-it.todo('test action unlocking')
+it.todo('test canExecute if baseBalance is provided')
