@@ -13,7 +13,7 @@ const options = {
     category: 'Category',
 };
 
-const useTestStore = defineActionStore(options, () => {
+export const useTestStore = defineActionStore(options, () => {
     const durations = computed(() => [4, 8, 12]);
     const unlocked = ref(true);
 
@@ -38,19 +38,22 @@ const actionsTest = test.extend({
     actions: async ({}, use) => await use(useActionsStore()),
 })
 
-function resetGlobals() {
+export function resetGlobals() {
     actionStores.value.clear();
     clearHandlers();
 }
 
-beforeEach(() => {
-    resetGlobals();
-
+export function setupStore() {
     const store = createPinia();
     setActivePinia(store)
 
     const action = useTestStore()
     actionStores.value.set(action.$id, action)
+}
+
+beforeEach(() => {
+    resetGlobals();
+    setupStore();
 })
 
 afterEach(() => {
