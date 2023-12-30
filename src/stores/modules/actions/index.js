@@ -4,6 +4,9 @@ import {computed, ref, toValue} from "vue";
 import {range, assign, last, head} from "lodash";
 import {computedWritable} from "@/helpers/computed";
 import {requireCost} from "@/helpers/actions/index.js";
+import {actionStores} from "@/plugins/actions.js";
+import {onClock} from "@/routines/clock.js";
+import {actionRevokeHook, actionUnlockHook} from "@/routines/hooks/actions.js";
 
 function setupDefaultCanExecute(store, setup, minDuration) {
     // If setup does not implement "canExecute"
@@ -34,10 +37,22 @@ function setupExecuteAction(store) {
     }
 }
 
+function setupOnClock(name) {
+    onClock(() => {
+        const actionStore = actionStores.value.get(name);
+
+        if (actionStore !== undefined) {
+            actionUnlockHook(actionStore);
+            actionRevokeHook(actionStore);
+        }
+    })
+}
+
 export function defineActionStore(opts, storeSetup) {
     const id = `${opts.category}.${opts.subcategory}.${opts.title}`;
+    const name = storeName(id);
 
-    return defineStore(storeName(id), () => {
+    return defineStore(name, () => {
         const title = computed(() => opts.title);
         const subcategory = computed(() => opts.subcategory);
         const category = computed(() => opts.category);
@@ -82,6 +97,7 @@ export function defineActionStore(opts, storeSetup) {
         assign(store, setup);
 
         setupExecuteAction(store);
+        setupOnClock(name);
 
         return store;
     });

@@ -4,12 +4,8 @@ import { actionStores } from "@/plugins/actions.js";
 import { storeName } from "@/stores";
 import { onClock } from "@/routines/clock";
 import {range} from "lodash/util";
-import {head} from "lodash/array.js";
-import {max} from "lodash/math.js";
 import {filter, orderBy, sortBy} from "lodash/collection.js";
-import {transform} from "lodash/object.js";
 import {useDeathStore} from "@/stores/death.js";
-import {actionRevokeHook, actionUnlockHook} from "@/routines/hooks/actions.js";
 
 export const useActionsStore = defineStore(storeName('actions'), () => {
     const death = useDeathStore();
@@ -159,16 +155,6 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
             }
 
             action.executeAction(actionCount);
-        }
-
-        // Action unlocking
-        for (const actionStore of actionStores.value.values()) {
-            actionUnlockHook(actionStore);
-        }
-
-        // Action revoking
-        for (const actionStore of actionStores.value.values()) {
-            actionRevokeHook(actionStore);
         }
     })
 
