@@ -61,8 +61,11 @@ export function setupStore() {
     const store = createPinia();
     setActivePinia(store)
 
-    const action = useActionA()
-    actionStores.value.set(action.$id, action)
+    const actionA = useActionA()
+    actionStores.value.set(actionA.$id, actionA)
+
+    const actionB = useActionA()
+    actionStores.value.set(actionB.$id, actionB)
 }
 
 beforeEach(() => {
