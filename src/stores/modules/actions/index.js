@@ -5,6 +5,35 @@ import {range, assign, last, head} from "lodash";
 import {computedWritable} from "@/helpers/computed";
 import {requireCost} from "@/helpers/actions/index.js";
 
+function setupDefaultCanExecute(store, setup, minDuration) {
+    // If setup does not implement "canExecute"
+    if (!setup.canExecute) {
+        // But provides a baseBalance cost
+        if (setup.baseBalance && toValue(setup.baseBalance) < 0) {
+            store.canExecute = requireCost(toValue(setup.baseBalance) * minDuration);
+        } else {
+            store.canExecute = computed(() => true)
+        }
+    }
+}
+
+function setupExecuteAction(store) {
+    const executeActionChild = store.executeAction;
+    store.executeAction = function (count) {
+        if (!store.canExecute.value) {
+            return;
+        }
+
+        executeActionChild(count)
+
+        if (store.executionCount.value) {
+            store.executionCount.value += count;
+        } else {
+            store.executionCount.value = count;
+        }
+    }
+}
+
 export function defineActionStore(opts, storeSetup) {
     const id = `${opts.category}.${opts.subcategory}.${opts.title}`;
 
@@ -41,17 +70,9 @@ export function defineActionStore(opts, storeSetup) {
 
         const setup = storeSetup(store);
 
-        const minDuration = head(toValue(setup.durations || durations)) || 1;
+        const minDuration = head(toValue(setup.durations || store.durations)) || 1;
 
-        // If setup does not implement "canExecute"
-        if (!setup.canExecute) {
-            // But provides a baseBalance cost
-            if (setup.baseBalance && toValue(setup.baseBalance) < 0) {
-                store.canExecute = requireCost(toValue(setup.baseBalance) * minDuration);
-            } else {
-                store.canExecute = computed(() => true)
-            }
-        }
+        setupDefaultCanExecute(store, setup, minDuration)
 
         // Calculate minimumBalance according to a minDuration
         if (setup.baseBalance) {
@@ -60,20 +81,7 @@ export function defineActionStore(opts, storeSetup) {
 
         assign(store, setup);
 
-        const executeActionChild = store.executeAction;
-        store.executeAction = function (count) {
-            if (!store.canExecute.value) {
-                return;
-            }
-
-            executeActionChild(count)
-
-            if (executionCount.value) {
-                executionCount.value += count;
-            } else {
-                executionCount.value = count;
-            }
-        }
+        setupExecuteAction(store);
 
         return store;
     });
