@@ -35,7 +35,7 @@ const intellect = useIntellectStore();
       </div>
       <div class="grid grid-cols-4 gap-3">
         <div class="flex flex-col items-center">
-          <span class="flex gap-1"><ScaleIcon class="w-4" />Social</span>
+          <span class="flex gap-1 font-medium"><ScaleIcon class="w-4" />Social</span>
           <div>
             <StatValue title="Construction" :item="social.construction">
               <template #title>

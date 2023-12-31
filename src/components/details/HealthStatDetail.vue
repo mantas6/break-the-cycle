@@ -13,7 +13,7 @@ const { health, healthLifetime } = toRefs(props.stat);
 
 <template>
   <div class="flex flex-col items-center">
-    <span class="flex gap-1"><CogIcon class="w-4" /> {{ title }}</span>
+    <span class="flex gap-1 font-medium"><CogIcon class="w-4" /> {{ title }}</span>
     <div>
       <StatValue format="percent" :item="health">
         <template #title>
