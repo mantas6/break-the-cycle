@@ -11,7 +11,6 @@ const unlock = useUnlockStore();
   <div class="flex flex-col gap-3">
     <button @click="unlock.unlockAll" v-hover>Unlock All</button>
     <div class="flex gap-2 justify-center">
-      <button @click="time.pause = !time.pause" v-hover>{{ time.pause ? 'Unpause' : 'Pause' }}</button>
       <button @click="time.clockInterval += 50" v-hover><ChevronDoubleLeftIcon class="w-6" /></button>
       <span>{{ time.clockInterval }}ms</span>
       <button @click="time.clockInterval -= 50" v-hover><ChevronDoubleRightIcon class="w-6" /></button>

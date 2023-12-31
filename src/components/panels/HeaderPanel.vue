@@ -16,7 +16,8 @@ const unlock = useUnlockStore();
   <PanelBlock class="grid grid-cols-2 min-h-20">
     <div class="flex flex-col justify-between">
       <Logo />
-      <span class="text-sm text-zinc-300">{{ time.date }}</span>
+      <span v-if="time.pause" class="text-yellow-300">Paused</span>
+      <span v-else class="text-sm text-zinc-300">{{ time.date }}</span>
     </div>
     <StatWalletBalance v-if="unlock.balance" v-bind="wallet.balance" :show-diff="unlock.planner || unlock.hold" />
     <div v-else class="flex justify-center"><LockClosedIcon class="w-4" /></div>

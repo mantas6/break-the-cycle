@@ -26,6 +26,6 @@ function hardReset() {
     <button @click="loadGame" v-hover>Load</button>
     <button @click="reset" v-hover>Reset</button>
     <button @click="hardReset" v-hover>Hard Reset</button>
-    <RouterLink v-if="showDevMenu" to="/debug" v-hover>Debug menu</RouterLink>
+    <RouterLink v-if="showDevMenu" to="/settings/debug" v-hover>Debug menu</RouterLink>
   </div>
 </template>
