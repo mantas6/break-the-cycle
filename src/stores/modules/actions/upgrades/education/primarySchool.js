@@ -1,5 +1,5 @@
-import {Value} from "@/stats";
-import { defineActionStore } from "@/stores/modules/actions";
+import {Value} from "@/stats/index.js";
+import { defineActionStore } from "@/stores/modules/actions/index.js";
 import {useSocialStore} from "@/stores/stats/social.js";
 import {computed} from "vue";
 import {useIntellectStore} from "@/stores/stats/intellect.js";
@@ -7,8 +7,8 @@ import {useWalletStore} from "@/stores/stats/wallet.js";
 
 const options = {
     title: 'Primary Evening School',
-    subcategory: 'Basic',
-    category: 'Education',
+    subcategory: 'Education',
+    category: 'Upgrades',
     description: `Teaches the basics if those who have supposedly "missed"`,
 };
 
