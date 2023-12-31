@@ -27,9 +27,9 @@ const categoriesNotify = computed(() => {
 <template>
   <PanelBlock class="flex justify-between" :locked="!unlock.categories">
     <div class="flex gap-3">
-      <RouterLink to="/" v-hover>All</RouterLink>
+      <RouterLink to="/" active-class="underline" v-hover>All</RouterLink>
       <template v-for="category in categories" :key="category">
-        <RouterLink :to="`/${kebabCase(category)}`" v-hover>
+        <RouterLink :to="`/${kebabCase(category)}`" active-class="underline" v-hover>
           <span>{{ category }}</span>
           <span v-if="categoriesNotify.includes(category)" class="text-red-300">*</span>
         </RouterLink>
