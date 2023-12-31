@@ -1,6 +1,7 @@
 <script setup>
 import {computed} from "vue";
 import DiffIcon from "@/components/DiffIcon.vue";
+import StatBalanceBox from "@/components/StatBalanceBox.vue";
 
 const props = defineProps([
   'title',
@@ -25,30 +26,20 @@ const diff = computed(() => props.gain - props.loss);
 </script>
 
 <template>
-  <div class="text-xs flex flex-col gap-1">
-    <div class="flex justify-between">
-      <div class="flex gap-1">
-        <span class="font-bold">{{ title }}</span>
-        <DiffIcon :diff="diff" />
-      </div>
-      <div v-format="gain - loss"></div>
+  <StatBalanceBox v-bind="$props">
+    <div class="absolute w-1/6 h-4 bg-red-200 bottom-0">
+      <div class="text-zinc-600 text-center">{{ titleMin }}</div>
+    </div>
+    <div class="absolute w-1/6 h-4 bg-red-200 bottom-0 right-0">
+      <div class="text-zinc-600 text-center">{{ titleMax }}</div>
     </div>
 
-    <div class="w-full bg-zinc-200 overflow-hidden relative h-4">
-      <div class="absolute w-1/6 h-4 bg-red-200 bottom-0">
-        <div class="text-zinc-600 text-center">{{ titleMin }}</div>
-      </div>
-      <div class="absolute w-1/6 h-4 bg-red-200 bottom-0 right-0">
-        <div class="text-zinc-600 text-center">{{ titleMax }}</div>
-      </div>
+    <div class="absolute w-full flex justify-center bottom-0"><div class="bg-green-200 h-4 w-1/4"></div></div>
 
-      <div class="absolute w-full flex justify-center bottom-0"><div class="bg-green-200 h-4 w-1/4"></div></div>
-
-      <div class="absolute w-full flex justify-center">
-        <div class="border-dotted border-l border-zinc-600 h-4"></div>
-      </div>
-
-      <div class="absolute bg-red-500 h-4 w-1" :style="{ left: `calc(${left}% - 2px)` }"></div>
+    <div class="absolute w-full flex justify-center">
+      <div class="border-dotted border-l border-zinc-600 h-4"></div>
     </div>
-  </div>
+
+    <div class="absolute bg-red-500 h-4 w-1" :style="{ left: `calc(${left}% - 2px)` }"></div>
+  </StatBalanceBox>
 </template>
