@@ -1,9 +1,7 @@
 import {defineActionStore} from "@/stores/modules/actions";
 import {Balance} from "@/stats/index.js";
 import {usePhysicalStore} from "@/stores/stats/physical.js";
-import {useNutritionStore} from "@/stores/stats/nutrition.js";
-import {useDigestiveStore} from "@/stores/stats/digestive.js";
-import {useCardiovascularStore} from "@/stores/stats/cardiovascular.js";
+import {executeSleep} from "@/helpers/actions/sleep.js";
 
 const options = {
     title: 'Moldy Mattress',
@@ -14,18 +12,9 @@ const options = {
 
 export default defineActionStore(options, ({ eff }) => {
     const physical = usePhysicalStore();
-    const nutrition = useNutritionStore();
-    const digestive = useDigestiveStore();
-    const cardio = useCardiovascularStore();
 
     function executeAction(count) {
-        const sleepQuality = 0.25;
-        const energyAvailPercent = Balance.percentage(nutrition.energy, 0, 0.25);
-        eff.value = energyAvailPercent;
-        Balance.affect(physical.energy, sleepQuality * count * eff.value);
-
-        Balance.affect(digestive.health, sleepQuality * count * eff.value * 0.1);
-        Balance.affect(cardio.health, sleepQuality * count * eff.value * 0.1);
+        executeSleep({ eff, count }, { sleepQuality: 0.25 })
     }
 
     function beforeUnlock() {
