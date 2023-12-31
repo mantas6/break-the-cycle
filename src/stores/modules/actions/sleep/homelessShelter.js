@@ -1,9 +1,8 @@
 import {defineActionStore} from "@/stores/modules/actions";
 import {executeSleep} from "@/helpers/actions/sleep.js";
 import {useSocialStore} from "@/stores/stats/social.js";
-import {computed} from "vue";
-import {range} from "lodash";
 import {useUnlockStore} from "@/stores/unlock.js";
+import {interval} from "@/helpers/actions/index.js";
 
 const options = {
     title: 'Homeless shelter',
@@ -13,7 +12,7 @@ const options = {
 };
 
 export default defineActionStore(options, ({ eff }) => {
-    const durations = computed(() => range(1, 9));
+    const durations = interval(1, 8);
 
     const social = useSocialStore();
     const unlock = useUnlockStore();
