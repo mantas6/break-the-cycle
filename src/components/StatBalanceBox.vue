@@ -21,7 +21,7 @@ const diff = computed(() => props.gain - props.loss);
         <DiffIcon :diff="diff" />
       </div>
       <div v-if="diff" class="flex gap-1">
-        <span v-format="diff"></span>
+        <span v-format.plus="diff"></span>
         <ClockIcon class="w-3 text-zinc-300" />
       </div>
     </div>

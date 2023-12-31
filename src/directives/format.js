@@ -1,4 +1,4 @@
-export const vFormat = (el, { arg: style, value }) => {
+export const vFormat = (el, { arg: style, modifiers, value }) => {
     const abstractStyles = ['decimal', 'currency', 'percent', undefined];
 
     const usingAbstract = abstractStyles.includes(style);
@@ -18,5 +18,5 @@ export const vFormat = (el, { arg: style, value }) => {
 
     const formatter = Intl.NumberFormat('en-US', options);
 
-    el.textContent = formatter.format(value)
+    el.textContent = (modifiers.plus && value > 0 ? '+' : '') +  formatter.format(value)
 }
