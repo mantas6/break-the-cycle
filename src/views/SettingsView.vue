@@ -1,5 +1,5 @@
 <script setup>
-import { loadGame, resetGame, saveGame } from "@/routines/persistence";
+import {hardResetGame, loadGame, resetGame, saveGame} from "@/routines/persistence";
 import {useTimeStore} from "@/stores/time.js";
 import {RouterLink, useRouter} from "vue-router";
 import {computed} from "vue";
@@ -13,6 +13,11 @@ function reset() {
   resetGame();
   router.push('/');
 }
+
+function hardReset() {
+  hardResetGame();
+  router.push('/');
+}
 </script>
 
 <template>
@@ -20,6 +25,7 @@ function reset() {
     <button @click="saveGame" v-hover>Save</button>
     <button @click="loadGame" v-hover>Load</button>
     <button @click="reset" v-hover>Reset</button>
+    <button @click="hardReset" v-hover>Hard Reset</button>
     <RouterLink v-if="showDevMenu" to="/debug" v-hover>Debug menu</RouterLink>
   </div>
 </template>
