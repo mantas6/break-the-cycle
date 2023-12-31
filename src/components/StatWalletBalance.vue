@@ -1,5 +1,5 @@
 <script setup>
-import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
+import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/vue/16/solid'
 
 const props = defineProps({
   now: Number,
