@@ -21,7 +21,7 @@ function hardReset() {
 </script>
 
 <template>
-  <div class="flex flex-col gap-3 text-center">
+  <div class="grid gap-3 text-center text-zinc-100 *:bg-zinc-700 hover:*:bg-zinc-800 active:*:bg-zinc-900 *:p-2 *:rounded">
     <button @click="saveGame" v-hover>Save</button>
     <button @click="loadGame" v-hover>Load</button>
     <button @click="reset" v-hover>Reset</button>
