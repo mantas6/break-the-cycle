@@ -30,12 +30,19 @@ export function load(json) {
     for (const [ id, savedState ] of Object.entries(decoded)) {
         const store = serializableStores.get(id);
 
+        if (store === undefined) {
+            console.warn('Serialized state store does not exist ' + id)
+            continue;
+        }
+
         store.$reset();
 
         for (const itemName of Object.keys(store.$state)) {
-            const patch = {};
-            patch[itemName] = savedState[itemName];
-            store.$patch(patch);
+            const savedValue = savedState[itemName];
+
+            // TODO: check if state has .type and make sure it matches before patching
+
+            store.$patch({ [itemName]: savedValue });
         }
     }
 }
