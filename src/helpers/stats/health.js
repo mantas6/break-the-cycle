@@ -5,6 +5,7 @@ import {useDeathStore} from "@/stores/death.js";
  * @typedef {Object} DegradeLifetimeOptions
  * @property {number} passiveHealthLoss
  * @property {number} healthLossMultiplier
+ * @property {string} deathReason
  */
 
 /**
