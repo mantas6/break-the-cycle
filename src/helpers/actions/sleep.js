@@ -2,6 +2,7 @@ import {useNutritionStore} from "@/stores/stats/nutrition.js";
 import {useDigestiveStore} from "@/stores/stats/digestive.js";
 import {useCardiovascularStore} from "@/stores/stats/cardiovascular.js";
 import {Balance} from "@/stats/index.js";
+import {usePhysicalStore} from "@/stores/stats/physical.js";
 
 /**
  * @typedef {Object} SleepOptions
@@ -15,6 +16,7 @@ import {Balance} from "@/stats/index.js";
  * @param {SleepOptions} opts
  */
 export function executeSleep({ eff, count }, opts) {
+    const physical = usePhysicalStore();
     const nutrition = useNutritionStore();
     const digestive = useDigestiveStore();
     const cardio = useCardiovascularStore();
