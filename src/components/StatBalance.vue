@@ -35,8 +35,12 @@ const diff = computed(() => props.gain - props.loss);
     </div>
 
     <div class="w-full bg-zinc-200 overflow-hidden relative h-4">
-      <div class="absolute w-1/6 h-4 bg-red-200 bottom-0"></div>
-      <div class="absolute w-1/6 h-4 bg-red-200 bottom-0 right-0"></div>
+      <div class="absolute w-1/6 h-4 bg-red-200 bottom-0">
+        <div class="text-zinc-600 text-center">{{ titleMin }}</div>
+      </div>
+      <div class="absolute w-1/6 h-4 bg-red-200 bottom-0 right-0">
+        <div class="text-zinc-600 text-center">{{ titleMax }}</div>
+      </div>
 
       <div class="absolute w-full flex justify-center bottom-0"><div class="bg-green-200 h-4 w-1/4"></div></div>
 
@@ -45,12 +49,6 @@ const diff = computed(() => props.gain - props.loss);
       </div>
 
       <div class="absolute bg-red-500 h-4 w-1" :style="{ left: `calc(${left}% - 2px)` }"></div>
-    </div>
-
-    <div class="flex justify-between">
-      <span class="border-l pl-1 border-dotted">{{ titleMin }}</span>
-      <span>OK</span>
-      <span class="border-r pr-1 border-dotted">{{ titleMax }}</span>
     </div>
   </div>
 </template>
