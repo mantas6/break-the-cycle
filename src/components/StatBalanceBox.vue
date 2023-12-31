@@ -1,4 +1,5 @@
 <script setup>
+import { ClockIcon } from "@heroicons/vue/16/solid";
 import DiffIcon from "@/components/DiffIcon.vue";
 import {computed} from "vue";
 
@@ -19,7 +20,10 @@ const diff = computed(() => props.gain - props.loss);
         <span class="font-bold">{{ title }}</span>
         <DiffIcon :diff="diff" />
       </div>
-      <div v-format="diff"></div>
+      <div v-if="diff" class="flex gap-1">
+        <span v-format="diff"></span>
+        <ClockIcon class="w-3 text-zinc-300" />
+      </div>
     </div>
 
     <div class="w-full bg-zinc-200 overflow-hidden relative h-4 rounded">
