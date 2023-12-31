@@ -6,22 +6,22 @@ import { onClock } from "@/routines/clock.js";
 
 export const useTimeStore = defineStore(storeName('time'), () => {
     const startDate = ref(new Date().toISOString())
-    const daysAfter = ref(0)
+    const days = ref(0)
 
     const clockInterval = ref(500);
     const pause = ref(false);
 
     const date = computed(
         () => dayjs(startDate.value)
-            .add(daysAfter.value, 'days')
+            .add(days.value, 'days')
             .format('YYYY-MM-DD')
     );
 
-    onClock(() => daysAfter.value++);
+    onClock(() => days.value++);
 
     return {
         startDate,
-        daysAfter,
+        days,
 
         clockInterval,
         pause,
