@@ -31,7 +31,7 @@ export function load(json) {
         const store = serializableStores.get(id);
 
         if (store === undefined) {
-            console.warn('Serialized state store does not exist ' + id)
+            console.warn('Saved state store no longer exists ' + id)
             continue;
         }
 
@@ -40,7 +40,19 @@ export function load(json) {
         for (const itemName of Object.keys(store.$state)) {
             const savedValue = savedState[itemName];
 
-            // TODO: check if state has .type and make sure it matches before patching
+            if (savedValue === undefined) {
+                // Save does not (yet) have this value
+                continue;
+            }
+
+            const storeValue = store.$state[itemName];
+
+            if (storeValue !== undefined && storeValue.type !== undefined) {
+                if (storeValue.type !== savedValue.type) {
+                    console.warn(`Type of the state variable has changed, skipping ${id} ${itemName}`)
+                    continue;
+                }
+            }
 
             store.$patch({ [itemName]: savedValue });
         }
