@@ -4,7 +4,7 @@ import {
   ChevronDoubleUpIcon,
   ChevronDownIcon,
   ChevronUpIcon
-} from "@heroicons/vue/24/outline";
+} from "@heroicons/vue/16/solid";
 
 const props = defineProps({
   diff: Number,
