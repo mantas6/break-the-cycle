@@ -5,7 +5,7 @@ import {computed, ref} from "vue";
  * @desc Define an element in the state
  * @param {string} name - name of the variable in the store
  * @param value - definition
- * @return base - reactive state
+ * @return {{value:any}} - reactive state
  */
 export function defineRaw(name, value) {
     getCurrentContext().store[name] = value;
@@ -17,12 +17,16 @@ export function defineRaw(name, value) {
  *
  * @param {string} name
  * @param {CallableFunction|any} cb
- * @returns base
+ * @returns {{value:any}}
  */
 export function define(name, cb) {
     return defineRaw(name, computed(cb instanceof Function ? cb : () => cb));
 }
 
+/**
+ *
+ * @return {{value:any}}
+ */
 export function defineRef(name, value) {
     return defineRaw(name, ref(value))
 }

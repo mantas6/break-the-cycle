@@ -1,5 +1,6 @@
 import {getCurrentContext} from "@/helpers/actions/definition/context.js";
 import {computed} from "vue";
+import {setActionContext} from "@/helpers/actions/context.js";
 
 /**
  * @callback ActionExecutionFunction
@@ -17,6 +18,8 @@ export function executeAction(cb) {
         if (!store.canExecute.value) {
             return;
         }
+
+        setActionContext({ store, count });
 
         cb(count);
 

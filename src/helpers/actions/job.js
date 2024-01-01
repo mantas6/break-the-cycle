@@ -4,8 +4,11 @@ import {useWalletStore} from "@/stores/stats/wallet";
 import {ref, toValue} from "vue";
 import {percentageBetween} from "@/helpers/math.js";
 import {last} from "lodash/array.js";
+import {getActionContext} from "@/helpers/actions/context.js";
 
-export function executeBasicJob({ eff, durations }, count, { energyCost, baseBalance, capabilityUpper = 0.5 }) {
+export function executeBasicJob({ energyCost, capabilityUpper = 0.5 }) {
+    const { eff, durations, baseBalance, count } = getActionContext();
+
     const physical = usePhysicalStore();
 
     const energyCostTotal = toValue(energyCost) * count;
