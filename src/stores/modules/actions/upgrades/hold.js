@@ -5,16 +5,18 @@ import {computed, toValue} from "vue";
 import {useSocialStore} from "@/stores/stats/social.js";
 import {useUnlockStore} from "@/stores/unlock.js";
 import {useIntellectStore} from "@/stores/stats/intellect.js";
+import {defineAction} from "@/helpers/actions/definition/index.js";
+import {beforeRevoke, beforeUnlock, declareOnce, define} from "@/helpers/actions/definition/hooks.js";
+import {executeAction} from "@/helpers/actions/definition/execution.js";
 
-const options = {
+const titles = {
     title: 'Concentration learning',
     subcategory: 'General',
     category: 'Upgrades',
     description: 'Hold the mouse button on the action to bulk execute.',
-    once: true,
 };
 
-export default defineActionStore(options, ({ executionCount }) => {
+/*export default defineActionStore(options, ({ executionCount }) => {
     const baseBalance = computed(() => -25);
     const wallet = useWalletStore();
     const intellect = useIntellectStore();
@@ -39,4 +41,17 @@ export default defineActionStore(options, ({ executionCount }) => {
         executeAction,
         beforeRevoke,
     };
-});
+});*/
+
+export default defineAction(titles, ({ executionCount }) => {
+    const wallet = useWalletStore();
+    const intellect = useIntellectStore();
+    const unlock = useUnlockStore();
+
+    declareOnce();
+    const baseBalance = define('baseBalance', -25);
+
+    beforeUnlock(() => intellect.overall > 0);
+    executeAction(() => wallet.transaction(toValue(baseBalance)))
+    beforeRevoke(() => executionCount.value > 0 || unlock.hold)
+})
