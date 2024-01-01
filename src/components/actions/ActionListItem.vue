@@ -49,11 +49,11 @@
 </script>
 
 <template>
-  <div class="flex p-3 gap-3 justify-between border-dotted border border-zinc-400 hover:border-zinc-300 rounded relative touch-manipulation"
+  <div class="flex p-3 gap-3 justify-between border-dotted border border-zinc-400 hover:border-zinc-300 rounded relative select-none"
    @mouseover="clearNotify"
-   @mouseenter="showDetails = true"
-   @mouseleave="showDetails = false">
-    <div class="flex flex-col cursor-pointer text-sm grow select-none" @click="triggers.execute(name)" @mousedown="hold.enable(name)" @mouseup="hold.disable" v-hover>
+   @pointerenter="showDetails = true"
+   @pointerleave="showDetails = false">
+    <div class="flex flex-col cursor-pointer text-sm grow" @click="triggers.execute(name)" @pointerdown="hold.enable(name)" @pointerup="hold.disable" v-hover>
       <div class="flex gap-3" :class="{ 'text-zinc-500': !canExecute }">
         <span class="w-10" v-if="unlock.planner && durations.length">{{ isActive ? currentDuration : '0' }}h</span>
         <div>
