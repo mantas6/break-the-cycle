@@ -8,10 +8,9 @@ const options = {
     subcategory: 'Job - Collect Empty Bottles',
     category: 'Upgrades',
     description: 'Load up more bottles at once. No need to carry them in a backpack.',
-    once: true,
 };
 
-export default defineTierUpgrade(options, computed(() => -10), useJob, () => {
+export default defineTierUpgrade(options, -10, useJob, () => {
     const social = useSocialStore();
     const job = useJob();
     return job.tier === 2 && social.construction.now >= 10;
