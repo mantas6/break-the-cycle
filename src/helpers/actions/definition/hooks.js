@@ -24,7 +24,8 @@ export function defineComputed(name, cb) {
 }
 
 /**
- *
+ * @param {string} name
+ * @param {any?} value
  * @return {{value:any}}
  */
 export function defineRef(name, value) {
