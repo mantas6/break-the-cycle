@@ -19,7 +19,6 @@
     minBalance: Number,
 
     notify: Boolean,
-    once: Boolean,
     charge: Object,
     durations: Array,
     canExecute: Boolean,
