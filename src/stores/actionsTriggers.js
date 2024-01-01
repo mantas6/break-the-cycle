@@ -15,6 +15,7 @@ export const useActionsTriggersStore = defineStore(storeName('actions.triggers')
 
         const lockDuration = minDuration * 100;
 
+        // TODO: add check if action is already running and maxed it's hours
         if (start(lockDuration)) {
             action.onExecute(minDuration);
         }
