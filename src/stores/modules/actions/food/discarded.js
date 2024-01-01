@@ -1,11 +1,10 @@
 import { useNutritionStore } from "@/stores/stats/nutrition";
 import { Balance } from "@/stats";
-import { defineActionStore } from "@/stores/modules/actions";
 import {calculateCapability} from "@/helpers/actions/job.js";
 import {usePhysicalStore} from "@/stores/stats/physical.js";
 import {useDigestiveStore} from "@/stores/stats/digestive.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
-import {beforeUnlock} from "@/helpers/actions/definition/hooks.js";
+import {unlockWhen} from "@/helpers/actions/definition/hooks.js";
 import {executeAction} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
@@ -20,7 +19,7 @@ export default defineAction(titles, ({ eff, durations }) => {
     const physical = usePhysicalStore();
     const digestive = useDigestiveStore();
 
-    beforeUnlock(() => Balance.percentage(nutrition.energy) < 0.25)
+    unlockWhen(() => Balance.percentage(nutrition.energy) < 0.25)
 
     executeAction(count => {
         const energyGain = 0.25 * count;

@@ -4,10 +4,10 @@ import {useActionsStore} from "@/stores/actions.js";
 import {actionStores} from "@/plugins/actions.js";
 import {computed, nextTick, ref} from "vue";
 import {clearHandlers, clockHandlers, runClock} from "@/routines/clock.js";
-import {defineActionStore} from "@/stores/modules/actions";
+
 import {useDeathStore} from "@/stores/death.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
-import {beforeUnlock, defineRaw, defineRef} from "@/helpers/actions/definition/hooks.js";
+import {unlockWhen, defineRaw, defineRef} from "@/helpers/actions/definition/hooks.js";
 import {canExecute, executeAction} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
@@ -182,7 +182,7 @@ actionsTest('unlocking triggers correctly', ({ actions }) => {
     const useAction = defineAction({ title: 'LockedAction' }, () => {
         const someCondition = defineRef('someCondition', false)
 
-        beforeUnlock(() => someCondition.value)
+        unlockWhen(() => someCondition.value)
         executeAction(() => {})
     })
 

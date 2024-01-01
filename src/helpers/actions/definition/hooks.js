@@ -41,16 +41,16 @@ export function declareOnce() {
 
 /**
  * @desc Unlock check callback
- * @param {func} cb
+ * @param {function(): boolean} cb
  */
-export function beforeUnlock(cb) {
-    getCurrentContext().store.beforeUnlock = cb;
+export function unlockWhen(cb) {
+    getCurrentContext().store.unlockWhen = cb;
 }
 
 /**
  * @desc Revoke check callback
- * @param {func} cb
+ * @param {function(): boolean} cb
  */
-export function beforeRevoke(cb) {
-    getCurrentContext().store.beforeRevoke = cb;
+export function revokeWhen(cb) {
+    getCurrentContext().store.revokeWhen = cb;
 }

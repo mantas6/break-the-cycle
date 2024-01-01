@@ -1,10 +1,10 @@
 import { computed } from 'vue'
 import {interval, requireCost} from "@/helpers/actions";
 import {executeBasicFood} from "@/helpers/actions/food.js";
-import {defineActionStore} from "@/stores/modules/actions/index.js";
+
 import {useSocialStore} from "@/stores/stats/social.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
-import {beforeUnlock, defineComputed, defineRaw} from "@/helpers/actions/definition/hooks.js";
+import {unlockWhen, defineComputed, defineRaw} from "@/helpers/actions/definition/hooks.js";
 import {executeAction} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
@@ -22,5 +22,5 @@ export default defineAction(titles, () => {
 
     executeAction(() => executeBasicFood({ energyGain: 1 }))
 
-    beforeUnlock(() => social.construction.now >= 50)
+    unlockWhen(() => social.construction.now >= 50)
 })

@@ -1,4 +1,3 @@
-import {defineActionStore} from "@/stores/modules/actions";
 import {beforeEach, expect, it} from "vitest";
 import {createPinia, setActivePinia} from "pinia";
 import {actionStores} from "@/plugins/actions.js";
@@ -7,7 +6,7 @@ import {ref} from "vue";
 import {runClock} from "@/routines/clock";
 import {useActionsTriggersStore} from "@/stores/actionsTriggers.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
-import {beforeUnlock, defineRef} from "@/helpers/actions/definition/hooks.js";
+import {unlockWhen, defineRef} from "@/helpers/actions/definition/hooks.js";
 import {executeAction} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
@@ -19,7 +18,7 @@ const titles = {
 const useTestStore = defineAction(titles, () => {
     const canBeUnlocked = defineRef('canBeUnlocked', false)
     executeAction(() => {})
-    beforeUnlock(() => canBeUnlocked.value)
+    unlockWhen(() => canBeUnlocked.value)
 });
 
 beforeEach(() => {

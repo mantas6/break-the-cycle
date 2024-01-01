@@ -1,4 +1,3 @@
-import {defineActionStore} from "@/stores/modules/actions/index.js";
 import {useWalletStore} from "@/stores/stats/wallet.js";
 import {requireCost} from "@/helpers/actions/index.js";
 import {computed, toValue} from "vue";
@@ -6,7 +5,7 @@ import {useSocialStore} from "@/stores/stats/social.js";
 import {useUnlockStore} from "@/stores/unlock.js";
 import {useIntellectStore} from "@/stores/stats/intellect.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
-import {beforeRevoke, beforeUnlock, declareOnce, defineComputed} from "@/helpers/actions/definition/hooks.js";
+import {revokeWhen, unlockWhen, declareOnce, defineComputed} from "@/helpers/actions/definition/hooks.js";
 import {executeAction} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
@@ -24,7 +23,7 @@ export default defineAction(titles, ({ executionCount }) => {
     declareOnce();
     const baseBalance = defineComputed('baseBalance', -25);
 
-    beforeUnlock(() => intellect.overall > 0);
+    unlockWhen(() => intellect.overall > 0);
     executeAction(() => wallet.transaction(toValue(baseBalance)))
-    beforeRevoke(() => executionCount.value > 0 || unlock.hold)
+    revokeWhen(() => executionCount.value > 0 || unlock.hold)
 })

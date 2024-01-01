@@ -2,7 +2,7 @@ import {executeBasicJob} from "@/helpers/actions/job";
 import {useSocialStore} from "@/stores/stats/social";
 import { Value } from "@/stats";
 import {defineAction} from "@/helpers/actions/definition/index.js";
-import {beforeUnlock, defineComputed, defineRaw, defineRef} from "@/helpers/actions/definition/hooks.js";
+import {unlockWhen, defineComputed, defineRaw, defineRef} from "@/helpers/actions/definition/hooks.js";
 import {executeAction} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
@@ -19,7 +19,7 @@ export default defineAction(titles, ({ eff }) => {
 
     defineComputed('baseBalance', () => tier.value * 0.1);
 
-    beforeUnlock(() => true)
+    unlockWhen(() => true)
 
     executeAction(count => {
         executeBasicJob({ energyCost: 0.5, capabilityUpper: 0.25 })

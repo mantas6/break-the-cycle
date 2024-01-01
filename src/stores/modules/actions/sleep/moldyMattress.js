@@ -1,9 +1,9 @@
-import {defineActionStore} from "@/stores/modules/actions";
+
 import {Balance} from "@/stats/index.js";
 import {usePhysicalStore} from "@/stores/stats/physical.js";
 import {executeSleep} from "@/helpers/actions/sleep.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
-import {beforeUnlock} from "@/helpers/actions/definition/hooks.js";
+import {unlockWhen} from "@/helpers/actions/definition/hooks.js";
 import {executeAction} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
@@ -16,7 +16,7 @@ const titles = {
 export default defineAction(titles, () => {
     const physical = usePhysicalStore();
 
-    beforeUnlock(() => Balance.percentage(physical.energy) < 0.25)
+    unlockWhen(() => Balance.percentage(physical.energy) < 0.25)
 
     executeAction(() => executeSleep({ sleepQuality: 0.25 }))
 })

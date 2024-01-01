@@ -1,11 +1,10 @@
 import {Value} from "@/stats/index.js";
-import { defineActionStore } from "@/stores/modules/actions/index.js";
 import {useSocialStore} from "@/stores/stats/social.js";
 import {computed} from "vue";
 import {useIntellectStore} from "@/stores/stats/intellect.js";
 import {useWalletStore} from "@/stores/stats/wallet.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
-import {beforeUnlock, defineComputed, defineRaw} from "@/helpers/actions/definition/hooks.js";
+import {unlockWhen, defineComputed, defineRaw} from "@/helpers/actions/definition/hooks.js";
 import {executeAction} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
@@ -23,7 +22,7 @@ export default defineAction(titles, ({ eff }) => {
     const durations = defineComputed('durations', [3, 6])
     const baseBalance = defineComputed('baseBalance', -1)
 
-    beforeUnlock(() => social.construction.now >= 25)
+    unlockWhen(() => social.construction.now >= 25)
     executeAction(count => {
         const actualAmount = wallet.preTransactionArr(baseBalance.value, durations.value, count);
 
