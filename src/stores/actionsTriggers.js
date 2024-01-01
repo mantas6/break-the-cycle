@@ -16,7 +16,7 @@ export const useActionsTriggersStore = defineStore(storeName('actions.triggers')
         const lockDuration = minDuration * 100;
 
         if (start(lockDuration)) {
-            action.executeAction(minDuration);
+            action.onExecute(minDuration);
         }
     }
 

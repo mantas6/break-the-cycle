@@ -4,7 +4,7 @@ import {usePhysicalStore} from "@/stores/stats/physical.js";
 import {executeSleep} from "@/helpers/actions/sleep.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
 import {unlockWhen} from "@/helpers/actions/definition/hooks.js";
-import {executeAction} from "@/helpers/actions/definition/execution.js";
+import {onExecute} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
     title: 'Moldy Mattress',
@@ -18,5 +18,5 @@ export default defineAction(titles, () => {
 
     unlockWhen(() => Balance.percentage(physical.energy) < 0.25)
 
-    executeAction(() => executeSleep({ sleepQuality: 0.25 }))
+    onExecute(() => executeSleep({ sleepQuality: 0.25 }))
 })

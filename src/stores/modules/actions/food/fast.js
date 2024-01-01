@@ -5,7 +5,7 @@ import {executeBasicFood} from "@/helpers/actions/food.js";
 import {useSocialStore} from "@/stores/stats/social.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
 import {unlockWhen, defineComputed, defineRaw} from "@/helpers/actions/definition/hooks.js";
-import {executeAction} from "@/helpers/actions/definition/execution.js";
+import {onExecute} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
     title: 'Fast Food',
@@ -20,7 +20,7 @@ export default defineAction(titles, () => {
     defineRaw('durations', interval(0.5))
     defineComputed('baseBalance', -1)
 
-    executeAction(() => executeBasicFood({ energyGain: 1 }))
+    onExecute(() => executeBasicFood({ energyGain: 1 }))
 
     unlockWhen(() => social.construction.now >= 50)
 })

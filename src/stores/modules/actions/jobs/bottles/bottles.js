@@ -3,7 +3,7 @@ import {useSocialStore} from "@/stores/stats/social";
 import { Value } from "@/stats";
 import {defineAction} from "@/helpers/actions/definition/index.js";
 import {unlockWhen, defineComputed, defineRaw, defineRef} from "@/helpers/actions/definition/hooks.js";
-import {executeAction} from "@/helpers/actions/definition/execution.js";
+import {onExecute} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
     title: 'Collect Empty Bottles',
@@ -21,7 +21,7 @@ export default defineAction(titles, ({ eff }) => {
 
     unlockWhen(() => true)
 
-    executeAction(count => {
+    onExecute(count => {
         executeBasicJob({ energyCost: 0.5, capabilityUpper: 0.25 })
 
         Value.affect(social.construction, 0.1 * count * eff.value * tier.value);

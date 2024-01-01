@@ -2,7 +2,7 @@ import {useWalletStore} from "@/stores/stats/wallet.js";
 import {toValue} from "vue";
 import {defineAction} from "@/helpers/actions/definition/index.js";
 import {revokeWhen, unlockWhen, declareOnce, defineComputed} from "@/helpers/actions/definition/hooks.js";
-import {executeAction} from "@/helpers/actions/definition/execution.js";
+import {onExecute} from "@/helpers/actions/definition/execution.js";
 
 /**
  *
@@ -20,7 +20,7 @@ export function defineTierUpgrade(titles, cost, jobFn, unlockWhenFn) {
 
         unlockWhen(unlockWhenFn)
 
-        executeAction(() => {
+        onExecute(() => {
             wallet.transaction(cost);
 
             const job = jobFn();

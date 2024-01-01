@@ -5,7 +5,7 @@ import {useIntellectStore} from "@/stores/stats/intellect.js";
 import {useWalletStore} from "@/stores/stats/wallet.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
 import {unlockWhen, defineComputed, defineRaw} from "@/helpers/actions/definition/hooks.js";
-import {executeAction} from "@/helpers/actions/definition/execution.js";
+import {onExecute} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
     title: 'Primary Evening School',
@@ -23,7 +23,7 @@ export default defineAction(titles, ({ eff }) => {
     const baseBalance = defineComputed('baseBalance', -1)
 
     unlockWhen(() => social.construction.now >= 25)
-    executeAction(count => {
+    onExecute(count => {
         const actualAmount = wallet.preTransactionArr(baseBalance.value, durations.value, count);
 
         if (actualAmount !== 0) {

@@ -4,7 +4,7 @@ import {useUnlockStore} from "@/stores/unlock.js";
 import {interval} from "@/helpers/actions/index.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
 import {unlockWhen, defineRaw} from "@/helpers/actions/definition/hooks.js";
-import {executeAction} from "@/helpers/actions/definition/execution.js";
+import {onExecute} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
     title: 'Homeless shelter',
@@ -21,7 +21,7 @@ export default defineAction(titles, () => {
 
     unlockWhen(() => social.construction.now >= 300 && unlock.planner);
 
-    executeAction(() => {
+    onExecute(() => {
         executeSleep({ sleepQuality: 0.35 })
     })
 });

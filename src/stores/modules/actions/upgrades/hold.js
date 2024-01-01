@@ -6,7 +6,7 @@ import {useUnlockStore} from "@/stores/unlock.js";
 import {useIntellectStore} from "@/stores/stats/intellect.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
 import {revokeWhen, unlockWhen, declareOnce, defineComputed} from "@/helpers/actions/definition/hooks.js";
-import {executeAction} from "@/helpers/actions/definition/execution.js";
+import {onExecute} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
     title: 'Concentration learning',
@@ -24,6 +24,6 @@ export default defineAction(titles, ({ executionCount }) => {
     const baseBalance = defineComputed('baseBalance', -25);
 
     unlockWhen(() => intellect.overall > 0);
-    executeAction(() => wallet.transaction(toValue(baseBalance)))
+    onExecute(() => wallet.transaction(toValue(baseBalance)))
     revokeWhen(() => executionCount.value > 0 || unlock.hold)
 })

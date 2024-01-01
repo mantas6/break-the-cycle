@@ -5,7 +5,7 @@ import {usePhysicalStore} from "@/stores/stats/physical.js";
 import {useDigestiveStore} from "@/stores/stats/digestive.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
 import {unlockWhen} from "@/helpers/actions/definition/hooks.js";
-import {executeAction} from "@/helpers/actions/definition/execution.js";
+import {onExecute} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
     title: 'Discarded Food',
@@ -21,7 +21,7 @@ export default defineAction(titles, ({ eff, durations }) => {
 
     unlockWhen(() => Balance.percentage(nutrition.energy) < 0.25)
 
-    executeAction(count => {
+    onExecute(count => {
         const energyGain = 0.25 * count;
         const energyCost = -0.1 * count;
 

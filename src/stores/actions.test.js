@@ -8,7 +8,7 @@ import {clearHandlers, clockHandlers, runClock} from "@/routines/clock.js";
 import {useDeathStore} from "@/stores/death.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
 import {unlockWhen, defineRaw, defineRef} from "@/helpers/actions/definition/hooks.js";
-import {canExecute, executeAction} from "@/helpers/actions/definition/execution.js";
+import {canExecute, onExecute} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
     title: 'Test action',
@@ -23,7 +23,7 @@ export const useActionA = defineAction(titles, () => {
 
     const executions = defineRef('executions', 0)
 
-    executeAction(count => executions.value += count)
+    onExecute(count => executions.value += count)
 })
 
 export const useActionB = defineAction({ title: 'ActionB' }, () => {
@@ -31,7 +31,7 @@ export const useActionB = defineAction({ title: 'ActionB' }, () => {
 
     defineRef('executions', 0)
 
-    executeAction(() => {})
+    onExecute(() => {})
 })
 
 const actionsTest = test.extend({
@@ -165,16 +165,16 @@ actionsTest('does not execute when canExecute is false', () => {
         const someCondition = defineRef('someCondition', false)
 
         canExecute(() => someCondition.value);
-        executeAction(() => {})
+        onExecute(() => {})
     });
 
     const store = useActionWithCanExecute();
 
-    store.executeAction(1)
+    store.onExecute(1)
     expect(store.executionCount).toBeUndefined()
 
     store.someCondition = true;
-    store.executeAction(1)
+    store.onExecute(1)
     expect(store.executionCount).toBe(1)
 })
 
@@ -183,7 +183,7 @@ actionsTest('unlocking triggers correctly', ({ actions }) => {
         const someCondition = defineRef('someCondition', false)
 
         unlockWhen(() => someCondition.value)
-        executeAction(() => {})
+        onExecute(() => {})
     })
 
     const action = useAction();

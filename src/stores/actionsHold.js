@@ -47,7 +47,7 @@ export const useActionsHoldStore = defineStore(storeName('actions.hold'), () => 
         const duration = last(availableDurations);
 
         if (duration !== undefined) {
-            action.executeAction(duration);
+            action.onExecute(duration);
         }
     })
 

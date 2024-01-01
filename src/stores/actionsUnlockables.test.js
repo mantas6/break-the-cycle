@@ -7,7 +7,7 @@ import {runClock} from "@/routines/clock";
 import {useActionsTriggersStore} from "@/stores/actionsTriggers.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
 import {unlockWhen, defineRef} from "@/helpers/actions/definition/hooks.js";
-import {executeAction} from "@/helpers/actions/definition/execution.js";
+import {onExecute} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
     title: 'Unlockable action',
@@ -17,7 +17,7 @@ const titles = {
 
 const useTestStore = defineAction(titles, () => {
     const canBeUnlocked = defineRef('canBeUnlocked', false)
-    executeAction(() => {})
+    onExecute(() => {})
     unlockWhen(() => canBeUnlocked.value)
 });
 

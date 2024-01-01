@@ -4,7 +4,7 @@
  * @property {Object} options
  * @property {Object} titles
  * @property {string} name
- * @property {CallableFunction?} executeAction
+ * @property {CallableFunction?} onExecute
  */
 
 /**

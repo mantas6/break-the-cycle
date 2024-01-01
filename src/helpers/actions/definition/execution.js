@@ -12,9 +12,9 @@ import {setActionContext} from "@/helpers/actions/context.js";
  * @param {ActionExecutionFunction} cb
  * @return {void}
  */
-export function executeAction(cb) {
+export function onExecute(cb) {
     const { store } = getCurrentContext();
-    store.executeAction = count => {
+    store.onExecute = count => {
         if (!store.canExecute.value) {
             return;
         }
