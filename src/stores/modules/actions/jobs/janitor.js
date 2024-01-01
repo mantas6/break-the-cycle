@@ -24,28 +24,3 @@ export default defineAction(titles, () => {
     executeAction(() => executeBasicJob({ energyCost: 1 }));
 
 })
-
-/*export default defineActionStore(options, store => {
-    const durations = computed(() => [4, 8, 12]);
-
-    const baseBalance = computed(() => 1);
-
-    function executeAction(count) {
-        executeBasicJob(store, count, { baseBalance, energyCost: 1 });
-    }
-
-    function beforeUnlock() {
-        const social = useSocialStore();
-        return social.construction.now >= 250;
-    }
-
-    return {
-        durations,
-
-        baseBalance,
-
-        executeAction,
-        beforeUnlock,
-    };
-})
-*/

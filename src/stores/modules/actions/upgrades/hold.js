@@ -16,33 +16,6 @@ const titles = {
     description: 'Hold the mouse button on the action to bulk execute.',
 };
 
-/*export default defineActionStore(options, ({ executionCount }) => {
-    const baseBalance = computed(() => -25);
-    const wallet = useWalletStore();
-    const intellect = useIntellectStore();
-    const unlock = useUnlockStore();
-
-    function beforeUnlock() {
-        return intellect.overall > 0;
-    }
-
-    function executeAction() {
-        wallet.transaction(toValue(baseBalance));
-    }
-
-    function beforeRevoke() {
-        return executionCount.value > 0 || unlock.hold;
-    }
-
-    return {
-        baseBalance,
-
-        beforeUnlock,
-        executeAction,
-        beforeRevoke,
-    };
-});*/
-
 export default defineAction(titles, ({ executionCount }) => {
     const wallet = useWalletStore();
     const intellect = useIntellectStore();
