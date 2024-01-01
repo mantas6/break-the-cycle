@@ -20,7 +20,7 @@ import {actionRevokeHook, actionUnlockHook} from "@/routines/hooks/actions.js";
  * @param {CallableFunction} setup
  */
 export function defineAction(titles, setup) {
-    const { id, name } = describe(titles);
+    const name = describe(titles);
 
     return defineStore(name, () => {
         const store = {};
@@ -45,13 +45,11 @@ export function defineAction(titles, setup) {
 /**
  *
  * @param {ActionTitlesOptions} titles
- * @return {{ id: string, name: string }}
+ * @return {string}
  */
 export function describe(titles) {
     const id = `${titles.category}.${titles.subcategory}.${titles.title}`;
-    const name = storeName(id);
-
-    return { id, name };
+    return storeName(id);
 }
 
 function setupOnClock() {
