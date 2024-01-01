@@ -8,6 +8,7 @@ const context = { store: null };
  */
 export function setActionContext(ctx) {
     Object.assign(context, ctx);
+    // TODO: also add action unset function
 }
 
 /**
