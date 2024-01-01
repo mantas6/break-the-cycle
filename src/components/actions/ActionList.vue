@@ -19,7 +19,7 @@ const categorized = computed(() => {
   <div class="grid gap-1">
     <template v-for="(actionsItems, groupName) in categorized" :key="groupName">
       <div class="text-xs text-zinc-300" :class="{ 'opacity-0': Object.keys(categorized).length <= 1 }">{{ groupName }}</div>
-      <div :class="{ 'grid-cols-2': grid }" class="grid gap-1">
+      <div :class="{ 'grid-cols-2 max-lg:grid-cols-1': grid }" class="grid gap-1">
         <template v-for="(action, actionName) in actionsItems" :key="actionName">
           <ActionListItem :name="actionName" v-bind="action" :item="action" />
         </template>
