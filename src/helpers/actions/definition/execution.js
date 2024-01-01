@@ -23,6 +23,8 @@ export function onExecute(cb) {
 
         cb(count);
 
+        // TODO: also add action unset function
+
         if (store.executionCount.value) {
             store.executionCount.value += count;
         } else {
