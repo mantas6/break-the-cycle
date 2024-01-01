@@ -6,31 +6,21 @@ import {useActionsStore} from "@/stores/actions.js";
 import {ref} from "vue";
 import {runClock} from "@/routines/clock";
 import {useActionsTriggersStore} from "@/stores/actionsTriggers.js";
+import {defineAction} from "@/helpers/actions/definition/index.js";
+import {beforeUnlock, defineRef} from "@/helpers/actions/definition/hooks.js";
+import {executeAction} from "@/helpers/actions/definition/execution.js";
 
-const options = {
+const titles = {
     title: 'Unlockable action',
     subcategory: 'Test subcategory',
     category: 'Category',
 };
 
-const useTestStore = defineActionStore(options, () => {
-    const canBeUnlocked = ref(false);
-
-    function executeAction(count) {
-
-    }
-
-    function beforeUnlock() {
-        return canBeUnlocked.value;
-    }
-
-    return {
-        canBeUnlocked,
-
-        beforeUnlock,
-        executeAction,
-    };
-})
+const useTestStore = defineAction(titles, () => {
+    const canBeUnlocked = defineRef('canBeUnlocked', false)
+    executeAction(() => {})
+    beforeUnlock(() => canBeUnlocked.value)
+});
 
 beforeEach(() => {
     const store = createPinia();

@@ -31,7 +31,6 @@ export function defineAction(titles, setup) {
         useContext(() => {
             createDefaults();
 
-            console.log(getCurrentContext())
             setup(store);
 
             setupDefaultCanExecute();

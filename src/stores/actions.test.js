@@ -6,45 +6,32 @@ import {computed, nextTick, ref} from "vue";
 import {clearHandlers, clockHandlers, runClock} from "@/routines/clock.js";
 import {defineActionStore} from "@/stores/modules/actions";
 import {useDeathStore} from "@/stores/death.js";
+import {defineAction} from "@/helpers/actions/definition/index.js";
+import {beforeUnlock, defineRaw, defineRef} from "@/helpers/actions/definition/hooks.js";
+import {canExecute, executeAction} from "@/helpers/actions/definition/execution.js";
 
-const options = {
+const titles = {
     title: 'Test action',
     subcategory: 'Test subcategory',
     category: 'Category',
+    description: '',
 };
 
-export const useActionA = defineActionStore(options, () => {
-    const durations = computed(() => [4, 8, 12]);
-    const unlocked = ref(true);
+export const useActionA = defineAction(titles, () => {
+    defineRaw('durations', [4, 8, 12]);
+    defineRaw('unlocked', true);
 
-    const executions = ref(0);
+    const executions = defineRef('executions', 0)
 
-    function executeAction(count) {
-        executions.value += count;
-    }
-
-    return {
-        durations,
-        unlocked,
-
-        executions,
-
-        executeAction,
-    };
+    executeAction(count => executions.value += count)
 })
 
-export const useActionB = defineActionStore({ title: 'ActionB' }, () => {
-    const unlocked = ref(true);
+export const useActionB = defineAction({ title: 'ActionB' }, () => {
+    defineRaw('unlocked', true);
 
-    function executeAction() {
+    defineRef('executions', 0)
 
-    }
-
-    return {
-        unlocked,
-
-        executeAction,
-    };
+    executeAction(() => {})
 })
 
 const actionsTest = test.extend({
@@ -78,9 +65,9 @@ afterEach(() => {
 })
 
 actionsTest('initializes correctly using wrapper', ({ store }) => {
-    expect(store.title).toBe(options.title)
-    expect(store.subcategory).toBe(options.subcategory)
-    expect(store.category).toBe(options.category)
+    expect(store.title).toBe(titles.title)
+    expect(store.subcategory).toBe(titles.subcategory)
+    expect(store.category).toBe(titles.category)
     expect(store.eff).toBeDefined()
 })
 
@@ -173,24 +160,13 @@ actionsTest('actions is not executed and removed from the stack when revoked', (
 })
 
 actionsTest('does not execute when canExecute is false', () => {
-    const useActionWithCanExecute = defineActionStore({ title: 'ActionWithCanExecute' }, () => {
-        const unlocked = ref(true);
-        const someCondition = ref(false);
-        const canExecute = computed(() => someCondition.value);
+    const useActionWithCanExecute = defineAction({ title: 'ActionWithCanExecute' }, () => {
+        defineRaw('unlocked', true);
+        const someCondition = defineRef('someCondition', false)
 
-        function executeAction(count) {
-
-        }
-
-        return {
-            unlocked,
-            someCondition,
-
-            canExecute,
-
-            executeAction,
-        };
-    })
+        canExecute(() => someCondition.value);
+        executeAction(() => {})
+    });
 
     const store = useActionWithCanExecute();
 
@@ -203,21 +179,11 @@ actionsTest('does not execute when canExecute is false', () => {
 })
 
 actionsTest('unlocking triggers correctly', ({ actions }) => {
-    const useAction = defineActionStore({ title: 'LockedAction' }, () => {
-        const someCondition = ref(false);
+    const useAction = defineAction({ title: 'LockedAction' }, () => {
+        const someCondition = defineRef('someCondition', false)
 
-        function beforeUnlock() {
-            return someCondition.value;
-        }
-
-        function executeAction(count) {}
-
-        return {
-            someCondition,
-
-            beforeUnlock,
-            executeAction,
-        };
+        beforeUnlock(() => someCondition.value)
+        executeAction(() => {})
     })
 
     const action = useAction();

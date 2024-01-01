@@ -1,4 +1,5 @@
 import {getCurrentContext} from "@/helpers/actions/definition/context.js";
+import {computed} from "vue";
 
 /**
  * @callback ActionExecutionFunction
@@ -28,5 +29,5 @@ export function executeAction(cb) {
 }
 
 export function canExecute(cb) {
-    getCurrentContext().store.canExecute = cb;
+    getCurrentContext().store.canExecute = computed(cb);
 }
