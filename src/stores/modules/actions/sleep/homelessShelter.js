@@ -14,7 +14,7 @@ const titles = {
     description: 'At least a warm place to stay. Only allows 8hrs per day though..',
 };
 
-export default defineAction(titles, store => {
+export default defineAction(titles, () => {
     const social = useSocialStore();
     const unlock = useUnlockStore();
 
@@ -22,7 +22,7 @@ export default defineAction(titles, store => {
 
     beforeUnlock(() => social.construction.now >= 300 && unlock.planner);
 
-    executeAction(count => {
-        executeSleep({ ...store, count }, { sleepQuality: 0.35 })
+    executeAction(() => {
+        executeSleep({ sleepQuality: 0.35 })
     })
 });

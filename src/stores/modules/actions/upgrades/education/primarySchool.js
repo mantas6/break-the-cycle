@@ -4,23 +4,27 @@ import {useSocialStore} from "@/stores/stats/social.js";
 import {computed} from "vue";
 import {useIntellectStore} from "@/stores/stats/intellect.js";
 import {useWalletStore} from "@/stores/stats/wallet.js";
+import {defineAction} from "@/helpers/actions/definition/index.js";
+import {beforeUnlock, defineComputed, defineRaw} from "@/helpers/actions/definition/hooks.js";
+import {executeAction} from "@/helpers/actions/definition/execution.js";
 
-const options = {
+const titles = {
     title: 'Primary Evening School',
     subcategory: 'Education',
     category: 'Upgrades',
     description: `Teaches the basics if those who have supposedly "missed"`,
 };
 
-export default defineActionStore(options, ({ eff }) => {
-    const durations = computed(() => [3, 6]);
-    const baseBalance = computed(() => -1);
-
+export default defineAction(titles, ({ eff }) => {
     const social = useSocialStore();
     const intellect = useIntellectStore();
     const wallet = useWalletStore();
 
-    function executeAction(count) {
+    const durations = defineComputed('durations', [3, 6])
+    const baseBalance = defineComputed('baseBalance', -1)
+
+    beforeUnlock(() => social.construction.now >= 25)
+    executeAction(count => {
         const actualAmount = wallet.preTransactionArr(baseBalance.value, durations.value, count);
 
         if (actualAmount !== 0) {
@@ -30,17 +34,5 @@ export default defineActionStore(options, ({ eff }) => {
             Value.affect(intellect.education, 0.001 * count * eff.value);
             wallet.transaction(actualAmount)
         }
-    }
-
-    function beforeUnlock() {
-        return social.construction.now >= 25;
-    }
-
-    return {
-        durations,
-        baseBalance,
-
-        executeAction,
-        beforeUnlock,
-    };
+    })
 })
