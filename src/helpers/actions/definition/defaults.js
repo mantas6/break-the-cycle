@@ -2,16 +2,16 @@ import {getCurrentContext} from "@/helpers/actions/definition/context.js";
 import {computed, ref, toValue} from "vue";
 import {interval, requireCost} from "@/helpers/actions/index.js";
 import {computedWritable} from "@/helpers/computed.js";
-import {define, defineRaw, defineRef} from "@/helpers/actions/definition/hooks.js";
+import {defineComputed, defineRaw, defineRef} from "@/helpers/actions/definition/hooks.js";
 import {head} from "lodash";
 
 export function createDefaults() {
     const { titles } = getCurrentContext();
 
-    define('title', titles.title);
-    define('subcategory', titles.subcategory);
-    define('category', titles.category);
-    define('description', titles.description);
+    defineComputed('title', titles.title);
+    defineComputed('subcategory', titles.subcategory);
+    defineComputed('category', titles.category);
+    defineComputed('description', titles.description);
 
     //
     defineRaw('durations', interval(1));

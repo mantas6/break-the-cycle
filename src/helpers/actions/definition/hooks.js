@@ -19,7 +19,7 @@ export function defineRaw(name, value) {
  * @param {CallableFunction|any} cb
  * @returns {{value:any}}
  */
-export function define(name, cb) {
+export function defineComputed(name, cb) {
     return defineRaw(name, computed(cb instanceof Function ? cb : () => cb));
 }
 

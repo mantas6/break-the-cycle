@@ -6,7 +6,7 @@ import {useSocialStore} from "@/stores/stats/social.js";
 import {useUnlockStore} from "@/stores/unlock.js";
 import {useIntellectStore} from "@/stores/stats/intellect.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
-import {beforeRevoke, beforeUnlock, declareOnce, define} from "@/helpers/actions/definition/hooks.js";
+import {beforeRevoke, beforeUnlock, declareOnce, defineComputed} from "@/helpers/actions/definition/hooks.js";
 import {executeAction} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
@@ -49,7 +49,7 @@ export default defineAction(titles, ({ executionCount }) => {
     const unlock = useUnlockStore();
 
     declareOnce();
-    const baseBalance = define('baseBalance', -25);
+    const baseBalance = defineComputed('baseBalance', -25);
 
     beforeUnlock(() => intellect.overall > 0);
     executeAction(() => wallet.transaction(toValue(baseBalance)))
