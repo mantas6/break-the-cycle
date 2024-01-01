@@ -39,10 +39,18 @@ export function declareOnce() {
     getCurrentContext().store.durations = computed(() => []);
 }
 
+/**
+ * @desc Unlock check callback
+ * @param {func} cb
+ */
 export function beforeUnlock(cb) {
     getCurrentContext().store.beforeUnlock = cb;
 }
 
+/**
+ * @desc Revoke check callback
+ * @param {func} cb
+ */
 export function beforeRevoke(cb) {
     getCurrentContext().store.beforeRevoke = cb;
 }
