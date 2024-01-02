@@ -1,31 +1,32 @@
-import {defineActionStore} from "@/stores/modules/actions/index.js";
 import {useWalletStore} from "@/stores/stats/wallet.js";
 import {toValue} from "vue";
+import {defineAction} from "@/helpers/actions/definition/index.js";
+import {revokeWhen, unlockWhen, declareOnce, defineComputed} from "@/helpers/actions/definition/hooks.js";
+import {onExecute} from "@/helpers/actions/definition/execution.js";
 
-export function defineTierUpgrade(options, baseBalance, jobFn, beforeUnlockFn) {
-    return defineActionStore(options, ({ executionCount }) => {
+/**
+ *
+ * @param {ActionTitlesOptions} titles - titles of the action
+ * @param {number} cost - otherwise what is baseAmount
+ * @param jobFn - job reference so that the tier can be updated
+ * @param {CallableFunction} unlockWhenFn - unlockWhen custom conditions
+ */
+export function defineTierUpgrade(titles, cost, jobFn, unlockWhenFn) {
+    return defineAction(titles, ({ executionCount }) => {
         const wallet = useWalletStore();
 
-        function executeAction() {
-            const cost = toValue(baseBalance)
+        defineComputed('baseBalance', cost)
+        declareOnce();
 
+        unlockWhen(unlockWhenFn)
+
+        onExecute(() => {
             wallet.transaction(cost);
 
             const job = jobFn();
             job.tier++;
-        }
+        })
 
-        function beforeRevoke() {
-            return executionCount.value > 0;
-        }
-
-        return {
-            baseBalance,
-
-            executeAction,
-            beforeRevoke,
-
-            beforeUnlock: beforeUnlockFn,
-        };
-    });
+        revokeWhen(() => executionCount.value > 0);
+    })
 }

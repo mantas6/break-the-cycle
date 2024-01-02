@@ -1,40 +1,29 @@
-import {defineActionStore} from "@/stores/modules/actions";
-import {computed, ref} from "vue";
 import {executeBasicJob} from "@/helpers/actions/job";
 import {useSocialStore} from "@/stores/stats/social";
 import { Value } from "@/stats";
-import { useWalletStore } from "@/stores/stats/wallet";
+import {defineAction} from "@/helpers/actions/definition/index.js";
+import {unlockWhen, defineComputed, defineRaw, defineRef} from "@/helpers/actions/definition/hooks.js";
+import {onExecute} from "@/helpers/actions/definition/execution.js";
 
-const options = {
+const titles = {
     title: 'Collect Empty Bottles',
     subcategory: 'Homeless',
     category: 'Jobs',
     description: "Trash cans might have an empty bottle or two. There's other places to look as well.",
 };
 
-export default defineActionStore(options, store => {
-    const { eff } = store;
-    const tier = ref(1);
+export default defineAction(titles, ({ eff }) => {
+    const social = useSocialStore();
 
-    const baseBalance = computed(() => tier.value * 0.1);
+    const tier = defineRef('tier', 1)
 
-    function executeAction(count) {
-        executeBasicJob(store, count, { energyCost: 0.5, capabilityUpper: 0.25, baseBalance })
+    defineComputed('baseBalance', () => tier.value * 0.1);
 
-        // Move to global method
-        const social = useSocialStore();
+    unlockWhen(() => true)
+
+    onExecute(count => {
+        executeBasicJob({ energyCost: 0.5, capabilityUpper: 0.25 })
+
         Value.affect(social.construction, 0.1 * count * eff.value * tier.value);
-    }
-
-    function beforeUnlock() {
-        return true;
-    }
-
-    return {
-        baseBalance,
-        tier,
-
-        executeAction,
-        beforeUnlock,
-    };
-});
+    })
+})

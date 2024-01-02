@@ -1,25 +1,29 @@
 import { useNutritionStore } from "@/stores/stats/nutrition";
 import { Balance } from "@/stats";
-import { defineActionStore } from "@/stores/modules/actions";
 import {calculateCapability} from "@/helpers/actions/job.js";
 import {usePhysicalStore} from "@/stores/stats/physical.js";
 import {useDigestiveStore} from "@/stores/stats/digestive.js";
+import {defineAction} from "@/helpers/actions/definition/index.js";
+import {unlockWhen} from "@/helpers/actions/definition/hooks.js";
+import {onExecute} from "@/helpers/actions/definition/execution.js";
 
-const options = {
+const titles = {
     title: 'Discarded Food',
     subcategory: 'Homeless',
     category: 'Food',
     description: 'Green containers near the houses and stores might contain some not spoiled or almost but hopefully-not-quite-yet spoiled food.',
 };
 
-export default defineActionStore(options, ({ eff, durations }) => {
-    function executeAction(count) {
+export default defineAction(titles, ({ eff, durations }) => {
+    const nutrition = useNutritionStore();
+    const physical = usePhysicalStore();
+    const digestive = useDigestiveStore();
+
+    unlockWhen(() => Balance.percentage(nutrition.energy) < 0.25)
+
+    onExecute(count => {
         const energyGain = 0.25 * count;
         const energyCost = -0.1 * count;
-
-        const nutrition = useNutritionStore();
-        const physical = usePhysicalStore();
-        const digestive = useDigestiveStore();
 
         const capability = calculateCapability(physical.overallCapability, 0.25, count, durations);
 
@@ -33,18 +37,5 @@ export default defineActionStore(options, ({ eff, durations }) => {
             const digestiveHealthLoss = 0.25;
             Balance.affect(digestive.health, -digestiveHealthLoss * eff.value * count)
         }
-    }
-
-    function beforeUnlock() {
-        const nutrition = useNutritionStore();
-
-        const nutritionPercent = Balance.percentage(nutrition.energy)
-
-        return nutritionPercent < 0.25;
-    }
-
-    return {
-        executeAction,
-        beforeUnlock,
-    };
+    })
 })

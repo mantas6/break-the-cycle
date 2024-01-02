@@ -1,35 +1,26 @@
 import {computed} from 'vue'
-import {defineActionStore} from "@/stores/modules/actions/index.js";
+
 import {useSocialStore} from "@/stores/stats/social.js";
 import {executeBasicJob} from "@/helpers/actions/job.js";
+import {defineAction} from "@/helpers/actions/definition/index.js";
+import {unlockWhen, defineRaw} from "@/helpers/actions/definition/hooks.js";
+import {onExecute} from "@/helpers/actions/definition/execution.js";
 
-const options = {
+const titles = {
     title: 'Janitor',
     subcategory: 'Education-less',
     category: 'Jobs',
     description: 'The contract states that the toilet cleaning is included in the daily routine.',
 };
 
-export default defineActionStore(options, store => {
-    const durations = computed(() => [4, 8, 12]);
+export default defineAction(titles, () => {
+    const social = useSocialStore();
 
-    const baseBalance = computed(() => 1);
+    defineRaw('durations', [4, 8, 12]);
+    defineRaw('baseBalance', 1)
 
-    function executeAction(count) {
-        executeBasicJob(store, count, { baseBalance, energyCost: 1 });
-    }
+    unlockWhen(() => social.construction.now >= 250);
 
-    function beforeUnlock() {
-        const social = useSocialStore();
-        return social.construction.now >= 250;
-    }
+    onExecute(() => executeBasicJob({ energyCost: 1 }));
 
-    return {
-        durations,
-
-        baseBalance,
-
-        executeAction,
-        beforeUnlock,
-    };
 })

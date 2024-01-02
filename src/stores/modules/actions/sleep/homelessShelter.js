@@ -1,34 +1,27 @@
-import {defineActionStore} from "@/stores/modules/actions";
 import {executeSleep} from "@/helpers/actions/sleep.js";
 import {useSocialStore} from "@/stores/stats/social.js";
 import {useUnlockStore} from "@/stores/unlock.js";
 import {interval} from "@/helpers/actions/index.js";
+import {defineAction} from "@/helpers/actions/definition/index.js";
+import {unlockWhen, defineRaw} from "@/helpers/actions/definition/hooks.js";
+import {onExecute} from "@/helpers/actions/definition/execution.js";
 
-const options = {
+const titles = {
     title: 'Homeless shelter',
     subcategory: 'Homeless',
     category: 'Sleep',
     description: 'At least a warm place to stay. Only allows 8hrs per day though..',
 };
 
-export default defineActionStore(options, ({ eff }) => {
-    const durations = interval(1, 8);
-
+export default defineAction(titles, () => {
     const social = useSocialStore();
     const unlock = useUnlockStore();
 
-    function executeAction(count) {
-        executeSleep({ eff, count }, { sleepQuality: 0.35 })
-    }
+    defineRaw('durations', interval(1, 8));
 
-    function beforeUnlock() {
-        return social.construction.now >= 300 && unlock.planner;
-    }
+    unlockWhen(() => social.construction.now >= 300 && unlock.planner);
 
-    return {
-        durations,
-
-        executeAction,
-        beforeUnlock,
-    };
+    onExecute(() => {
+        executeSleep({ sleepQuality: 0.35 })
+    })
 });

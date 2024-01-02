@@ -2,8 +2,8 @@ import {max} from "lodash/math.js";
 import {useActionsStore} from "@/stores/actions.js";
 
 export function actionRevokeHook(actionStore) {
-    if (!actionStore.revoked && actionStore.beforeRevoke) {
-        const nowRevoked = actionStore.beforeRevoke();
+    if (!actionStore.revoked && actionStore.revokeWhen) {
+        const nowRevoked = actionStore.revokeWhen();
 
         if (nowRevoked === true) {
             actionStore.revoked = true;
@@ -12,8 +12,8 @@ export function actionRevokeHook(actionStore) {
 }
 
 export function actionUnlockHook(actionStore) {
-    if (!actionStore.revoked && !actionStore.unlocked && actionStore.beforeUnlock) {
-        const nowUnlocked = actionStore.beforeUnlock();
+    if (!actionStore.revoked && !actionStore.unlocked && actionStore.unlockWhen) {
+        const nowUnlocked = actionStore.unlockWhen();
 
         // Ref might be mistakenly returned, so checking strictly
         if (nowUnlocked === true) {

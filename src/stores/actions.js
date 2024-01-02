@@ -154,7 +154,7 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
                 continue;
             }
 
-            action.executeAction(actionCount);
+            action.onExecute(actionCount);
         }
     })
 
