@@ -17,18 +17,18 @@ export const useUnlockStore = defineStore(storeName('unlock'), () => {
     const physicalStore = usePhysicalStore();
     const nutritionStore = useNutritionStore();
 
-    const balance = condition(() => wallet.balance.now >= 1);
+    const balance = condition(() => wallet.balance.now > 0);
 
     const categories = condition(() => Object.keys(actionsStore.all).length > 1);
 
     const planner = condition(() => {
         const upgrade = usePlannerUpgrade();
-        return upgrade.revoked;
+        return upgrade.revoked; // should check exec count
     });
 
     const hold = condition(() => {
         const upgrade = useHoldUpgrade();
-        return upgrade.revoked;
+        return upgrade.revoked; // should check exec count
     });
 
     const physical = condition(() => Balance.actualCenter(physicalStore.energy) < 0.5);
