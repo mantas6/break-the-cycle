@@ -72,7 +72,7 @@ export function reserve(stat, diff) {
 export function affectUpperLimit(stat, diff) {
     assert(stat)
 
-    stat.upperLimit += diff;
+    stat.upperLimit = clamp(stat.upperLimit + diff, stat.min, stat.max);
 
     if (stat.now > stat.upperLimit) {
         stat.now = stat.upperLimit;

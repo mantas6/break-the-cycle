@@ -273,4 +273,8 @@ it('correctly limits maximum value with upperLimit parameter', () => {
 
     Balance.affectUpperLimit(stat, -1)
     expect(stat.now).toBe(74)
+
+    Balance.affectUpperLimit(stat, -100)
+    expect(stat.now).toBe(0)
+    expect(stat.upperLimit).toBe(0)
 })
