@@ -1,4 +1,3 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { storeName } from "@/stores";
 import { Balance } from "@/stats";

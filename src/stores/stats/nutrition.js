@@ -1,8 +1,7 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { storeName } from "@/stores";
 import { Balance } from "@/stats";
-import {afterClock, onClock} from "@/routines/clock.js";
+import {afterClock} from "@/routines/clock.js";
 import {usePhysicalStore} from "@/stores/stats/physical.js";
 
 export const useNutritionStore = defineStore(storeName('nutrition'), () => {

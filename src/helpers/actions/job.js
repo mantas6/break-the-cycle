@@ -1,7 +1,7 @@
 import {usePhysicalStore} from "@/stores/stats/physical";
 import {Balance} from "@/stats";
 import {useWalletStore} from "@/stores/stats/wallet";
-import {ref, toValue} from "vue";
+import {toValue} from "vue";
 import {percentageBetween} from "@/helpers/math.js";
 import {last} from "lodash/array.js";
 import {getActionContext} from "@/helpers/actions/context.js";

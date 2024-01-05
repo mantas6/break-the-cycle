@@ -3,7 +3,6 @@ import { storeName } from "@/stores";
 import { Balance } from "@/stats";
 import {computedOnce} from "@/helpers/computed.js";
 import {onClock} from "@/routines/clock.js";
-import {useDeathStore} from "@/stores/death.js";
 import {degradeLifetime} from "@/helpers/stats/health.js";
 
 export const useDigestiveStore = defineStore(storeName('digestive'), () => {
