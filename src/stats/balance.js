@@ -3,7 +3,15 @@ import {clamp} from "lodash/number";
 import { assertStat } from '.'
 import {percentageBetween} from "@/helpers/math";
 
-export function create(min = -1000, max = 1000, now, center) {
+
+/**
+ *
+ * @param {number} [min=-1000]
+ * @param {number} [max=1000]
+ * @param {number} [now]
+ * @param {number} [center]
+ */
+export function create({ min = -1000, max = 1000, now, center }) {
     if (center === undefined) {
         center = (min + max) / 2;
     }

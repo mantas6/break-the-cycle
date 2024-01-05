@@ -5,7 +5,7 @@ import { create, affect, reserve, actualCenter } from './balance';
 import {Balance} from "@/stats/index.js";
 
 function createBasicStat() {
-    return create(-100, 100);
+    return create({ min: -100, max: 100 });
 }
 
 it('initializes as expected', () => {
@@ -22,10 +22,10 @@ it('initializes as expected', () => {
 })
 
 it('assigns center correctly', () => {
-    expect(create(-100, 100).center).toBe(0)
-    expect(create(0, 100).center).toBe(50)
-    expect(create(-100, 0).center).toBe(-50)
-    expect(create(-100, -50).center).toBe(-75)
+    expect(create({ min: -100, max: 100 }).center).toBe(0)
+    expect(create({ min: 0, max: 100 }).center).toBe(50)
+    expect(create({ min: -100, max: 0 }).center).toBe(-50)
+    expect(create({ min: -100, max: -50 }).center).toBe(-75)
 })
 
 it('calculates gain and loss correctly', () => {
@@ -59,7 +59,7 @@ it('clamps correctly to bounds', () => {
 })
 
 it('clamps correctly to bounds if stat has zero min', () => {
-    const stat = create(0, 100, 5);
+    const stat = create({ min: 0, max: 100, center: 5 });
 
     Balance.affect(stat, -10);
     expect(stat.now).toBe(0)
@@ -119,7 +119,7 @@ it('actual center behaves with default center', () => {
 })
 
 it('actual center behaves with offset center', () => {
-    const stat = create(0, 100);
+    const stat = create({ min: 0, max: 100 });
 
     expect(actualCenter(stat)).toBe(1)
 
@@ -172,7 +172,7 @@ it('behaves correctly when using actualCenter with startPercent', () => {
 })
 
 it('correctly calculates percentage value', () => {
-    let stat = create(-100, 100);
+    let stat = create({ min: -100, max: 100 });
 
     expect(Balance.percentage(stat)).toBe(0.5)
 
@@ -188,7 +188,7 @@ it('correctly calculates percentage value', () => {
     stat.now = 100
     expect(Balance.percentage(stat)).toBe(1)
 
-    stat = create(0, 100);
+    stat = create({ min: 0, max: 100 });
 
     expect(Balance.percentage(stat)).toBe(0.5)
 
@@ -201,7 +201,7 @@ it('correctly calculates percentage value', () => {
     stat.now = 100;
     expect(Balance.percentage(stat)).toBe(1)
 
-    stat = create(50, 100);
+    stat = create({ min: 50, max: 100 });
 
     expect(Balance.percentage(stat)).toBe(0.5)
 
@@ -213,7 +213,7 @@ it('correctly calculates percentage value', () => {
 })
 
 it('correctly calculates percentage value with bound overrides', () => {
-    let stat = create(0, 100);
+    let stat = create({ min: 0, max: 100 });
 
     expect(Balance.percentage(stat, 0.25, 0.75)).toBe(0.5)
 

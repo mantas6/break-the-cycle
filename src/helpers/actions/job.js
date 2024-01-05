@@ -33,7 +33,7 @@ export function calculateCapability(overallCapability, capabilityUpper, duration
 }
 
 export function createChargeable(opts) {
-    const charge = Balance.create(0, opts.max, 0);
+    const charge = Balance.create({ min: 0, max: opts.max, now: 0 });
 
     function onCharge(cb) {
         const affect = cb();
