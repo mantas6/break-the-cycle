@@ -12,12 +12,22 @@ import {useDigestiveStore} from "@/stores/stats/digestive.js";
 import {useCardiovascularStore} from "@/stores/stats/cardiovascular.js";
 import {useUnlockStore} from "@/stores/unlock.js";
 import {useIntellectStore} from "@/stores/stats/intellect.js";
+import {useNeuronalStore} from "@/stores/stats/neuronal.js";
+import {useRespiratoryStore} from "@/stores/stats/respiratory.js";
+import {useReproductiveStore} from "@/stores/stats/reproductive.js";
 
 const physical = usePhysicalStore();
 const nutrition = useNutritionStore();
 const social = useSocialStore();
+
+const neuronal = useNeuronalStore();
+
 const digestive = useDigestiveStore();
 const cardiovascular = useCardiovascularStore();
+const respiratory = useRespiratoryStore();
+
+const reproductive = useReproductiveStore()
+
 const unlock = useUnlockStore();
 const intellect = useIntellectStore();
 </script>
@@ -34,7 +44,10 @@ const intellect = useIntellectStore();
       </div>
       <div class="grid grid-cols-2 gap-3">
         <StatBalanceFill v-bind="cardiovascular.health" title="Cardio." bar-color="bg-green-400" />
+        <StatBalanceFill v-bind="respiratory.health" title="Resp." bar-color="bg-green-400" />
         <StatBalanceFill v-bind="digestive.health" title="Digest." bar-color="bg-green-400" />
+        <StatBalanceFill v-bind="neuronal.health" title="Neuro." bar-color="bg-green-400" />
+        <StatBalanceFill v-bind="reproductive.health" title="Reprod." bar-color="bg-green-400" />
       </div>
       <div class="flex flex-col items-center">
         <span class="flex gap-1 font-medium"><ScaleIcon class="w-4" />Social</span>
