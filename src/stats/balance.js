@@ -3,21 +3,25 @@ import {clamp} from "lodash/number";
 import { assertStat } from '.'
 import {percentageBetween} from "@/helpers/math";
 
-
 /**
  *
  * @param {number} [min=-1000]
  * @param {number} [max=1000]
  * @param {number} [now]
  * @param {number} [center]
+ * @param {number} [upperLimit] prevent stat from increase further
  */
-export function create({ min = -1000, max = 1000, now, center }) {
+export function create({ min = -1000, max = 1000, now, center, upperLimit }) {
     if (center === undefined) {
         center = (min + max) / 2;
     }
 
     if (now === undefined) {
         now = center;
+    }
+
+    if (upperLimit === undefined) {
+        upperLimit = max;
     }
 
     return reactive({
@@ -30,12 +34,14 @@ export function create({ min = -1000, max = 1000, now, center }) {
         min,
         center,
         max,
+        upperLimit,
     });
 }
 
 export function affect(stat, diff) {
     assert(stat);
-    stat.now = clamp(stat.now + diff, stat.min, stat.max);
+
+    stat.now = clamp(stat.now + diff, stat.min, stat.upperLimit);
 
     if (diff > 0) {
         stat._gain += diff;
@@ -51,11 +57,26 @@ export function reserve(stat, diff) {
         return stat.min - stat.now;
     }
 
-    if (stat.now + diff >= stat.max) {
-        return stat.max - stat.now;
+    if (stat.now + diff >= stat.upperLimit) {
+        return stat.upperLimit - stat.now;
     }
 
     return diff;
+}
+
+/**
+ * @desc Affects upper limit while updating now value if needed
+ * @param {Object} stat
+ * @param {number} diff
+ */
+export function affectUpperLimit(stat, diff) {
+    assert(stat)
+
+    stat.upperLimit += diff;
+
+    if (stat.now > stat.upperLimit) {
+        stat.now = stat.upperLimit;
+    }
 }
 
 export function actualCenter(stat, startPercent = 0) {
@@ -90,5 +111,6 @@ function assert(stat) {
         stat.min !== undefined,
         stat.center !== undefined,
         stat.max !== undefined,
+        stat.upperLimit !== undefined,
     )
 }

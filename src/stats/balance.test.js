@@ -40,6 +40,17 @@ it('calculates gain and loss correctly', () => {
     expect(stat._loss).toBe(50)
 })
 
+it('calculates gain and loss even when out of bounds', () => {
+    const stat = create({ min: 0, max: 100, now: 100 })
+
+    Balance.affect(stat, 50)
+    expect(stat._gain).toBe(50)
+
+    stat.now = 0;
+    Balance.affect(stat, -50)
+    expect(stat._loss).toBe(50)
+});
+
 it('clamps correctly to bounds', () => {
     const stat = createBasicStat();
 
@@ -251,3 +262,15 @@ it('correctly calculates percentage value with bound overrides', () => {
     stat.now = 100
     expect(Balance.percentage(stat, 0.25, 0.75)).toBe(1)
 });
+
+it('correctly limits maximum value with upperLimit parameter', () => {
+    const stat = create({ min: 0, max: 100, now: 0, upperLimit: 75 });
+
+    expect(Balance.reserve(stat, 100)).toBe(75)
+
+    Balance.affect(stat, 100)
+    expect(stat.now).toBe(75)
+
+    Balance.affectUpperLimit(stat, -1)
+    expect(stat.now).toBe(74)
+})
