@@ -46,6 +46,7 @@
       'bg-green-400': cat === 'Jobs',
       'bg-yellow-400': cat === 'Food',
       'bg-cyan-400': cat === 'Sleep',
+      'bg-red-400': cat === 'Training',
     };
   })
 

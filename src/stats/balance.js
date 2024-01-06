@@ -10,8 +10,9 @@ import {percentageBetween} from "@/helpers/math";
  * @param {number} [now]
  * @param {number} [center]
  * @param {number} [upperLimit] prevent stat from increase further
+ * @param {number} [lowerLimit] prevent stat from decreasing further
  */
-export function create({ min = -1000, max = 1000, now, center, upperLimit }) {
+export function create({ min = -1000, max = 1000, now, center, upperLimit, lowerLimit }) {
     if (center === undefined) {
         center = (min + max) / 2;
     }
@@ -22,6 +23,10 @@ export function create({ min = -1000, max = 1000, now, center, upperLimit }) {
 
     if (upperLimit === undefined) {
         upperLimit = max;
+    }
+
+    if (lowerLimit === undefined) {
+        lowerLimit = min;
     }
 
     return reactive({
@@ -35,13 +40,14 @@ export function create({ min = -1000, max = 1000, now, center, upperLimit }) {
         center,
         max,
         upperLimit,
+        lowerLimit,
     });
 }
 
 export function affect(stat, diff) {
     assert(stat);
 
-    stat.now = clamp(stat.now + diff, stat.min, stat.upperLimit);
+    stat.now = clamp(stat.now + diff, stat.lowerLimit, stat.upperLimit);
 
     if (diff > 0) {
         stat._gain += diff;
@@ -53,8 +59,8 @@ export function affect(stat, diff) {
 export function reserve(stat, diff) {
     assert(stat);
 
-    if (stat.now + diff <= stat.min) {
-        return stat.min - stat.now;
+    if (stat.now + diff <= stat.lowerLimit) {
+        return stat.lowerLimit - stat.now;
     }
 
     if (stat.now + diff >= stat.upperLimit) {
@@ -77,6 +83,21 @@ export function affectUpperLimit(stat, diff) {
     if (stat.now > stat.upperLimit) {
         stat.now = stat.upperLimit;
     }
+}
+
+/**
+ * @desc Affects stat with tolerance. Negative sta values are not supported
+ * @param {Object} stat
+ * @param {number} diff
+ */
+export function affectTolerance(stat, diff) {
+    assert(stat);
+
+    const percent = percentage(stat)
+
+    const actualDiff = diff > 0 ? diff * (1 - percent) : diff * percent;
+
+    affect(stat, actualDiff)
 }
 
 export function actualCenter(stat, startPercent = 0) {

@@ -10,7 +10,7 @@ import {onExecute} from "@/helpers/actions/definition/execution.js";
 const titles = {
     title: 'Primary Evening School',
     subcategory: 'Education',
-    category: 'Upgrades',
+    category: 'Training',
     description: `Teaches the basics if those who have supposedly "missed"`,
 };
 

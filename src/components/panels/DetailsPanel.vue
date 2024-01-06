@@ -49,6 +49,7 @@ const intellect = useIntellectStore();
         <StatBalanceFill v-bind="neuronal.health" title="Neuro." bar-color="bg-green-400" />
         <StatBalanceFill v-bind="reproductive.health" title="Reprod." bar-color="bg-green-400" />
         <StatValue title="Physical Capability" format="percent" :now="physical.overallCapability" />
+        <StatValue title="Muscle Mass" :item="physical.muscleMass" />
       </div>
       <div class="flex flex-col items-center">
         <span class="flex gap-1 font-medium"><ScaleIcon class="w-4" />Social</span>

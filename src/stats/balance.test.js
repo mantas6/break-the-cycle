@@ -278,3 +278,33 @@ it('correctly limits maximum value with upperLimit parameter', () => {
     expect(stat.now).toBe(0)
     expect(stat.upperLimit).toBe(0)
 })
+
+it('correctly limits min value with lowerLimit parameter', () => {
+    const stat = create({ min: 0, max: 100, now: 1, lowerLimit: 1 });
+
+    expect(Balance.reserve(stat, -1)).toBe(0)
+
+    Balance.affect(stat, -1)
+    expect(stat.now).toBe(1)
+})
+
+it('correctly affect with tolerance', () => {
+    const stat = create({ min: 0, max: 100, now: 0 });
+
+    Balance.affectTolerance(stat, 1)
+    expect(stat.now).toBe(1)
+
+    Balance.affectTolerance(stat, 1)
+    expect(stat.now).toBe(1.99)
+
+    stat.now = 50;
+    Balance.affectTolerance(stat, 1)
+    expect(stat.now).toBe(50.5)
+
+    stat.now = 100;
+    Balance.affectTolerance(stat, 1)
+    expect(stat.now).toBe(100)
+
+    Balance.affectTolerance(stat, -1)
+    expect(stat.now).toBe(99)
+})
