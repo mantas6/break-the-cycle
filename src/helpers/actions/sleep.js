@@ -46,8 +46,9 @@ export function executeSleep(opts) {
     eff.value = Balance.percentage(nutrition.energy, 0, 0.25);
 
     const sleepQuality = toValue(opts.sleepQuality);
+    const muscleAmount = Balance.percentage(physical.muscleMass);
 
-    Balance.affect(physical.energy, sleepQuality * count * eff.value);
+    Balance.affect(physical.energy, sleepQuality * count * eff.value * (1 + muscleAmount));
 
     const rate = 0.1;
 
