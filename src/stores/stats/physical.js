@@ -7,7 +7,7 @@ import {onClock} from "@/routines/clock.js";
 import {useRespiratoryStore} from "@/stores/stats/respiratory.js";
 
 export const usePhysicalStore = defineStore(storeName('physical'), () => {
-    const energy = Balance.create({ min: -100, max: 100, now: 50 });
+    const energy = Balance.create({ min: -100, max: 100, now: 50, lowerLimit: -99.9, upperLimit: 99.9 });
 
     const muscleMass = Balance.create({ min: 0, max: 1000, now: 1, lowerLimit: 1 });
 

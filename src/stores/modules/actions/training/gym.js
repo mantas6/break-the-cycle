@@ -22,7 +22,7 @@ export default defineAction(titles, ({ eff, durations }) => {
 
     const baseBalance = defineComputed('baseBalance', -5)
 
-    unlockWhen(() => social.construction.now >= 0)
+    unlockWhen(() => social.construction.now >= 1)
     onExecute(count => {
         const actualAmount = wallet.preTransactionArr(baseBalance.value, durations.value, count);
 
