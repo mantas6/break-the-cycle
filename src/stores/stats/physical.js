@@ -14,13 +14,13 @@ export const usePhysicalStore = defineStore(storeName('physical'), () => {
     const cardiovascular = useCardiovascularStore();
     const respiratory = useRespiratoryStore();
 
-    const overallCapability = computedOnce(() => Balance.actualCenter(energy) * cardiovascular.overallHealth * respiratory.overallHealth);
+    const overallCapability = computedOnce(() => Balance.actualCenter(energy, 0.25) * cardiovascular.overallHealth * respiratory.overallHealth);
 
     onClock(() => {
-        const balance = (1 - Balance.actualCenter(energy));
-        Balance.affect(cardiovascular.health, -balance);
+        const balance = (1 - Balance.actualCenter(energy, 0.25));
+        Balance.affect(cardiovascular.health, -balance * 20);
 
-        Balance.affectTolerance(muscleMass, -0.1);
+        Balance.affectTolerance(muscleMass, -1);
     });
 
     return {
