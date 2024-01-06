@@ -12,6 +12,7 @@ const props = defineProps({
   description: String,
   durations: Array,
   tier: Number,
+  quality: Number,
 });
 
 const unlock = useUnlockStore();
@@ -40,6 +41,10 @@ const durationsHuman = computed(() => {
           <CursorArrowRippleIcon class="w-4" />
           <span v-if="unlock.planner">{{ hold.maxDuration - actions.currentDuration }}h</span>
           <span v-else>Hold mouse to do bulk</span>
+        </div>
+        <div v-if="quality" class="text-zinc-300">
+          <span>Quality: </span>
+          <span v-format:percent="quality"></span>
         </div>
       </div>
     </div>

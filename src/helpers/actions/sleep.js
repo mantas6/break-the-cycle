@@ -7,10 +7,13 @@ import {getActionContext} from "@/helpers/actions/context.js";
 import {useRespiratoryStore} from "@/stores/stats/respiratory.js";
 import {useReproductiveStore} from "@/stores/stats/reproductive.js";
 import {useNeuronalStore} from "@/stores/stats/neuronal.js";
+import {useWalletStore} from "@/stores/stats/wallet.js";
+import {toValue} from "vue";
 
 /**
  * @typedef {Object} SleepOptions
- * @property {number} sleepQuality - multiplier for energy restoration
+ * @property {number|{value:number}} sleepQuality - multiplier for energy restoration
+ * @property {number|{value:number}} [baseBalance] - sleeping cost per night
  */
 
 /**
@@ -31,8 +34,18 @@ export function executeSleep(opts) {
 
     const reproductive = useReproductiveStore();
 
-    const sleepQuality = opts.sleepQuality;
+    const wallet = useWalletStore();
+
+    if (opts.baseBalance) {
+        if (!wallet.preTransactionArr(toValue(opts.baseBalance))) {
+            eff.value = 0;
+            return;
+        }
+    }
+
     eff.value = Balance.percentage(nutrition.energy, 0, 0.25);
+
+    const sleepQuality = toValue(opts.sleepQuality);
 
     Balance.affect(physical.energy, sleepQuality * count * eff.value);
 
