@@ -63,14 +63,14 @@
    @pointerleave="showDetails = false">
     <div class="flex flex-col cursor-pointer text-sm grow" @click="triggers.execute(name)" @pointerdown="hold.enable(name)" @pointerup="hold.disable" v-hover>
       <div class="flex gap-3" :class="{ 'text-zinc-500': !canExecute }">
-        <span class="w-10" v-if="unlock.planner && durations.length">{{ isActive ? currentDuration : '0' }}h</span>
+        <span class="w-10 text-zinc-300" v-if="unlock.planner && durations.length">{{ isActive ? currentDuration : '0' }}h</span>
         <div class="flex items-center gap-1">
           <div class="w-2 h-2" :class="color"></div>
           <span class="font-medium">{{ title }}</span>
           <span v-if="notify" class="text-red-300">*</span>
         </div>
       </div>
-      <div class="flex gap-2 items-center text-xs">
+      <div class="flex gap-2 items-center text-xs text-zinc-200">
         <span v-if="minBalance">
           <span v-format:currency="minBalance"></span>
         </span>
