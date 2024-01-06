@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 import {interval, requireCost} from "@/helpers/actions";
-import {executeBasicFood} from "@/helpers/actions/food.js";
+import {executePurchasedFood} from "@/helpers/actions/food.js";
 
 import {useSocialStore} from "@/stores/stats/social.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
@@ -20,7 +20,7 @@ export default defineAction(titles, () => {
     defineRaw('durations', interval(0.5))
     defineComputed('baseBalance', -2)
 
-    onExecute(() => executeBasicFood({ energyGain: 1, digestiveHealthLoss: 0.05 }))
+    onExecute(() => executePurchasedFood({ energyGain: 1, digestiveHealthLoss: 0.05 }))
 
     unlockWhen(() => social.construction.now >= 50)
 })

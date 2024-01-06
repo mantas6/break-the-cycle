@@ -6,6 +6,7 @@ import {useDigestiveStore} from "@/stores/stats/digestive.js";
 import {defineAction} from "@/helpers/actions/definition/index.js";
 import {unlockWhen} from "@/helpers/actions/definition/hooks.js";
 import {onExecute} from "@/helpers/actions/definition/execution.js";
+import {executeLabourFood} from "@/helpers/actions/food.js";
 
 const titles = {
     title: 'Discarded Food',
@@ -22,20 +23,6 @@ export default defineAction(titles, ({ eff, durations }) => {
     unlockWhen(() => Balance.percentage(nutrition.energy) < 0.25)
 
     onExecute(count => {
-        const energyGain = 0.25 * count;
-        const energyCost = -0.1 * count;
-
-        const capability = calculateCapability(physical.overallCapability, 0.25, count, durations);
-
-        const neededGain = Balance.reserve(nutrition.energy, energyGain) * capability * digestive.overallHealth;
-        eff.value = neededGain / energyGain;
-
-        if (eff.value > 0) {
-            Balance.affect(nutrition.energy, energyGain * eff.value)
-            Balance.affect(physical.energy, energyCost * eff.value)
-
-            const digestiveHealthLoss = 0.25;
-            Balance.affect(digestive.health, -digestiveHealthLoss * eff.value * count)
-        }
+        executeLabourFood({ energyGain: 0.25, energyCost: 0.1 });
     })
 })

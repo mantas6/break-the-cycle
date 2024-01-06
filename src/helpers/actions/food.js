@@ -5,18 +5,20 @@ import {toValue} from "vue";
 import {head} from "lodash/array.js";
 import {useDigestiveStore} from "@/stores/stats/digestive.js";
 import {getActionContext} from "@/helpers/actions/context.js";
+import {calculateCapability} from "@/helpers/actions/job.js";
+import {usePhysicalStore} from "@/stores/stats/physical.js";
 
 /**
- * @typedef {Object} FoodOptions
+ * @typedef {Object} PurchasedFoodOptions
  * @property {number|{value:number}} energyGain
  * @property {number|{value:number}} digestiveHealthLoss
  */
 
 /**
  *
- * @param {FoodOptions} opts
+ * @param {PurchasedFoodOptions} opts
  */
-export function executeBasicFood(opts) {
+export function executePurchasedFood(opts) {
     const { eff, durations, count, baseBalance } = getActionContext();
 
     const energyGain = toValue(opts.energyGain) * count;
@@ -42,5 +44,41 @@ export function executeBasicFood(opts) {
         Balance.affect(digestive.health, -digestiveHealthLoss * eff.value * count)
     } else {
         eff.value = 0;
+    }
+}
+
+/**
+ * @typedef {Object} LabourFoodOptions
+ * @property {number|{value:number}} energyGain
+ * @property {number|{value:number}} energyCost
+ * @property {number|{value:number}} [digestiveHealthLoss]
+ */
+
+
+/**
+ *
+ * @param {LabourFoodOptions} opts
+ */
+export function executeLabourFood(opts) {
+    const { eff, durations, count } = getActionContext();
+
+    const digestive = useDigestiveStore();
+    const physical = usePhysicalStore();
+    const nutrition = useNutritionStore();
+
+    const energyGain = toValue(opts.energyGain) * count;
+    const energyCost = -toValue(opts.energyCost) * count;
+
+    const capability = calculateCapability(physical.overallCapability, 0.25, count, durations);
+
+    const neededGain = Balance.reserve(nutrition.energy, energyGain) * capability * digestive.overallHealth;
+    eff.value = neededGain / energyGain;
+
+    if (eff.value > 0) {
+        Balance.affect(nutrition.energy, energyGain * eff.value)
+        Balance.affect(physical.energy, energyCost * eff.value)
+
+        const digestiveHealthLoss = opts.digestiveHealthLoss ? toValue(opts.digestiveHealthLoss) : 0.25;
+        Balance.affect(digestive.health, -digestiveHealthLoss * eff.value * count)
     }
 }
