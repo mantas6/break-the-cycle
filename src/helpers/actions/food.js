@@ -6,6 +6,16 @@ import {head} from "lodash/array.js";
 import {useDigestiveStore} from "@/stores/stats/digestive.js";
 import {getActionContext} from "@/helpers/actions/context.js";
 
+/**
+ * @typedef {Object} FoodOptions
+ * @property {number|{value:number}} energyGain
+ * @property {number|{value:number}} digestiveHealthLoss
+ */
+
+/**
+ *
+ * @param {FoodOptions} opts
+ */
 export function executeBasicFood(opts) {
     const { eff, durations, count, baseBalance } = getActionContext();
 
@@ -28,7 +38,7 @@ export function executeBasicFood(opts) {
         wallet.transaction(cost)
         Balance.affect(nutrition.energy, energyGain * eff.value)
 
-        const digestiveHealthLoss = 0.1;
+        const digestiveHealthLoss = opts.digestiveHealthLoss ? toValue(opts.digestiveHealthLoss) : 0.1;
         Balance.affect(digestive.health, -digestiveHealthLoss * eff.value * count)
     } else {
         eff.value = 0;

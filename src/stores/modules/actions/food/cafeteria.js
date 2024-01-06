@@ -8,19 +8,19 @@ import {unlockWhen, defineComputed, defineRaw} from "@/helpers/actions/definitio
 import {onExecute} from "@/helpers/actions/definition/execution.js";
 
 const titles = {
-    title: 'Fast Food',
+    title: 'Cafeteria',
     subcategory: 'Restaurants',
     category: 'Food',
-    description: "Can't beat how fast it is.",
+    description: "Decent quality. Until you find a teeth in your meal..",
 };
 
 export default defineAction(titles, () => {
     const social = useSocialStore();
 
-    defineRaw('durations', interval(0.25))
-    defineComputed('baseBalance', -1)
+    defineRaw('durations', interval(0.5))
+    defineComputed('baseBalance', -2)
 
-    onExecute(() => executeBasicFood({ energyGain: 1 }))
+    onExecute(() => executeBasicFood({ energyGain: 1, digestiveHealthLoss: 0.05 }))
 
     unlockWhen(() => social.construction.now >= 50)
 })
