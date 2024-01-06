@@ -40,6 +40,15 @@
     'text-red-300': isActive.value && !props.eff
   }));
 
+  const color = computed(() => {
+    const cat = props.item.category;
+    return {
+      'bg-green-400': cat === 'Jobs',
+      'bg-yellow-400': cat === 'Food',
+      'bg-cyan-400': cat === 'Sleep',
+    };
+  })
+
   function clearNotify() {
     if (props.notify) {
       triggers.clearNotify(props.name);
@@ -55,7 +64,8 @@
     <div class="flex flex-col cursor-pointer text-sm grow" @click="triggers.execute(name)" @pointerdown="hold.enable(name)" @pointerup="hold.disable" v-hover>
       <div class="flex gap-3" :class="{ 'text-zinc-500': !canExecute }">
         <span class="w-10" v-if="unlock.planner && durations.length">{{ isActive ? currentDuration : '0' }}h</span>
-        <div>
+        <div class="flex items-center gap-1">
+          <div class="w-2 h-2" :class="color"></div>
           <span class="font-medium">{{ title }}</span>
           <span v-if="notify" class="text-red-300">*</span>
         </div>
