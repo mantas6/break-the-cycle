@@ -17,7 +17,7 @@ import {percentageBetween} from "@/helpers/math.js";
  */
 export function degradeLifetime({ health }, opts = {}) {
     const passiveHealthLoss = opts.passiveHealthLoss || 0.4;
-    const healthLossMultiplier = opts.healthLossMultiplier || 10;
+    const healthLossMultiplier = opts.healthLossMultiplier || 5;
 
     const percentage = percentageBetween(health.now, 0, 1, health.min, health.upperLimit);
     const loss = Math.max((1 - percentage) * healthLossMultiplier, passiveHealthLoss);

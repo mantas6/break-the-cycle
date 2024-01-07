@@ -78,7 +78,7 @@ export function executeLabourFood(opts) {
         Balance.affect(nutrition.energy, energyGain * eff.value)
         Balance.affect(physical.energy, energyCost * eff.value)
 
-        const digestiveHealthLoss = opts.digestiveHealthLoss ? toValue(opts.digestiveHealthLoss) : 0.25;
+        const digestiveHealthLoss = opts.digestiveHealthLoss ? toValue(opts.digestiveHealthLoss) : 0.5;
         Balance.affect(digestive.health, -digestiveHealthLoss * eff.value * count)
     }
 }
