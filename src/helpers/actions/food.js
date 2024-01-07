@@ -11,7 +11,7 @@ import {usePhysicalStore} from "@/stores/stats/physical.js";
 /**
  * @typedef {Object} PurchasedFoodOptions
  * @property {number|{value:number}} energyGain
- * @property {number|{value:number}} digestiveHealthLoss
+ * @property {number|{value:number}} [digestiveHealthLoss]
  */
 
 /**
