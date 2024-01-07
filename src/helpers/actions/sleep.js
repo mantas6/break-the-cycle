@@ -37,10 +37,14 @@ export function executeSleep(opts) {
     const wallet = useWalletStore();
 
     if (opts.baseBalance) {
-        if (!wallet.preTransactionArr(toValue(opts.baseBalance))) {
+        const baseBalance = toValue(opts.baseBalance);
+
+        if (!wallet.preTransactionArr(baseBalance)) {
             eff.value = 0;
             return;
         }
+
+        wallet.transaction(baseBalance);
     }
 
     eff.value = Balance.percentage(nutrition.energy, 0, 0.25);
