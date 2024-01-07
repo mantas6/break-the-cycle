@@ -17,7 +17,7 @@ export const useDebugStore = defineStore(storeName('debug'), () => {
         unlock.nutrition = true;
     }
 
-    function $reset() {
+    function $resetToo() {
         unlockAllActions.value = false;
     }
 
@@ -26,6 +26,6 @@ export const useDebugStore = defineStore(storeName('debug'), () => {
 
         unlockAll,
 
-        $reset,
+        $resetToo,
     };
 });

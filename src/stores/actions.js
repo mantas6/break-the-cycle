@@ -129,7 +129,7 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         delete active[name];
     }
 
-    function $reset() {
+    function $resetToo() {
         for (const key of Object.keys(active)) {
             delete active[key];
         }
@@ -172,6 +172,6 @@ export const useActionsStore = defineStore(storeName('actions'), () => {
         decrease,
         remove,
 
-        $reset,
+        $resetToo,
     };
 })

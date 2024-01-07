@@ -3,18 +3,11 @@ import { cloneDeep } from "lodash/lang";
 export function ResetPlugin({ store }) {
     const initialState = cloneDeep(store.$state);
 
-    let definesReset = false;
+    store.$reset = () => {
+        store.$patch(cloneDeep(initialState));
 
-    try {
-        store.$reset();
-        definesReset = true;
-    } catch (e) {
-    }
-
-    if (!definesReset) {
-        store.$reset = () => {
-            //store.$patch($state => Object.assign($state, initialState));
-            store.$patch(cloneDeep(initialState));
-        };
-    }
+        if (store.$resetToo instanceof Function) {
+            store.$resetToo();
+        }
+    };
 }
