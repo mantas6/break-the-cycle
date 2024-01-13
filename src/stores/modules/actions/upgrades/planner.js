@@ -24,6 +24,9 @@ export default defineAction(titles, ({ executionCount }) => {
     declareOnce();
 
     unlockWhen(() => intellect.overall >= 1)
-    onExecute(() => wallet.transaction(toValue(baseBalance)))
-    revokeWhen(() => executionCount.value > 0 || unlock.planner)
+    revokeWhen(() => unlock.planner)
+    onExecute(() => {
+        wallet.transaction(toValue(baseBalance))
+        unlock.planner = true;
+    })
 })

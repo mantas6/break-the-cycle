@@ -24,6 +24,9 @@ export default defineAction(titles, ({ executionCount }) => {
     const baseBalance = defineComputed('baseBalance', -25);
 
     unlockWhen(() => intellect.overall > 0);
-    onExecute(() => wallet.transaction(toValue(baseBalance)))
-    revokeWhen(() => executionCount.value > 0 || unlock.hold)
+    revokeWhen(() => unlock.hold)
+    onExecute(() => {
+        wallet.transaction(toValue(baseBalance))
+        unlock.hold = true;
+    })
 })

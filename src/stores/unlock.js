@@ -8,9 +8,6 @@ import {useNutritionStore} from "@/stores/stats/nutrition.js";
 import {onClock} from "@/routines/clock.js";
 import {useActionsStore} from "@/stores/actions.js";
 
-import usePlannerUpgrade from '@/stores/modules/actions/upgrades/planner.js';
-import useHoldUpgrade from '@/stores/modules/actions/upgrades/hold.js';
-
 export const useUnlockStore = defineStore(storeName('unlock'), () => {
     const wallet = useWalletStore();
     const actionsStore = useActionsStore();
@@ -21,15 +18,8 @@ export const useUnlockStore = defineStore(storeName('unlock'), () => {
 
     const categories = condition(() => Object.keys(actionsStore.all).length > 1);
 
-    const planner = condition(() => {
-        const upgrade = usePlannerUpgrade();
-        return upgrade.revoked; // should check exec count
-    });
-
-    const hold = condition(() => {
-        const upgrade = useHoldUpgrade();
-        return upgrade.revoked; // should check exec count
-    });
+    const planner = condition(() => false);
+    const hold = condition(() => false);
 
     const physical = condition(() => Balance.actualCenter(physicalStore.energy) < 0.5);
 
