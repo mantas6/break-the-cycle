@@ -24,6 +24,6 @@ export default defineAction(titles, ({ eff }) => {
     onExecute(count => {
         executeBasicJob({ energyCost: 0.5, capabilityUpper: 0.25 })
 
-        Value.affect(social.construction, 0.1 * count * eff.value * tier.value);
+        social.affectConstruction(0.1 * count * eff.value * tier.value);
     })
 })
