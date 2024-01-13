@@ -17,7 +17,7 @@ const unlock = useUnlockStore();
     <div class="flex flex-col justify-between">
       <Logo />
       <span v-if="time.pause" class="text-yellow-300">Paused</span>
-      <span v-else class="text-sm text-zinc-300">{{ time.date }}</span>
+      <span v-else-if="unlock.categories" class="text-sm text-zinc-300">{{ time.date }}</span>
     </div>
     <StatWalletBalance v-if="unlock.balance" v-bind="wallet.balance" :show-diff="unlock.planner || unlock.hold" />
     <div v-else class="flex justify-center"><LockClosedIcon class="w-4" /></div>
