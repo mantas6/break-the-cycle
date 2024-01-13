@@ -21,7 +21,6 @@ export function degradeLifetime({ health }, opts = {}) {
 
     const percentage = percentageBetween(health.now, 0, 1, health.min, health.upperLimit);
     const loss = Math.max((1 - percentage) * healthLossMultiplier, passiveHealthLoss);
-    console.log({loss})
     Balance.affectUpperLimit(health, -loss)
 
     if (opts.deathReason) {
