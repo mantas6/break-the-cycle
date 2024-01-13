@@ -48,22 +48,24 @@ const intellect = useIntellectStore();
         <StatBalanceFill v-bind="digestive.health" title="Digest." bar-color="bg-green-400" />
         <StatBalanceFill v-bind="neuronal.health" title="Neuro." bar-color="bg-green-400" />
         <StatBalanceFill v-bind="reproductive.health" title="Reprod." bar-color="bg-green-400" />
-        <StatValue title="Physical Capability" format="percent" :now="physical.overallCapability" />
-        <StatValue title="Muscle Mass" :item="physical.muscleMass" />
+        <StatValue v-if="unlock.physical" title="Physical Capability" format="percent" :now="physical.overallCapability" />
+        <StatValue v-if="unlock.physical" title="Muscle Mass" :item="physical.muscleMass" />
       </div>
-      <div class="flex flex-col items-center">
-        <span class="flex gap-1 font-medium"><ScaleIcon class="w-4" />Social</span>
-        <div class="flex gap-2">
-          <StatValue title="Construction" :item="social.construction">
-            <template #title>
-              <HandThumbUpIcon class="text-green-200 w-4" />
-            </template>
-          </StatValue>
-          <StatValue :item="social.destruction">
-            <template #title>
-              <HandThumbDownIcon class="text-red-200 w-4" />
-            </template>
-          </StatValue>
+      <div class="grid grid-cols-2">
+        <div v-if="social.construction.now > 5 || social.destruction.now > 5" class="flex flex-col items-center">
+          <span class="flex gap-1 font-medium"><ScaleIcon class="w-4" />Social</span>
+          <div class="flex flex-col w-full">
+            <StatValue v-if="social.construction.now > 5" :item="social.construction">
+              <template #title>
+                <HandThumbUpIcon class="text-green-200 w-4" />
+              </template>
+            </StatValue>
+            <StatValue v-if="social.destruction.now > 5" :item="social.destruction">
+              <template #title>
+                <HandThumbDownIcon class="text-red-200 w-4" />
+              </template>
+            </StatValue>
+          </div>
         </div>
       </div>
     </div>
