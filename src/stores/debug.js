@@ -9,12 +9,13 @@ export const useDebugStore = defineStore(storeName('debug'), () => {
     const unlockAllActions = computedWritable(false);
 
     function unlockAll() {
-        unlock.balance = true;
-        unlock.categories = true;
-        unlock.planner = true;
-        unlock.hold = true;
-        unlock.physical = true;
-        unlock.nutrition = true;
+        const unlocks = Object.keys(unlock)
+
+        unlocks.forEach(name => {
+            if (unlock[name] === undefined) {
+                unlock[name] = true
+            }
+        })
     }
 
     function $resetToo() {
