@@ -43,11 +43,11 @@ const intellect = useIntellectStore();
         <StatBalanceFill v-if="unlock.nutrition" title="Nutrition" v-bind="nutrition.energy" borders />
       </div>
       <div class="grid grid-cols-2 gap-3">
-        <StatBalanceFill v-bind="cardiovascular.health" title="Cardio." bar-color="bg-green-400" />
-        <StatBalanceFill v-bind="respiratory.health" title="Resp." bar-color="bg-green-400" />
-        <StatBalanceFill v-bind="digestive.health" title="Digest." bar-color="bg-green-400" />
-        <StatBalanceFill v-bind="neuronal.health" title="Neuro." bar-color="bg-green-400" />
-        <StatBalanceFill v-bind="reproductive.health" title="Reprod." bar-color="bg-green-400" />
+        <StatBalanceFill v-if="unlock.cardiovascular" v-bind="cardiovascular.health" title="Cardio." bar-color="bg-green-400" />
+        <StatBalanceFill v-if="unlock.respiratory" v-bind="respiratory.health" title="Resp." bar-color="bg-green-400" />
+        <StatBalanceFill v-if="unlock.digestive" v-bind="digestive.health" title="Digest." bar-color="bg-green-400" />
+        <StatBalanceFill v-if="unlock.neuronal" v-bind="neuronal.health" title="Neuro." bar-color="bg-green-400" />
+        <StatBalanceFill v-if="unlock.reproductive" v-bind="reproductive.health" title="Reprod." bar-color="bg-green-400" />
         <StatValue v-if="unlock.physical" title="Physical Capability" format="percent" :now="physical.overallCapability" />
         <StatValue v-if="unlock.physical" title="Muscle Mass" :item="physical.muscleMass" />
       </div>
