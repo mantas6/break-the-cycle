@@ -33,6 +33,7 @@ export const usePhysicalStore = defineStore(storeName('physical'), () => {
     const overallCapability = computedOnce(() => Balance.actualCenter(energy, physicalEndurance.value) * cardiovascular.overallHealth * respiratory.overallHealth);
 
     onClock(() => {
+        // TODO: also add passive degradation even when stat is in center
         const balance = (1 - Balance.actualCenter(energy, 0.25));
         Balance.affect(cardiovascular.health, -balance * 20);
 
