@@ -12,12 +12,12 @@ const titles = {
     description: 'Green containers near the houses and stores might contain some not spoiled or almost but hopefully-not-quite-yet spoiled food.',
 };
 
-export default defineAction(titles, ({ eff, durations }) => {
+export default defineAction(titles, () => {
     const nutrition = useNutritionStore();
 
     unlockWhen(() => Balance.percentage(nutrition.energy) < 0.25)
 
-    onExecute(count => {
+    onExecute(() => {
         executeLabourFood({ energyGain: 0.25, energyCost: 0.1 });
     })
 })
